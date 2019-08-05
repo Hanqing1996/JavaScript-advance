@@ -59,7 +59,7 @@ f.call({name:'frank'},1,2) // {name: 'frank'}, [1,2]
 ```
 person.sayHi.call({name:'haha'})  // 这时 sayHi 里面的 this 就不是 person 了
 ```
-5. [为什么需要this]()
+5. [为什么需要this](https://github.com/Hanqing1996/JavaScript-advance/blob/master/%E4%BD%A0%E7%9C%9F%E7%9A%84%E6%87%82%E5%87%BD%E6%95%B0%E5%90%97/%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81this.js)
 6. this的意义在于为函数指定一个依附的对象，但实际上不是所有函数都需要一个依附的对象(比如求和函数)
 
 #### call与apply
@@ -70,7 +70,7 @@ f.call(this,arg[0],arg[1]...arg[n])
 f.apply(this,arr) // arr为数组
 ```
 2. 1决定了apply可以处理不定长数组，call不可以
-3. 例子：[求和]() 
+3. 例子：[求和](https://github.com/Hanqing1996/JavaScript-advance/blob/master/%E4%BD%A0%E7%9C%9F%E7%9A%84%E6%87%82%E5%87%BD%E6%95%B0%E5%90%97/call%E4%B8%8Eapply.js) 
 
 
 
