@@ -38,6 +38,41 @@ a(10);
 1. 函数是关键，所有代码可以看作运行在一个全局函数(windows)中.声明发生在函数执行前，运行发生在函数的执行过程中
 2. 每遇到一个函数，就发生一次声明和运行，函数的调用次序遵照[call stack](https://xiedaimala.com/tasks/f3b7885d-ac51-4c41-a498-d01d532cc651/video_tutorials/6e3cd39b-c322-4bfb-83b9-d926c7072929)
 
+#### call stack
+call stack存放的是函数调用的入口(当前位置)
+
+#### this
+1. call的参数有两个:call(this,arg[0],arg[1],arg[2]...arg[n]).其中this是一个对象,默认为window(在浏览器中),其它参数构成数组arguments
+```
+function f(){
+    console.log(this)
+    console.log(arguments)
+}
+f.call() // window
+f.call({name:'frank'}) // {name: 'frank'}, []
+f.call({name:'frank'},1) // {name: 'frank'}, [1]
+f.call({name:'frank'},1,2) // {name: 'frank'}, [1,2]
+```
+2. f()是阉割版的f.call()
+3. 对于person.sayHi.call(),默认this为person
+4. this 是参数，所以，只有在调用的时候才能确定
+```
+person.sayHi.call({name:'haha'})  // 这时 sayHi 里面的 this 就不是 person 了
+```
+5. [为什么需要this]()
+6. this的意义在于为函数指定一个依附的对象，但实际上不是所有函数都需要一个依附的对象(比如求和函数)
+
+#### call与apply
+1. 唯一的区别在于参数
+```
+f.call(this,arg[0],arg[1]...arg[n])
+
+f.apply(this,arr) // arr为数组
+```
+2. 1决定了apply可以处理不定长数组，call不可以
+3. 例子：[求和]() 
+
+
 
 
 
