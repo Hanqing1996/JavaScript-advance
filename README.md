@@ -42,7 +42,25 @@ a(10);
 call stack存放的是函数调用的入口(当前位置)
 
 #### this
-1. call的参数有两个:call(this,arg[0],arg[1],arg[2]...arg[n]).其中this是一个对象,默认为window(在浏览器中),其它参数构成数组arguments
+1. this这个概念只与函数有关,常见的有如下场景
+```
+function f(){
+    console.log(this) // 对函数f的this进行操作
+}
+
+f.call({name:'libai'}) //为函数f指定this
+```
+2. 一个无聊的语法糖
+```
+var person={
+    sayHi:function(){
+        console.log('say hi');
+    }
+}
+
+person.sayHi(); // 等效于person.sayHi.call(person);
+```
+3. call的参数有两个:call(this,arg[0],arg[1],arg[2]...arg[n]).其中this是一个对象,默认为window(在浏览器中),其它参数构成数组arguments
 ```
 function f(){
     console.log(this)
@@ -53,14 +71,18 @@ f.call({name:'frank'}) // {name: 'frank'}, []
 f.call({name:'frank'},1) // {name: 'frank'}, [1]
 f.call({name:'frank'},1,2) // {name: 'frank'}, [1,2]
 ```
-2. f()是阉割版的f.call()
-3. 对于person.sayHi.call(),默认this为person
-4. this 是参数，所以，只有在调用的时候才能确定
+2. 注意区别
 ```
-person.sayHi.call({name:'haha'})  // 这时 sayHi 里面的 this 就不是 person 了
+f()等价于f.call('undefined')
+
+person.sayHi()等价于person.sayHi.call(person)
 ```
-5. [为什么需要this](https://github.com/Hanqing1996/JavaScript-advance/blob/master/%E4%BD%A0%E7%9C%9F%E7%9A%84%E6%87%82%E5%87%BD%E6%95%B0%E5%90%97/%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81this.js)
-6. this的意义在于为函数指定一个依附的对象，但实际上不是所有函数都需要一个依附的对象(比如求和函数)
+3. this 是参数，所以，只有在调用的时候才能确定
+```
+person.sayHi.call({name:'haha'})  // 这时函数sayHi的this就不是person了
+```
+4. [为什么需要this](https://github.com/Hanqing1996/JavaScript-advance/blob/master/%E4%BD%A0%E7%9C%9F%E7%9A%84%E6%87%82%E5%87%BD%E6%95%B0%E5%90%97/%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81this.js)
+5. this的意义在于为函数指定一个依附的对象，但实际上不是所有函数都需要一个依附的对象(比如求和函数)
 
 #### call与apply
 1. 唯一的区别在于参数
@@ -73,7 +95,53 @@ f.apply(this,arr) // arr为数组
 3. 例子：[求和](https://github.com/Hanqing1996/JavaScript-advance/blob/master/%E4%BD%A0%E7%9C%9F%E7%9A%84%E6%87%82%E5%87%BD%E6%95%B0%E5%90%97/call%E4%B8%8Eapply.js) 
 
 
+#### bind
+* bind的适用场景是fn2函数需要复制fn函数的内容，且要求fn2函数在调用时this值固定为某个对象
+```
+// 令函数fn2的内容等于函数fn,且函数fn2在通过call()调用时this值固定为obj
+fn2=fn.bind(obj)
+```
+* 一旦fn2通过bind被绑定了this,call()就无法通过参数来修改this了
+```
+var young={age:16}
+var old={age:77}
+
+function fn()
+{
+    console.log('I am '+this.age);
+}
+
+var fn2=fn;
+
+fn2.call() // I am undefined
+fn2.call(old) // I am 77
 
 
+fn2=fn.bind(young); //绑定fn2的this
+
+fn2.call() // I am 16
+fn2.call(old) // I am 16
+```
+* 一段看起来很复杂的代码
+```
+bindEvents:function(){
+    this.element.onclick=this.onclick.bind(this);
+}
+```
+其中,this是函数bindEvents在call()时的第一个参数(对象形式),this.element是一个对象,this.onclick是一个函数
+
+#### 高阶函数
+* 定义:满足以下至少一个条件的函数()
+1. 接受一个或多个函数作为输入：forEach sort map filter reduce
+2. 输出一个函数：bind curry
+* 作用:组合函数
+```
+arr=[1,2,3,4,5,6,7,8];
+
+even_arr=arr.filter(n=>n%2==0);
+even_sum=even_arr.reduce((sum,cur)=>sum+cur,0)
+
+console.log(even_sum);
+```
 
 
