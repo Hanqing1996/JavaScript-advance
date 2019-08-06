@@ -10,17 +10,19 @@ var person = {
         console.log(word + ', I am' + person.name)
     }
 }
-person.sayHi(person)
-person.sayBye(person)
-person.say(person, 'How are you')
+person.sayHi.call(person)
+person.sayBye.call(person)
+person.say.call(person, 'How are you')
 
 /**
- * 为了减少person这个词，我们创造了this
+ * 我们想减少person这个词,该怎么做呢
  */
 var person = {
     name: 'frank',
+
+    // 用this代替person，代价是函数的this必须在调用时指定是person
     sayHi: function(){
-        console.log('Hi, I am' + this.name)
+        console.log('Hi, I am' + this.name) // 这里的this在通过call调用函数sayHi时才知道是什么
     },
     sayBye: function(){
         console.log('Bye, I am' + this.name)
@@ -30,11 +32,8 @@ var person = {
     }
 }
 
-person.sayHi.call(person)
-person.sayBye.call(person)
-person.say.call(person, 'How are you')
-
-// 语法糖版
-person.sayHi()
+person.sayHi() // 这里其实就是person.sayHi.call(person)，只是一个无聊的语法糖
 person.sayBye()
 person.say('How are you')
+
+
