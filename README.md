@@ -1,3 +1,13 @@
+* [从浏览器多进程到JS单线程，JS运行机制以及浏览器渲染过程最全面的一次梳理](https://zhuanlan.zhihu.com/p/33230026)
+
+#### function.length
+返回函数在声明时的参数个数
+```
+function fn(a,b,c){}
+
+console.log(fn.length); // 3
+```
+
 #### 词法分析树
 * [介绍](https://xiedaimala.com/tasks/f3b7885d-ac51-4c41-a498-d01d532cc651/video_tutorials/76247167-7764-4c49-bf78-53b4d126da7a)
 * 作用
@@ -143,5 +153,191 @@ even_sum=even_arr.reduce((sum,cur)=>sum+cur,0)
 
 console.log(even_sum);
 ```
+
+#### 构造函数
+```
+function Person(name,age)
+{
+    // 设置this的字段值
+    this.name='li';
+    this.age=13;
+
+    // 返回修改后的this对象
+    return this;
+}
+
+var per=Person.call({},'li',13);
+
+console.log(per);// { name: 'li', age: 13 }
+```
+语法糖
+```
+function Person(name,age)
+{
+    this.name='li';
+    this.age=13;
+}
+
+var per=new Person('li',13);
+
+console.log(per);// { name: 'li', age: 13 }
+```
+#### 箭头函数
+* 语法
+1. 内容只有一句话，不用加{},若有返回值，不用写return
+```
+var fn=(i,j)=> i+j;
+```
+2. 内容超过两句话，加{},若有返回值，要写return
+```
+var fn=(i,j)=>{console.log(i+j);return i+j;};
+```
+* 箭头函数没有this
+```
+setTimeout(function(){
+    console.log(this);
+
+    setTimeout(function(){
+        console.log(this);
+    }.bind(this),1000);// 注意这行的this是{name:'liming'}
+}.bind({name:'liming'}),1000);
+
+// 结果为{name:'liming'},{name:'liming'}
+```
+用箭头函数实现如下
+```
+setTimeout(function(){
+    console.log(this);
+
+    setTimeout(()=>console.log(this),1000); //箭头函数没有this,所以这个箭头函数内部的this只是一个变量，值为{name:'liming'}
+}.bind({name:'liming'}),1000);
+
+// 结果为{name:'liming'},{name:'liming'}
+```
+* 强制为箭头函数绑定this呢
+```
+fn=()=>console.log(this);
+
+fn.call({name:'liming'});
+
+// 结果为window,即强制绑定this失败
+```
+#### 柯里化函数
+* 示例
+```
+function curry(fn)
+{
+    return function(p1){
+        return function(p2){
+            return function(p3){
+                return fn(p1,p2,p3);
+            }
+        }
+    }
+}
+
+function sum(x,y,z){
+    return x+y+z;
+}
+
+// 将sum函数curry化
+var curried=curry(sum)
+
+var res=curried(1)(2)(3); // 等价于 var res=sum(1,2,3);
+
+console.log(res);// 6
+```
+* 将上述的curry函数抽象化,大致是这样一个流程
+```
+function curry(fn){
+    
+    当前参数个数=0;
+    
+    if(当前参数个数<fn参数个数)
+    {
+        当前参数个数++;
+        return function(参数1){
+            if(当前参数个数<fn参数个数){
+                当前参数个数++;
+                return function(参数2){
+                    ......
+
+                    if(当前参数个数==fn参数个数)
+                        fn(参数1,参数2,参数3...参数n)
+                }
+            }
+        }   
+    }
+}
+```
+写成递归
+```
+function curry(fn,已传入参数)
+{
+    return function(){
+        获取新传入参数
+        if(新传入参数个数+已传入参数个数<fn参数个数){
+            curry(fn,已传入参数+新传入参数)
+        }
+        else{
+            fn.call(undefined,已传入参数+新传入参数)
+        }
+    }
+}
+```
+写成代码
+```
+function curry(func , fixedParams){
+    if ( !Array.isArray(fixedParams) ) { fixedParams = [ ] } // 初始化
+    return function(){
+        let newParams = Array.prototype.slice.call(arguments); // 新传的所有参数
+        if ( (fixedParams.length+newParams.length) < func.length ) {
+            return curry(func , fixedParams.concat(newParams));
+        }else{
+            return func.apply(undefined, fixedParams.concat(newParams));
+        }
+    };
+}
+```
+#### 浏览器进程
+* 每打开一个新页面，会开启多个浏览器进程
+1. 浏览器渲染进程（浏览器内核）（Renderer进程，内部是多线程的）：由多个线程组成
+2. 第三方插件进程
+3. Browser进程：浏览器的主进程（负责协调、主控）
+
+#### 组成浏览器渲染进程的多线程
+1. GUI渲染线程：负责渲染浏览器界面，解析HTML，CSS，构建DOM树和RenderObject树，布局和绘制等。
+2. JS引擎线程：
+3. 事件触发线程
+4. 定时触发器线程
+5. 异步http请求线程
+
+
+#### DOM树
+* 解析
+通过解析html元素(按照代码上下顺序)来形成DOM树,当所有html元素解析完毕后,DOM树形成
+* 渲染
+再解析完毕后，只有当该页面所有script的js代码(setTimeout除外)都运行完毕,DOM树才会开始渲染
+
+
+
+#### setTimeout
+* [setTimeout们会等到所有script执行完毕后再按顺序执行]()
+* [setTimeout执行时,DOM树一定已经解析完毕(即一定可以在setTimeout执行时读取到DOM元素)]()
+* [setTimout执行时,DOM树一定已经渲染完毕(即页面)]()
+
+#### js阻塞DOM树解析和渲染
+* [js阻塞DOM树解析]()
+ 浏览器按照代码先后顺序解析html元素，形成DOM树。如果遇到script标签，则暂停DOM树的解析，开始运行js代码。
+* [js阻塞DOM树渲染]()
+只有当该页面所有script的js代码(setTimeout除外)都运行完毕,DOM树才会开始渲染
+
+
+
+
+
+
+
+
 
 
