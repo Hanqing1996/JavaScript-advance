@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+    <h1>
+        I am h1
+    </h1>
+</body>
+<script>
+    var h1=document.querySelectorAll('h1')
+    console.log(h1);
+    console.log(new Date);
+
+    function sleep(seconds){
+    var start = new Date()
+    while(new Date() - start < seconds * 1000){
+    }
+    return
+}
+sleep(10)
+console.log(new Date);
+</script>
+</html>
+
+白屏,输出 NodeList[h1],10秒后页面显示"I am h1"

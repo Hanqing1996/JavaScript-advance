@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+    <script>
+    var h1=document.querySelectorAll('h1') // 这里读取不到h1元素
+    console.log(h1); 
+    </script>
+    <h1>
+        I am h1
+    </h1>
+</body>
+</html>
+<script>
+    var h1=document.querySelectorAll('h1') // 这里可以读取h1元素
+    console.log(h1);
+</script>
+
+<!-- 输出 NodeList[] NodeList[h1] -->
