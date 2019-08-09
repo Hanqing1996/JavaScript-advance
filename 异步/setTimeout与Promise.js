@@ -71,18 +71,17 @@ console.log(res);
 function fn(){
     return new Promise((resolve,reject)=>{ 
         setTimeout(()=>{
-            console.log('1');
             resolve('apple')
         },10000)
     })
 }
 
 var res=await fn();
-console.log(res);
 
 /**
- * 10秒后,输出
- * apple
+ * 如果不断输入console.log(res);
+ * 10秒内,输出res is not defined
+ * 10秒后,输出apple
  *
  */
 

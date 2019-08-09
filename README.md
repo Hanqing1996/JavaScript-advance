@@ -470,22 +470,10 @@ buyfruit(function(res){
 ```
 
 
-#### try和catch
-```
-function buyFruit(){
-    return new Promise((resolve,reject)=>{
-        setTimeout(()=>{
-            resolve('apple')
-        },10000)
-
-buyFruit()
-```
-上面代码会报错"Uncaught (in promise) apple",原因是缺少e2的执行，我们可以用catch代替
-
-
 
 
 #### Promise
+* Promise和异步没有任何关系,我们可以往Promise内部塞入一个异步任务，但Promise不是异步的，
 * Promise不是异步的,resolve(),reject(),then()也不是异步的，只是普普通通的对象和调用方法而已。唯一的注意点是then()一定在resolve()或reject()执行完毕后执行
 ```
 function buyFruit(){
@@ -500,7 +488,9 @@ var pro=buyFruit()
 
 pro.then(s=>console.log(s))
 
-// 10秒后输出'apple',事实上prom会立即被赋值为PromiseValue=undefined的Promise对象,但直到10秒后prom变为PromiseValue=undefined的Promise对象，才会执行then()
+// 10秒后输出apple
+
+// prom会立即被赋值为PromiseValue=undefined的Promise对象,但直到10秒后prom变为PromiseValue=undefined的Promise对象，才会执行then()
 ```
 * Promise是一个对象，不是一个函数
 ```
@@ -681,8 +671,7 @@ promise的作用只是规范了回调,使[回调变得可控](https://zhuanlan.z
 function buyFruit(){
     return new Promise((resolve,reject)=>{ // 注意resolve,reject不是回调函数
         setTimeout(()=>{
-            // resolve('apple') // s1执行,接下来将执行s2
-            reject('apple') // e1执行，接下来将执行e2
+            reject('apple') // s1执行,接下来将执行s2
         },10000)
     })
 }
@@ -702,6 +691,7 @@ promise.then(()=>{
 [理解 JavaScript 的 async/await](https://segmentfault.com/a/1190000007535316)
 
 #### async 
+async 会使得后面跟的函数返回一个Promise对象
 * async函数返回值
 ```
 async function fn() {
@@ -748,9 +738,25 @@ console.log(fn())
  *
  */
 ```
-
-#### await
+* 如果async函数本来就返回一个Promise对象,此时async有没有无区别
 ```
+async function fn()
+{
+    return Promise.resolve('小明');
+}
+
+console.log(fn());
+
+/**
+ * 输出:
+ * Promise {<resolved>: 小明}
+ * __proto__: Promise
+ * [[PromiseStatus]]: "resolved"
+ * [[PromiseValue]]: 小明
+ *
+ */
+```
+#### await
 * await 后面是可以接普通函数调用或者直接量的
 ```
 function fn()
@@ -771,11 +777,54 @@ async function testAsync() {
 
 
 var v2=await testAsync();
+
 console.log(v2);
 
 // 输出:hh
 ```
+* await的作用在于我们不用写then()了
+```
+function test() {
+    return Promise.resolve('hh');
+}
 
+testAsync().then(s=>console.log(s))
+```
+等价于
+```
+function test() {
+    return Promise.resolve('hh');
+}
 
+var s=await test();
+console.log(s)
+```
+* 语法规定：如果一个函数内部有await，该函数前面必须有async
+```
+function test() {
+    const v = await takeLongTime();
+    console.log(v);
+}
 
+test()
 
+// 报错：Uncaught SyntaxError: await is only valid in async function
+```
+* await 命令后面的 Promise 对象，运行结果可能是 rejected，所以最好把 await 命令放在 try...catch 代码块中。
+```
+async function myFunction() {
+  try {
+    await somethingThatReturnsAPromise();
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+// 等价于
+
+async function myFunction() {
+  await somethingThatReturnsAPromise().catch(function (err){
+    console.log(err);
+  });
+}
+```
