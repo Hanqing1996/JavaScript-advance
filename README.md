@@ -1,4 +1,24 @@
 * [从浏览器多进程到JS单线程，JS运行机制以及浏览器渲染过程最全面的一次梳理](https://zhuanlan.zhihu.com/p/33230026)
+* [Chrome performance](https://zhuanlan.zhihu.com/p/29879682)
+
+
+
+#### var和let
+* var
+```
+ for(var i=0;i<5;i++)
+ {
+     setTimeout(()=>{console.log(i);},1000);
+ }
+```
+* let
+```
+for(let i=0;i<5;i++)
+{
+    setTimeout(()=>{console.log(i);},1000);
+}
+```
+
 
 #### function.length
 返回函数在声明时的参数个数
@@ -308,18 +328,15 @@ function curry(func , fixedParams){
 #### 组成浏览器渲染进程的多线程
 1. GUI渲染线程：负责渲染浏览器界面，解析HTML，CSS，构建DOM树和RenderObject树，布局和绘制等。
 2. JS引擎线程：
-3. 事件触发线程
-4. 定时触发器线程
-5. 异步http请求线程
-
+3. 事件触发线程：
+4. 定时触发器线程：setTimeout,setInterval
+5. 异步http请求线程：
 
 #### DOM树
 * 解析
 通过解析html元素(按照代码上下顺序)来形成DOM树,当所有html元素解析完毕后,DOM树形成
 * 渲染
 再解析完毕后，只有当该页面所有script的js代码(setTimeout除外)都运行完毕,DOM树才会开始渲染
-
-
 
 #### setTimeout
 * [setTimeout们会等到所有script执行完毕后再按顺序执行](https://github.com/Hanqing1996/JavaScript-advance/blob/master/%E5%BC%82%E6%AD%A5/setTimeout%E4%B8%8Escript.html)
@@ -332,11 +349,432 @@ function curry(func , fixedParams){
 * [js阻塞DOM树渲染](https://github.com/Hanqing1996/JavaScript-advance/blob/master/%E5%BC%82%E6%AD%A5/js%E9%98%BB%E5%A1%9EDOM%E6%A0%91%E6%B8%B2%E6%9F%93.html)
 只有当该页面所有script的js代码(setTimeout除外)都运行完毕,DOM树才会开始渲染
 
+#### onload
+* 发生在页面资源加载完毕的时候(不是页面渲染完毕的时候)
+```
+document.getElementsByTagNames('img')[0].onload = function(){
+    console.log(this.width) // 宽度不为 0
+}
+```
+
+#### 回调
+* 回调的本质
+在异步任务结束后调根据任务结果调用相应函数的行为
+* 不同场景下的回调
+1. Node.js 的 error-first 形式
+```
+ fs.readFile('./1.txt', (error, content)=>{
+     if(error){
+         // 失败
+     }else{
+         // 成功
+     }
+ })
+ ```
+2. jQuery 的 success / error 形式
+```
+ $.ajax({
+     url:'/xxx',
+     success:()=>{},
+     error: ()=>{}
+ })
+ ```
+3. jQuery 的 done / fail / always 形式
+```
+ $.ajax({
+     url:'/xxx',
+ }).done( ()=>{} ).fail( ()=>{} ).always( ()=> {})
+```
+
+#### catch-语法糖
+```
+ axios({
+     url:'xxx',
+     async:true,
+ }).then( ()=>{
+ }, ()=>{
+   console.log('失败1')
+   return Promise.reject('e1 can not deal it')
+ }).then(()=>{  // 注意这里then只包含一个函数
+ }).catch((e)=>{
+   console.log('I catch it')
+   console.log(e) // e1处理失败的原因
+ })
+
+/**
+ * 输出:
+ * 失败1
+ * I catch it
+ * e1 can not deal it
+ */
+```
+等价于
+```
+ axios({
+     url:'xxx',
+     async:true,
+ }).then( ()=>{
+ }, ()=>{
+   console.log('失败1')
+   return Promise.reject('e1 can not deal it')
+ }).then(()=>{
+ },(e)=>{
+   console.log(e) // e1处理失败的原因
+ })
+
+/**
+ * 输出:
+ * 失败1
+ * e1 can not deal it
+ */
+```
+#### 自己实现的回调
+```
+function buyfruit(fn){ // fn即回调函数
+
+    setTimeout(() => { 
+
+        // 在这里执行任务
+
+        // 异步任务执行完毕，开始根据结果调用相应函数
+        if(Math.random()>0.5){
+
+            // 执行回调函数
+            fn.call(undefined,"买到的苹果")
+        }
+        else{
+
+            // 执行回调函数
+            fn.call(undefined,new Error)
+        }
+    }, (Math.random+0.5)*1000);
+}
+
+// buyfruit(fn),其中fn即为回调函数
+buyfruit(function(res){ 
+
+    if(res instanceof Error){
+        console.log("没买到苹果");
+    }
+    else{
+        console.log("买到了苹果");
+    }
+})
+
+/**
+ * 输出:
+ * 成功1
+ * 失败2
+ * [object Error] { ... }
+ */
+```
+
+
+#### try和catch
+```
+function buyFruit(){
+    return new Promise((resolve,reject)=>{
+        setTimeout(()=>{
+            resolve('apple')
+        },10000)
+
+buyFruit()
+```
+上面代码会报错"Uncaught (in promise) apple",原因是缺少e2的执行，我们可以用catch代替
 
 
 
 
+#### Promise
+* Promise不是异步的,resolve(),reject(),then()也不是异步的，只是普普通通的对象和调用方法而已。唯一的注意点是then()一定在resolve()或reject()执行完毕后执行
+```
+function buyFruit(){
+    return new Promise((resolve,reject)=>{ // 注意resolve,reject不是回调函数
+        setTimeout(()=>{
+            resolve('apple') // s1执行,接下来将执行s2
+        },10000)
+    })
+}
 
+var pro=buyFruit() 
+
+pro.then(s=>console.log(s))
+
+// 10秒后输出'apple',事实上prom会立即被赋值为PromiseValue=undefined的Promise对象,但直到10秒后prom变为PromiseValue=undefined的Promise对象，才会执行then()
+```
+* Promise是一个对象，不是一个函数
+```
+
+// 下面这句等价于var promise=Promise.resolve("1");
+var promise=new Promise(resolve=>resolve('1')) // promise是一个对象
+
+var promise2=promise.then() // 对象promise执行了then方法,返回了一个新对象,所以promise2是一个对象
+
+promise2.then(s=>console.log(s)) // 对象promise2执行了then方法
+
+// 输出1
+```
+* promise的局限
+promise的作用只是规范了回调,使[回调变得可控](https://zhuanlan.zhihu.com/p/22782675),避免了回调地狱的出现，但并没有消除回调
+* Promise函数顺序问题
+1. s1处理成功引发s2
+```
+ axios({
+     url:'.',
+     async:true,
+ }).then( ()=>{
+   console.log('成功1')
+ }, ()=>{
+   console.log('失败1')
+ }).then(()=>{
+   console.log('成功2')
+ },()=>{
+   console.log('失败2')
+ })
+
+/**
+ * 输出:
+ * 成功1
+ * 成功2
+ */
+```
+2. e1处理成功引发s2
+```
+ axios({
+     url:'xxx',
+     async:true,
+ }).then( ()=>{
+   console.log('成功1')
+ }, ()=>{
+   console.log('失败1')
+ }).then(()=>{
+   console.log('成功2')
+ },()=>{
+   console.log('失败2')
+ })
+
+
+/**
+ * 输出:
+ * 失败1
+ * 成功2
+ */
+ ```
+
+3. s1处理失败引发e2
+```
+ axios({
+     url:'.',
+     async:true,
+ }).then( ()=>{
+   console.log('成功1')
+   处理失败
+ }, ()=>{
+   console.log('失败1')
+ }).then(()=>{
+   console.log('成功2')
+ },(e)=>{
+   console.log('失败2')
+   console.log(e) // s1处理失败的原因
+ })
+
+
+/**
+ * 输出:
+ * 成功1
+ * 失败2
+ * [object Error] { ... }
+ */
+ ```
+4. e1处理失败引发e2
+```
+ axios({
+     url:'xxx',
+     async:true,
+ }).then( ()=>{
+   console.log('成功1')
+ }, ()=>{
+   console.log('失败1')
+   处理失败
+ }).then(()=>{
+   console.log('成功2')
+ },(e)=>{
+   console.log('失败2')
+   console.log(e) // e1处理失败的原因
+ })
+
+
+/**
+ * 输出:
+ * 失败1
+ * 失败2
+ * [object Error] { ... }
+ */
+ ```
+* Promise中值的传递
+1. s1(e1)处理成功,return一个值,则s2可以接受一个参数,参数值等于s1的return值
+```
+ axios({
+     url:'xxx',
+     async:true,
+ }).then( ()=>{
+ }, ()=>{
+   return 'e1处理成功'
+ }).then((s)=>{
+   console.log(s)
+ },(e)=>{
+ })
+
+/**
+ * 输出:
+ * e1处理成功
+ */
+```
+2. s1(e1)主动承认处理失败(处理不了),return Promise.reject(''),则e2可以接受一个参数,参数值等于(s1)e1的reject的内容
+```
+ axios({
+     url:'xxx',
+     async:true,
+ }).then( ()=>{
+ }, ()=>{
+   console.log('失败1')
+   return Promise.reject('e1 can not deal it')
+ }).then(()=>{
+ },(e)=>{
+   console.log('失败2')
+   console.log(e) // e1处理失败的原因
+ })
+
+/**
+ * 输出:
+ * 失败1
+ * 失败2
+ * e1 can not deal it
+ */
+```
+3. s1(e1)处理失败,则e2可以接受一个参数,参数值为s1(e1)的处理失败原因
+```
+ axios({
+     url:'xxx',
+     async:true,
+ }).then( ()=>{
+ }, ()=>{
+   console.log('失败1')
+   处理失败
+ }).then(()=>{
+ },(e)=>{
+   console.log('失败2')
+   console.log(e) // e1处理失败的原因
+ })
+
+
+/**
+ * 输出:
+ * 失败1
+ * 失败2
+ * [object Error] { ... }
+ */
+ ```
+* 自己实现的promise
+注意这里的then逻辑和上面讲的不一样。上面e1处理成功后会执行s2,而这里e1执行后会执行e2
+```
+function buyFruit(){
+    return new Promise((resolve,reject)=>{ // 注意resolve,reject不是回调函数
+        setTimeout(()=>{
+            // resolve('apple') // s1执行,接下来将执行s2
+            reject('apple') // e1执行，接下来将执行e2
+        },10000)
+    })
+}
+
+var promise=buyFruit()
+
+// 对于promise.then(s2,e2),s2,e2是回调函数
+promise.then(()=>{ 
+    console.log('成功') // s2
+},()=>{
+    console.log('失败') // e2
+})
+```
+
+
+
+[理解 JavaScript 的 async/await](https://segmentfault.com/a/1190000007535316)
+
+#### async 
+* async函数返回值
+```
+async function fn() {
+  return '小明';
+}
+
+console.log(fn())
+fn().then(s => console.log('get'+s)); 
+
+/**
+ * 输出:
+ * Promise {<resolved>: "小明"}
+ * __proto__: Promise
+ * [[PromiseStatus]]: "resolved"
+ * [[PromiseValue]]: "小明" 
+ *
+ * get小明
+ */
+```
+等价于
+```
+var fn=function()
+{
+    // 等价于Promise.resolve('小明');
+    return new Promise(resolve=>resolve('小明'));
+}
+
+console.log(fn())
+fn().then(s => console.log(s))
+```
+* async函数不返回值
+```
+async function fn() {
+}
+
+console.log(fn())
+
+/**
+ * 输出:
+ * Promise {<resolved>: undefined}
+ * __proto__: Promise
+ * [[PromiseStatus]]: "resolved"
+ * [[PromiseValue]]: undefined
+ *
+ */
+```
+
+#### await
+```
+* await 后面是可以接普通函数调用或者直接量的
+```
+function fn()
+{
+    return 2;
+}
+
+var res=await fn()
+console.log(res);
+
+// 输出:2
+```
+* 如果await 后面跟的是Promise的对象，await会获取该Prmose对象 resolve 的值
+```
+async function testAsync() {
+    return Promise.resolve('hh');
+}
+
+
+var v2=await testAsync();
+console.log(v2);
+
+// 输出:hh
+```
 
 
 
