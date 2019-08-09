@@ -691,7 +691,7 @@ promise.then(()=>{
 [理解 JavaScript 的 async/await](https://segmentfault.com/a/1190000007535316)
 
 #### async 
-async 会使得后面跟的函数返回一个Promise对象
+async的作用不是把一个函数变成异步函数(放入event loop到最后执行之类的)，而是会使得后面跟的函数返回一个Promise对象
 * async函数返回值
 ```
 async function fn() {
