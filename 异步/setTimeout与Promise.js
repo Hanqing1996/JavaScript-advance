@@ -86,3 +86,40 @@ var res=await fn();
  */
 
 
+
+console.log('1');
+let p1=new Promise((resolve,reject)=>{
+    console.log('2');
+    setTimeout(()=>{
+        console.log('3');
+        resolve('p1 rsv')
+    },1000);
+})
+
+let p2=new Promise((resolve,reject)=>{
+    setTimeout(()=>{
+        console.log('4');
+        resolve('p2 rsv')
+    },500);
+})
+
+console.log('5');
+
+p1.then(r=>{
+    console.log('6');
+})
+
+p2.then(r=>{
+    console.log('7');
+})
+
+/**
+ * 输出：
+ * 1
+ * 2
+ * 5
+ * 4
+ * 7
+ * 3
+ * 6
+ */
