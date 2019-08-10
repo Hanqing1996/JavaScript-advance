@@ -141,7 +141,6 @@ let p1=new Promise((resolve,reject)=>{
     console.log('5');
 })
 
-
 console.log('6');
 
 p1.then(r=>{
@@ -161,4 +160,37 @@ console.log('8');
  * Promise { 'p1 rsv' }
  * 7
  * 4
+ */
+
+
+/**
+ * then()一定在resolve()之后执行,但不一定是立即执行。因为then()是异步的，必须按照eventloop中异步函数顺序执行
+ * eventloop中异步函数的顺序可以理解为异步函数的代码顺序
+ */
+ setTimeout(()=>{
+    console.log('4');
+},0)
+
+console.log('1');
+let p1=new Promise((resolve,reject)=>{
+    console.log('2');
+    setTimeout(()=>{
+        console.log('3');
+        resolve('p1 rsv');
+    },0);
+})
+
+p1.then(r=>{
+    console.log('5');
+})
+
+console.log('6');
+/**
+ * 输出：
+ * 1
+ * 2
+ * 6
+ * 4
+ * 3
+ * 5
  */

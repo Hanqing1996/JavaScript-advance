@@ -830,9 +830,6 @@ async function myFunction() {
 ```
 
 
-
-
-
 #### 我对异步的理解
 
 异步是必需的，因为它能节省时间。
@@ -841,5 +838,9 @@ var result=asynctask()
 console.log(result);
 ```
 这种写法在逻辑流程上是没错的，但是js线程的机制(eventloop)决定了这种流程是实现不了的。事实上这种流程一直没有实现，async,await的出现也只是“看起来”实现了这种流程而已
+
+#### setImmediate()
+
+#### process.nextTick()
 
 
