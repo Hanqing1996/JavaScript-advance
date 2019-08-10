@@ -123,3 +123,42 @@ p2.then(r=>{
  * 3
  * 6
  */
+
+
+/**
+ * resolve是同步的
+ * then()是异步的,会被放入eventloop中，按照eventloop中异步函数顺序执行
+ */
+console.log('1');
+let p1=new Promise((resolve,reject)=>{
+    console.log('2');
+    setTimeout(()=>{
+        console.log('3');
+        resolve('p1 rsv');
+        console.log(p1);
+        console.log('4');
+    },1000);
+    console.log('5');
+})
+
+
+console.log('6');
+
+p1.then(r=>{
+    console.log('7');
+})
+
+console.log('8');
+
+ /**
+ * 输出：
+ * 1
+ * 2
+ * 5
+ * 6
+ * 8
+ * 3
+ * Promise { 'p1 rsv' }
+ * 7
+ * 4
+ */

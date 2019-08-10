@@ -474,7 +474,7 @@ buyfruit(function(res){
 
 #### Promise
 * Promise和异步没有任何关系,我们可以往Promise内部塞入一个异步任务，但Promise不是异步的，
-* Promise不是异步的,resolve(),reject(),then()也不是异步的，只是普普通通的对象和调用方法而已。唯一的注意点是then()一定在resolve()或reject()执行完毕后执行
+* Promise不是异步的,resolve(),reject()也不是异步的，只是普普通通的对象和调用方法而已。但是,then()是异步的，会在resolve()或reject()执行完毕后执行
 ```
 function buyFruit(){
     return new Promise((resolve,reject)=>{ // 注意resolve,reject不是回调函数
