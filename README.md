@@ -90,6 +90,21 @@ var person={
 
 person.sayHi(); // 等效于person.sayHi.call(person);
 ```
+但是注意
+```
+window.n = 'window name'
+var obj = {
+    n: 'obj name',
+    sayN(){
+        console.log(this.n)
+    }
+}
+
+var fn = obj.sayN
+fn()
+
+// window name
+```
 3. call的参数有两个:call(this,arg[0],arg[1],arg[2]...arg[n]).其中this是一个对象,默认为window(在浏览器中),其它参数构成数组arguments
 ```
 function f(){
