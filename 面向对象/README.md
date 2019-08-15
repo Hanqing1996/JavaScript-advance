@@ -13,6 +13,29 @@
 1. 对象
 2. 函数
 3. 数组
+* 注意
+```
+typeof Array // function
+type of [1,2,3] // object
+```
+
+#### __proto__和prototype的区别
+1. 函数才有prototype
+2. 对象才有__proto__
+
+#### obj与obj.__proto__
+1. obj不等于obj.__proto__
+```
+[1,2,3]===[1,2,3].__proto__
+false
+```
+2. obj.fn与obj.__proto__.fn
+```
+[1,2,3].slice===[1,2,3].__proto__.slice
+true
+```
+这是因为obj与obj.__proto__这两个对象存储在不同的内存空间中，而obj.fn与obj.__proto__.fn存储同一个内存地址(fn的内存地址)
+
 
 #### object的存储
 ```

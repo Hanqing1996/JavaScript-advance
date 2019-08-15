@@ -3,6 +3,50 @@
 
 # 函数
 
+#### if(a=b)
+```
+let temp;
+
+if(temp=1+2)
+console.log('end'); // end
+```
+等价于
+```
+let temp=1+2;
+
+if(temp)
+console.log('end'); // end
+```
+
+#### 6个假值
+```
+if(0){
+    console.log('yes');
+}
+else{
+    console.log('no');
+}
+
+// no
+```
+1. false (布尔型)
+2. null (用于定义空的或者不存在的引用)
+3. undefined (未定义值)
+4. 0 (数值型)
+5. '' (空字符串) (字符型)
+6. NaN
+
+
+#### 函数不一定总有返回值
+```
+function fn(n){
+    if(n==1)
+    return n;
+    else
+    console.log(n);
+}
+```
+
 #### var和let
 * var
 ```
@@ -252,6 +296,18 @@ var fn=(i,j)=> i+j;
 2. 内容超过两句话，加{},若有返回值，要写return
 ```
 var fn=(i,j)=>{console.log(i+j);return i+j;};
+```
+3. +=
+```
+var fn=(i,j)=> i+=j;
+
+console.log(fn(2,3)); // 5
+```
+等效于
+```
+var fn=(i,j)=> return i+j;
+
+console.log(fn(2,3)); // 5
 ```
 * 箭头函数没有this
 ```
