@@ -165,3 +165,276 @@ for(let i=0;i<6;i++){
 
 console.log('start');
 ```
+#### 处理默认参数(ES6之前)
+```
+function sum(a,b){
+    
+    a=a||0;
+    b=b||0;
+
+    /*
+    if(b){
+        b=b; // 没有什么意义，只是为了好看
+    }
+    else{
+        b=0;
+    }
+    */
+
+    return a+b;
+}
+
+sum(1);
+```
+#### 处理默认参数(ES6)
+```
+function sum(a=0,b=0){
+    return a+b;
+}
+
+sum(1);
+```
+#### python与js在处理默认参数上的不同
+* js:默认参数不共用(每次都初始化)
+```
+function sum(item,array=[]){
+    array.push(item);
+    return array;
+}
+
+sum(1); // [1]
+
+sum(2); // [2]
+```
+* python:默认参数共用(只初始化一次)
+```
+def sum(item,array=[]):
+	array.append(item)
+	return array
+	
+	
+print(sum(1)) // [1]	
+
+print(sum(2)) // [1,2]
+```
+#### 剩余参数(ES5)
+```
+function sum(message){
+    let result=0;
+
+    for(let i=1;i<arguments.length;i++){
+        result+=arguments[i];
+    }
+
+    return message+result;
+}
+
+sum('结果是',1,2,3,4,5); // 结果是15
+```
+#### 剩余参数(ES6)
+```
+function sum(message,...numbers){
+    let result=0;
+
+    for(let i=0;i<numbers.length;i++){
+        result+=numbers[i];
+    }
+
+    return message+result;
+}
+
+sum('结果是',1,2,3,4,5); // 结果是15
+```
+#### ...
+1. 数组操作(模式匹配)
+* 获取数组的若干连续项
+```
+var arr1=[1,2,3,4,5,6];
+var [a,b,c,...arr2]=arr1;
+
+console.log(arr2) // [4,5,6]
+```
+* 向数组头尾插入元素
+```
+var arr1=[1,2,3,4,5,6];
+var arr2=[0,...arr1,7];
+
+console.log(arr2) // [0,1,2,3,4,5,6,7]
+```
+2. 处理函数剩余参数（见上面）
+3. [将伪数组转换为数组](https://github.com/Hanqing1996/JavaScript-advance/tree/master/%E6%95%B0%E7%BB%84%E6%93%8D%E4%BD%9C)
+4. 深度拷贝
+```
+let obj1={
+    name:'Jack',
+}
+
+let obj2={...obj1};
+
+
+obj1.gender='male'
+
+console.log(obj2) // { name: 'Jack'}
+```
+
+#### {name,age,male}
+* 解构赋值
+```
+var per={
+    name:'liming',
+    age:12,
+    gender:'male'
+}
+
+var {name,age,gender}=per;
+
+console.log(name); // liming
+```
+等价于
+```
+var per={
+    name:'liming',
+    age:12,
+    gender:'male'
+}
+
+var name=per.name;
+var age=per.age;
+var gender=per.gender;
+
+console.log(name); // liming
+```
+#### {name:xingming}
+* 重命名
+```
+var per={
+    name:'liming',
+}
+
+var {name:xingming}=per;
+
+console.log(xingming); // liming
+```
+#### {child:{name}}
+* 取属性的属性
+```
+var per={
+    name:'liming',
+    child:{
+        name:'libai'
+    }
+}
+
+var {child:{name}}=per;
+
+console.log(name);
+```
+等价于
+```
+var per={
+    name:'liming',
+    child:{
+        name:'libai'
+    }
+}
+
+var {child}=per
+
+var {name}=child
+
+console.log(name);
+```
+#### {name='libai'}
+* 设置属性默认值
+```
+var per={
+    age:19
+}
+
+var {name='libai'}=per;
+
+console.log(name); // libai
+```
+
+#### [a=0,b=9]=[1]
+```
+var [a=0,b=9]=[1]
+
+console.log(a)  // 1
+console.log(b)  // 9 
+```
+意思是:a的默认参数为0,b的默认参数为9
+
+#### [a, ,b]=[1,2,3]
+```
+var [a, ,b]=[1,2,3]
+
+console.log(a) // 1
+console.log(b) // 3
+```
+
+#### 深度拷贝 
+> 另外开辟一片内存空间，两个对象，分别置于两片空间
+
+#### 浅拷贝
+> 两个对象指针指向同一片内存空间
+
+#### obj1=obj2属于浅拷贝
+```
+let obj1={
+    name:'Jack',
+}
+let obj2=obj1
+
+obj1.age=12
+
+console.log(obj2) // { name: 'Jack', age: 12 }
+```
+
+#### Object.assign(obj1,obj2)属于深度拷贝
+* 作用:将source的属性复制至target中,并返回target,属于深度拷贝
+* obj1必须之前已经被赋值为对象
+```
+
+// 报错：Cannot convert undefined or null to object
+```
+
+
+#### Object.assign({}, obj1)属于深度拷贝
+```
+let obj1={name:'Jack'}
+let obj2=Object.assign({}, obj1)
+obj1["age"]=12
+
+console.log(obj2) // { name: 'Jack' }
+```
+
+#### Object.assign(obj1)属于浅拷贝
+```
+let obj1={name:'Jack'}
+let obj2=Object.assign(obj1) // 等价于obj2=obj1
+obj1["age"]=12
+
+console.log(obj2) // { name: 'Jack', age: 12 }
+```
+
+#### 特殊：Object.assign(obj1,obj2)中obj2存在子对象的情况
+* 由于复制的是属性，obj1被赋与的属性值是一个地址，指向内存中子对象所在空间,即：原对象深度拷贝,子对象浅拷贝
+```
+let obj1={
+    name:'Jack',
+    child:{
+    name:'len'
+    }
+}
+
+let obj2={};
+
+Object.assign(obj2,obj1)
+
+obj1.gender='male'
+obj1.child.gender='female'
+
+console.log(obj2) // { name: 'Jack', child: { name: 'len', gender: 'female' } }
+```
+

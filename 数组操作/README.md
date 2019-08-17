@@ -79,6 +79,16 @@ function fn(){
 };
 fn.call(undefined,1,2,3);
 ```
+3. ES6:array=[...arguments]
+```
+function fn(){
+
+    array=[...arguments];
+
+    console.log(array.join('-')); // 1-2-3
+};
+fn.call(undefined,1,2,3);
+```
 
 #### 交换两个数的值
 ```
@@ -282,4 +292,3 @@ array2=arr.reduce((result,item)=>{
     return result
 },[])
 ```
-#### 

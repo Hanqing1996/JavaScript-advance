@@ -30,6 +30,7 @@
 #### [数组](https://github.com/Hanqing1996/JavaScript-advance/tree/master/%E6%95%B0%E7%BB%84%E6%93%8D%E4%BD%9C)
 * Array和Array.prototype
 * 伪数组
+* [...arguments]
 * 交换两个数的值
 * join
 * slice
@@ -50,3 +51,17 @@
 * const在声明时就必须赋值,不可以重复声明,不可以重复赋值
 * for循环细节
 * for循环与let
+* 处理默认参数
+* 剩余参数
+* ...
+* {...obj1}深拷贝
+* {name,age,male}
+* {name:xingming}
+* {child:{name}}
+* {name='libai'}
+* [a=0,b=9]=[1]
+* [a, ,b]=[1,2,3]
+* 深度拷贝
+* 浅拷贝
+* Object.assign
+
