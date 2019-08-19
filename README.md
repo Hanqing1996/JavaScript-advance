@@ -43,6 +43,13 @@
 #### [造轮子](https://github.com/Hanqing1996/JavaScript-advance/tree/master/%E9%80%A0%E8%BD%AE%E5%AD%90)
  
 
+#### [字符串]()
+* 
+* 
+* 
+* 
+
+
 #### [其它]
 * if(a=b)
 * 6个假值
@@ -64,4 +71,6 @@
 * 深度拷贝
 * 浅拷贝
 * Object.assign
+* 【面试答】JSON.parse(JSON.stringif(data))可以实现深度拷贝
+* 如何实现复杂对象的深度拷贝
 

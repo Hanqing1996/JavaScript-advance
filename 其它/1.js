@@ -1,10 +1,9 @@
 let obj1={
-    name:'Jack',
+    name:'liming'
 }
 
-let obj2={...obj1};
+let obj2=JSON.parse(JSON.stringify(obj1))
 
+obj1.age=12
 
-obj1.gender='male'
-
-console.log(obj2) // { name: 'Jack'}
+console.log(obj2);

@@ -276,6 +276,21 @@ obj1.gender='male'
 
 console.log(obj2) // { name: 'Jack'}
 ```
+5. [...obj1,...obj2]
+* 合并对象
+```
+let obj1={
+    name:'Jack',
+}
+
+let obj2={
+    age:12
+};
+
+let obj3={...obj1,...obj2};
+
+console.log(obj2) // { age: 12 }
+```
 
 #### {name,age,male}
 * 解构赋值
@@ -437,4 +452,21 @@ obj1.child.gender='female'
 
 console.log(obj2) // { name: 'Jack', child: { name: 'len', gender: 'female' } }
 ```
+#### JSON.parse(JSON.stringif(data))
+* data不可以是复杂对象(复杂对象定义如下)
+1. data不包含日期,正则，函数，循环引用属性
+2. data不包含undefined属性
+```
+let obj1={
+    name:'liming'
+}
 
+let obj2=JSON.parse(JSON.stringify(obj1))
+
+obj1.age=12
+
+console.log(obj2); // {name: "liming"}
+```
+
+#### 如何实现复杂对象的深度拷贝
+递归
