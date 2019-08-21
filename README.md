@@ -18,8 +18,15 @@
 * Promise
 * async/await
 #### [面向对象](https://github.com/Hanqing1996/JavaScript-advance/tree/master/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1)
+* get与set
+* 【面试】实现a===1&&a===2&&a===3
+* obj['name']=12   obj[name]=12   obj={[name]:12}
+* var obj={a,b,c}
+* get与set
+* 如何生成一个空对象
 * object
 * object的存储
+* Object.keys(obj):获取对象索引
 * __proto__和prototype的区别
 * obj与obj.__proto__
 * 原型链
@@ -44,13 +51,15 @@
  
 
 #### [字符串]()
-* 
-* 
-* 
-* 
+[教程](https://xiedaimala.com/tasks/05ad6931-9101-4c43-8810-893e787efb5f/video_tutorials/dafabdb1-724f-43c7-8b66-3b8037d3363e)
+* 包含空格和回车的字符串
+* 字符串中添加变量
+* 函数接字符串
+* 为什么字符串不应该作为函数参数
 
 
-#### [其它]
+#### [其它1]
+* 6种数据类型
 * if(a=b)
 * 6个假值
 * a=1不一定是声明了一个全局变量
@@ -74,3 +83,11 @@
 * 【面试答】JSON.parse(JSON.stringif(data))可以实现深度拷贝
 * 如何实现复杂对象的深度拷贝
 
+#### [其它2]()
+* 字面量
+* unicode(ES6)
+* sybmol
+* 迭代器
+* 生成器(迭代器生成的语法糖)
+
+#### [代码大全]()

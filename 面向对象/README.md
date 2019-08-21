@@ -9,6 +9,92 @@
 #### 多态
 更灵活。一个东西拥有多种东西的属性
 
+#### get与set
+```
+let age=18
+
+let per={
+    get age(){return age},
+    set age(value){if(value<100)age=value;else age=100}
+}
+
+per.age=12
+console.log(per.age) // 12
+```
+
+#### a===1&&a===2&&a===3
+```
+var i=0
+Object.defineProperty(window,'a',{
+    get(){
+        i+=1
+        return i
+    }
+})
+
+a===1&&a===2&&a===3 // true
+```
+
+#### obj['name']=12   obj[name]=12  obj={[name]:12}
+* obj['name']=12
+```
+let obj={}
+obj['name']=12
+
+obj // {'name':12}
+```
+* obj[name]=12
+name未赋值
+```
+let obj={}
+obj[name]=12
+
+obj // {'':12}
+```
+name已赋值
+```
+let name='a'
+let obj={}
+obj[name]=12
+
+obj // {a:12}
+```
+* obj={[name]:12}
+```
+let obj={}
+let name='a'
+obj={[name]:12}
+
+obj // {a: 12}
+```
+#### var obj={a,b,c}
+```
+/**
+ * 属性缩写:变量名作为属性名,变量值作为属性值
+ */
+let a=1,b='foo',c={}
+
+var obj={a,b,c}
+
+obj // {a: 1, b: "foo", c: {}}
+```
+
+
+#### 如何生成一个空对象
+1. 生成只有基本属性(存于__proto__)的空对象
+```
+var obj=new Object() // 等价于 var obj={}
+
+```
+2. 生成没有任何属性的真正空对象
+```
+var obj=Object.create(null)
+
+obj // No properties
+```
+
+
+
 #### object
 1. 对象
 2. 函数
@@ -17,6 +103,17 @@
 ```
 typeof Array // function
 type of [1,2,3] // object
+```
+
+#### Object.keys(obj)
+```
+let obj={0:'a',1:'b',2:'c'}
+let keys=Object.keys(obj)
+for(let i=0;i<keys.length;i++){
+    console.log(keys[i])
+}
+
+// 输出:0 1 2    
 ```
 
 #### __proto__和prototype的区别
@@ -75,9 +172,9 @@ sayName:A34
 
 #### 为何都是object,数组有push方法,而对象没有；函数有console.log方法,而对象没有
 ```
-arr:window.Array.protype(有push方法)->window.Object.protype
-fn1:window.Function.protype(有console.log方法)->window.Object.protype
-obj1:window.Object.protype
+arr->window.Array.protype(有push方法)->window.Object.protype
+fn1->window.Function.protype(有console.log方法)->window.Object.protype
+obj1->window.Object.protype
 ```
 #### 函数是一个对象
 ```

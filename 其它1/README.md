@@ -1,5 +1,13 @@
 # 其它
 
+#### 6种数据类型(大小写无所谓ie)
+* number
+* string
+* bool
+* undefined
+* null
+* object
+
 #### if(a=b)
 ```
 let temp;
