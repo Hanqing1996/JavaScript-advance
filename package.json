@@ -1,0 +1,27 @@
+{
+  "name": "JavaScript-advance",
+  "version": "1.0.0",
+  "description": "* 函数不一定总有返回值 * 词法分析树  * 变量提升  * js的预编译和解释执行 * 函数的callstack  * this  * call/apply  * bind * 箭头函数 * 柯里化函数 * 浏览器线程 * DOM树的解析和渲染 * js阻塞DOM树解析和渲染 * onload",
+  "main": "index.js",
+  "dependencies": {
+    "babel-preset-env": "^1.7.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel src -d lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hanqing1996/JavaScript-advance.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Hanqing1996/JavaScript-advance/issues"
+  },
+  "homepage": "https://github.com/Hanqing1996/JavaScript-advance#readme"
+}

@@ -369,8 +369,8 @@ obj.call(obj) // hello world
 #### new
 * [教程](https://xiedaimala.com/tasks/5833c9d4-ebd5-44e4-91b5-661f476f9cad/video_tutorials/4312943e-4fd3-4225-97e5-d4f04d6845be)
 * [文章](https://zhuanlan.zhihu.com/p/23987456)
-* [不用new创造solider]()
-* [用new创造solider]()
+* [不用new创造solider](https://github.com/Hanqing1996/JavaScript-advance/blob/master/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/createsolider_without_new.js)
+* [用new创造solider](https://github.com/Hanqing1996/JavaScript-advance/blob/master/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/createsolider_with_new.js)
 
 
 #### prototype
