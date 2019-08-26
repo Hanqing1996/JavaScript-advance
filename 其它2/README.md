@@ -30,8 +30,8 @@ String.fromCodePoint(0x2F804)  //  "你"
 ```
 "你".codePointAt(0).toString(16)  //  2F804
 ```
-* sybmol
-保证字段值唯一
+#### sybmol
+1. 作用:保证字段值唯一
 ```
 var raceOptions={
     神族:Symbol(),
@@ -50,7 +50,14 @@ function create(type){
 
 create(raceOptions.人族) // you choose terran
 ```
-* 迭代器
+2. 为对象设置并获取Symbol类型的属性名(注意是属性名，不是属性值)
+```
+let s=Symbol()
+let o={[s]:1}
+
+Object.getOwnPropertySymbols(o)  //  [Symbol()]
+```
+#### 迭代器
 ```
 function 发布器(){
     var _value=0
@@ -96,7 +103,7 @@ a.next() // 3
 a.next() // 4 
 ```
 
-#### for...of(迭代)与for...in(遍历) 
+#### for...of(迭代)
 1. 对象和数组都能遍历,但是数组可以迭代,对象不能迭代
 2. 一个Object使用for...of迭代的前提:该对象有Symbol.iterator属性
 ```
@@ -121,8 +128,8 @@ var obj={0:'a',1:'b',2:'c'}
 // 设置Symbol.iterator,是一个生成器
 obj[Symbol.iterator]=function *(){
     let keys=Object.keys(obj)
-    for(let i=0;i<keys.length;i++){
-        yield obj[keys[i]]
+    for(let key in keys){
+        yield obj[key]
     }
 }
 
@@ -133,4 +140,18 @@ for(item of obj){
 
 // 输出:a b c
 ```
+#### 迭代和遍历
+* 迭代和遍历都是针对Object而言的，本质都是枚举Object的属性
+* 数组可以迭代，可以遍历;对象不可以迭代，可以遍历
+* 遍历有以下几种形式
+```
 
+// 1
+for(let key in arr)
+
+// 2
+keys=Object.keys(arr)
+for(let i=0;i<keys.length;i++)
+```
+* 迭代用for...in,详见上面
+* 迭代是遵从一定顺序的遍历，数组的下标是有序的，所以数组可以迭代，而对象不可以，除非指定"顺序"

@@ -429,7 +429,7 @@ function curry(func , fixedParams){
 4. 定时触发器线程：setTimeout,setInterval
 5. 异步http请求线程：
 
-#### DOM树
+#### DOM树的解析和渲染
 * 解析
 通过解析html元素(按照代码上下顺序)来形成DOM树,当所有html元素解析完毕后,DOM树形成
 * 渲染

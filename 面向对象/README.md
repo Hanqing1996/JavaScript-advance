@@ -9,7 +9,8 @@
 #### 多态
 更灵活。一个东西拥有多种东西的属性
 
-#### get与set
+#### Object.defineProperty()与get/set的区别
+1. get/set用于读写一个新创建的对象的属性
 ```
 let age=18
 
@@ -21,7 +22,131 @@ let per={
 per.age=12
 console.log(per.age) // 12
 ```
+2. Object.defineProperty()用于读写一个已经创建的对象的属性(比如项目更新，要求不得改动旧代码)
+```
+let a=1,b=2
+let oldObj={a,b}
 
+
+Object.defineProperty(oldObj,'a',{
+    get(){
+        return a
+    },
+    set(value){
+        a=value
+    }
+
+})
+
+oldObj.a=3
+console.log(oldObj.a) // 3
+``` 
+#### 关键字的概念
+* 关键字不能声明同名变量
+```
+let undefined    // 不报错
+let null         // 报错：Unexpected token null
+```
+#### Object的属性遍历
+1. 遍历属性的两种方法
+```
+let o={a:'1',b:'2',c:'3'}
+
+/**
+ * 方法1
+ */
+for(let key in arr)
+console.log(key) // 0 1 2
+
+/**
+ * 方法2
+ */
+let keys=Object.keys(o)
+for(let key in keys)
+console.log(key) // 0 1 2
+```
+2. 数组的遍历和对象的遍历本质是一样的,下标可看作数组的属性名，元素可看作对应属性值
+```
+var arr=['a','b','c']
+
+for(let key in arr)
+console.log(`${key}:${arr[key]}`) // 0:a 1:b 2:c
+```
+3. 有些属性可以遍历到，有些属性不可以遍历到
+比如toString是arr的属性,但不会被遍历到
+```
+var arr=['a','b','c']
+
+'toString' in arr // true    
+```
+#### enumerable:设置某个属性是否可被遍历到
+```
+let o={
+    name:'libai',
+    age:12,
+    height:189
+}
+
+Object.defineProperty(o,'age',{
+    enumerable:false
+})
+
+for(let key in o)
+console.log(key)      //  name height 
+```
+#### undefined的本质是window的只读属性
+
+#### 设置对象的只读属性
+```
+let o={
+    get name(){return 'libai'}
+}
+
+Object.defineProperty(o,'name2',{
+    value:'libai',
+    writable:false
+})
+
+o.name='dufu'
+console.log(o.name)  // libai
+
+o.name2='dufu'
+console.log(o.name2)  // libai
+```
+#### configurable
+* 未使用configurable：A设置某属性不可读，B可以修改为可读
+```
+let o={
+    name:'libai'
+}
+
+Object.defineProperty(o,'name',{
+    writable:false
+})
+
+Object.defineProperty(o,'name',{
+    writable:true
+})
+
+console.log(o.name)  // libai
+```
+* 使用configurable效果：A设置某属性不可读，B无法修改为可读
+```
+let o={
+    name:'libai'
+}
+
+Object.defineProperty(o,'name',{
+    writable:false,
+    configurable:false
+})
+
+Object.defineProperty(o,'name',{
+    writable:true
+})
+
+console.log(o.name)  // 报错:Cannot redefine property: name
+```
 #### a===1&&a===2&&a===3
 ```
 var i=0
@@ -78,7 +203,20 @@ var obj={a,b,c}
 
 obj // {a: 1, b: "foo", c: {}}
 ```
+#### var obj={sayHi(){}}
+```
+/** 
+ * 省略"function"
+ */
 
+var obj={
+    sayHi(){
+        console.log('hi')
+    }
+}
+
+obj.sayHi // ƒ sayHi(){console.log('hi')}
+```
 
 #### 如何生成一个空对象
 1. 生成只有基本属性(存于__proto__)的空对象
@@ -114,6 +252,15 @@ for(let i=0;i<keys.length;i++){
 }
 
 // 输出:0 1 2    
+```
+
+#### let a=Object.create(b):等价于a.__proto__=b
+```
+let name='libai'
+let b={name}
+let a=Object.create(b)
+
+a.name // libai
 ```
 
 #### __proto__和prototype的区别
@@ -170,11 +317,26 @@ sayName:A34
 2. window.Function.protype：
 3. window.Object.protype：
 
-#### 为何都是object,数组有push方法,而对象没有；函数有console.log方法,而对象没有
+#### 为何都是Object,数组有push方法,而对象没有；函数有console.log方法,而对象没有
+1. 数组
 ```
-arr->window.Array.protype(有push方法)->window.Object.protype
-fn1->window.Function.protype(有console.log方法)->window.Object.protype
-obj1->window.Object.protype
+arr=[1,2,3]
+
+arr.__proto=window.Array.protype(有push方法)
+window.Array.protype.__proto__=window.Object.protype
+```
+2. 函数
+```
+fn1=function(){}
+
+fn1.__proto__=window.Function.protype(有console.log方法)
+window.Function.protype.__proto=window.Object.protype
+```
+3. 对象
+```
+obj1={}
+
+obj1.__proto__=window.Object.protype
 ```
 #### 函数是一个对象
 ```
@@ -340,3 +502,7 @@ A.prototype.__proto__ = B.prototype
 * super()只能为父类传递私有属性，不能传递公有属性,公有属性是由extends实现的
 * 注意公有属性只能是函数，而私有属性可以是函数，也可以不是函数
 * class的本质仍然是函数(一个无法call的函数)
+
+#### js的对象和JSON的对象的区别
+1. JSON的对象，属性名必须用""括起来
+2. JSON的对象，属性值不可以是函数

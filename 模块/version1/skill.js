@@ -1,0 +1,1 @@
+window.skills=['sing','dance','rap','basketball']

@@ -55,6 +55,13 @@ function fn(){
 fn(); // undefined
 ```
 
+#### var可以重复声明 
+```
+var a=1
+
+var a=2
+```
+
 #### let不存在变量提升
 ```
 let a=1
@@ -284,7 +291,7 @@ obj1.gender='male'
 
 console.log(obj2) // { name: 'Jack'}
 ```
-5. [...obj1,...obj2]
+5. {...obj1,...obj2}
 * 合并对象
 ```
 let obj1={
@@ -418,7 +425,9 @@ console.log(obj2) // { name: 'Jack', age: 12 }
 * 作用:将source的属性复制至target中,并返回target,属于深度拷贝
 * obj1必须之前已经被赋值为对象
 ```
-
+let obj1
+let obj2={name:'Jack'}
+Object.assign(obj1,obj2)
 // 报错：Cannot convert undefined or null to object
 ```
 

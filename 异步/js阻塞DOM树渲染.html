@@ -8,7 +8,12 @@
     </h1>
 </body>
 <script>
-    var h1=document.querySelectorAll('h1')
+    var h1=document.querySelectorAll('h1') 
+    /**
+     * 到这一步h1已经解析出来了，只是还没有渲染。
+     * 所以页面一开始输出NodeList[h1],但10秒后才显示"I am h1"
+     */ 
+    
     console.log(h1);
     console.log(new Date);
 
@@ -23,4 +28,4 @@ console.log(new Date);
 </script>
 </html>
 
-白屏,输出 NodeList[h1],10秒后页面显示"I am h1"
+<!-- 白屏,输出 NodeList[h1],10秒后页面显示"I am h1" -->
