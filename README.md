@@ -112,3 +112,5 @@
 * 代理(agent)
 * jsonp
 * 为hosts设置(伪造的)域名
+* 用Chrome模拟form请求
+* [面试]get和post的区别
