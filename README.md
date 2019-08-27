@@ -67,9 +67,6 @@
 * 函数接字符串
 * 为什么字符串不应该作为函数参数
 
-#### [模块]()
-
-
 
 #### [其它1](https://github.com/Hanqing1996/JavaScript-advance/tree/master/%E5%85%B6%E5%AE%831)
 * 7/3结果为小数
@@ -109,6 +106,9 @@
 * for...of(迭代)
 * 迭代和遍历
 
-
-
-#### [造轮子](https://github.com/Hanqing1996/JavaScript-advance/tree/master/%E9%80%A0%E8%BD%AE%E5%AD%90)
+#### [HTTP]()
+* curl -v
+* 用户代理(user agent)
+* 代理(agent)
+* jsonp
+* 为hosts设置(伪造的)域名

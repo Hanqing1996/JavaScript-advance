@@ -431,7 +431,7 @@ function test() {
     return Promise.resolve('hh');
 }
 
-testAsync().then(s=>console.log(s))
+test().then(s=>console.log(s))
 ```
 等价于
 ```
