@@ -72,6 +72,7 @@
 
 
 #### [其它1](https://github.com/Hanqing1996/JavaScript-advance/tree/master/%E5%85%B6%E5%AE%831)
+* 7/3结果为小数
 * 6种数据类型
 * if(a=b)
 * 6个假值
