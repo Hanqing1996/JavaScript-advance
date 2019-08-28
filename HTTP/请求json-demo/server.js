@@ -1,3 +1,5 @@
+运行:
+
 var http = require('http')
 var fs = require('fs')
 var url = require('url')
@@ -19,16 +21,21 @@ var server = http.createServer(function(request, response){
 
   /******** 从这里开始看，上面不要看 ************/
   if(path==='/main'){
-    response.setHeader('Content-Type', 'text/css;charset=utf-8')
-    response.end('h1{color:red}')
+    response.setHeader('Content-Type', 'application/json;charset=utf-8')
+    response.end('{"name":"frank"}')
   }else if(path === '/1.html'){
     response.setHeader('Content-Type', 'text/html;charset=utf-8')
     response.end(`
     <!DOCTYPE html>
-    <head>
-    <link rel="stylesheet" href="/main">  
-    </head>
     <h1>你好</h1>
+    <script>
+     let request=new XMLHttpRequest()
+     request.open('GET','/main')
+     request.onload=function(){
+       console.log(request.responseText)
+     }
+     request.send()
+    </script>
     `)
   }
 
