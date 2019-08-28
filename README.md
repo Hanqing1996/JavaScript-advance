@@ -117,6 +117,8 @@
 
 #### [Chrome]()
 1. 查看请求/响应头部,查看response内容
-![image](https://github.com/Hanqing1996/JavaScript-advance/blob/master/HTTP/GIF/b.gif)
+![image](https://github.com/Hanqing1996/JavaScript-advance/blob/master/Chrome/GIF/b.gif)
 2. 增加method选项
-![image](https://github.com/Hanqing1996/JavaScript-advance/blob/master/HTTP/GIF/c.gif)
+![image](https://github.com/Hanqing1996/JavaScript-advance/blob/master/Chrome/GIF/c.gif)
+3. 在Chrome中运行js代码
+![image](https://github.com/Hanqing1996/JavaScript-advance/blob/master/Chrome/GIF/e.gif)
