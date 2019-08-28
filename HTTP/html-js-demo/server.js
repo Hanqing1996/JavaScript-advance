@@ -20,13 +20,18 @@ var server = http.createServer(function(request, response){
   var method = request.method
 
   /******** 从这里开始看，上面不要看 ************/
-
-
-  if(path === '/2.html'){
-    response.statusCode = 200
+  if(path==='/main'){
+    response.setHeader('Content-Type', 'application/javascript;charset=utf-8')
+    response.end('console.log(1)')
+  }else if(path === '/1.html'){
     response.setHeader('Content-Type', 'text/html;charset=utf-8')
-    response.write('<div>我是一个div</div>')
-    response.end()
+    response.end(`
+    <!DOCTYPE html>
+    <head>
+    <script src="/main"></script>
+    </head>
+    <h1>你好</h1>
+    `)
   }
 
   /******** 代码结束，下面不要看 ************/

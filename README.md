@@ -115,7 +115,7 @@
 * 用Chrome模拟form请求
 * [面试]get和post的区别
 
-#### [Chrome]()
+#### Chrome
 * 查看请求/响应头部,查看response内容
 ![image](https://github.com/Hanqing1996/JavaScript-advance/blob/master/Chrome/GIF/b.gif)
 * 增加method选项
