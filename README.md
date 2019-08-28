@@ -114,3 +114,7 @@
 * 为hosts设置(伪造的)域名
 * 用Chrome模拟form请求
 * [面试]get和post的区别
+
+#### [Chrome]()
+1. 查看请求/响应头部
+![image](http://g.recordit.co/j4R3Jp7PuY.gif)

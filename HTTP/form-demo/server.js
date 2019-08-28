@@ -28,10 +28,16 @@ var server = http.createServer(function(request, response){
     response.setHeader('Content-Type', 'text/html;charset=utf-8')
     response.write('<div>我是一个div</div>')
     response.end()
-  }else{
+  }else if(path==='/3.css'){
     response.statusCode = 404
-    response.setHeader('Content-Type', 'text/html;charset=utf-8')
-    response.write(path)
+    response.setHeader('Content-Type', 'text/css;charset=utf-8')
+    response.write('.className{color:red}')
+    response.end()
+  }
+  else if(path==='/4.js'){
+    response.statusCode = 404
+    response.setHeader('Content-Type', 'application/javascript;charset=utf-8')
+    response.write('console.log("I am js")')
     response.end()
   }
 
