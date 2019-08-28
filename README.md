@@ -116,5 +116,7 @@
 * [面试]get和post的区别
 
 #### [Chrome]()
-1. 查看请求/响应头部
+1. 查看请求/响应头部,查看response内容
 ![image](https://github.com/Hanqing1996/JavaScript-advance/blob/master/HTTP/GIF/b.gif)
+2. 增加method选项
+![image](https://github.com/Hanqing1996/JavaScript-advance/blob/master/HTTP/GIF/c.gif)
