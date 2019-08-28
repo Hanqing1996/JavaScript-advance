@@ -23,19 +23,10 @@ vi /etc/hosts
 ```
 127.0.0.1 zhq.com
 ```
-#### [用Chrome模拟form请求]()
-1. 启动server.js
-```
-node server.js
-```
-2. 打开index.html,按F12，点击network,preserve log
-3. 按下按钮
-4. 选择2.html,点击view parse可以查看请求/响应具体信息
+
 
 #### get和post的区别
 1. get一般没有请求的第4部分，而post有
-
-
 
 
 
@@ -51,7 +42,7 @@ xxx=yyy&xxx2=yyy2
 xxx=yyy&xxx2=yyy2&xxx3=%E4%BD%A0%E5%A5%BD
 ```
 
-#### [响应常见的Content-Type](https://github.com/Hanqing1996/JavaScript-advance/blob/master/HTTP/form-demo/server.js)
+#### [响应常见的Content-Type](https://github.com/Hanqing1996/JavaScript-advance/blob/master/HTTP/response-Content-Type-demo/server.js)
 * html
 ```
 text/html
@@ -64,10 +55,18 @@ text/csss
 ```
 application/javascript
 ```
+* jsonp
+```
+application/javascript
+```
+* json
+```
+application/json
+```
 
 #### 响应的Content-Type作用
 * 作用是告诉浏览器，应该以什么格式和编码解析服务器返回的字符串
-* 比如在[server.js](https://github.com/Hanqing1996/JavaScript-advance/blob/master/HTTP/form-demo/server.js)中,如果去掉
+* 比如在[server.js](https://github.com/Hanqing1996/JavaScript-advance/blob/master/HTTP/response-Content-Type-demo/server.js)中,如果去掉
 ```
 response.setHeader('Content-Type', 'text/html;charset=utf-8') // text/html是格式,charset=utf-8是编码
 ```
@@ -75,3 +74,7 @@ response.setHeader('Content-Type', 'text/html;charset=utf-8') // text/html是格
 ```
 鎴戞槸涓€涓猟iv
 ```
+
+#### [用Chrome学习HTTP](https://xiedaimala.com/tasks/5c46b237-9763-474c-910b-68ccb123bac8/video_tutorials/8a16c68d-b129-41a9-af1d-eb11c019244a)
+1. [用Chrome模拟form请求](https://github.com/Hanqing1996/JavaScript-advance/tree/master/HTTP/form-demo)
+2. [用Chrome模拟response的不同ContentType]()

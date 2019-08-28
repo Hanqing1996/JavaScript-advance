@@ -116,9 +116,12 @@
 * [面试]get和post的区别
 
 #### [Chrome]()
-1. 查看请求/响应头部,查看response内容
+* 查看请求/响应头部,查看response内容
 ![image](https://github.com/Hanqing1996/JavaScript-advance/blob/master/Chrome/GIF/b.gif)
-2. 增加method选项
+* 增加method选项
 ![image](https://github.com/Hanqing1996/JavaScript-advance/blob/master/Chrome/GIF/c.gif)
-3. 在Chrome中运行js代码
+* 在Chrome中运行js代码
 ![image](https://github.com/Hanqing1996/JavaScript-advance/blob/master/Chrome/GIF/e.gif)
+
+* [用Chrome模拟response的不同ContentType](https://github.com/Hanqing1996/JavaScript-advance/tree/master/HTTP/response-Content-Type-demo)
+
