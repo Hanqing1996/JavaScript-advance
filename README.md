@@ -117,4 +117,4 @@
 
 #### [Chrome]()
 1. 查看请求/响应头部
-![image](http://g.recordit.co/j4R3Jp7PuY.gif)
+![image](https://github.com/Hanqing1996/JavaScript-advance/blob/master/HTTP/GIF/b.gif)
