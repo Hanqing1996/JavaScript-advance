@@ -97,7 +97,7 @@ response.setHeader('Content-Type', 'text/html;charset=utf-8') // text/html是格
 ![image](https://github.com/Hanqing1996/JavaScript-advance/blob/master/HTTP/GIF/e15.gif)
 * [请求html和js](https://github.com/Hanqing1996/JavaScript-advance/tree/master/HTTP/html-js-demo)
 ![image](https://github.com/Hanqing1996/JavaScript-advance/blob/master/HTTP/GIF/e16.gif)
-* [请求json]()
+* [请求json](https://github.com/Hanqing1996/JavaScript-advance/tree/master/HTTP/%E8%AF%B7%E6%B1%82json-demo)
 
 
 

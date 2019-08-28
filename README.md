@@ -108,12 +108,13 @@
 
 #### [HTTP](https://github.com/Hanqing1996/JavaScript-advance/tree/master/HTTP)
 * curl -v
-* 用户代理(user agent)
 * 代理(agent)
 * jsonp
 * 为hosts设置(伪造的)域名
-* 用Chrome模拟form请求
-* [面试]get和post的区别
+* get和post的区别
+* application/x-www-form-urlencoded
+* 常见的Content-Type
+* 响应的Content-Type作用
 
 #### Chrome
 * 查看请求/响应头部,查看response内容
