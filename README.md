@@ -123,5 +123,3 @@
 * 在Chrome中运行js代码
 ![image](https://github.com/Hanqing1996/JavaScript-advance/blob/master/Chrome/GIF/e.gif)
 
-* [用Chrome模拟response的不同ContentType](https://github.com/Hanqing1996/JavaScript-advance/tree/master/HTTP/response-Content-Type-demo)
-
