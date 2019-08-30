@@ -98,6 +98,10 @@ text/html
 ```
 text/xml application/xml text/xml+html
 ```
+* 纯文本("你请求的资源不存在")
+```
+text/plain
+```
 * css
 ```
 text/css

@@ -125,4 +125,10 @@
 ![image](https://github.com/Hanqing1996/JavaScript-advance/blob/master/Chrome/GIF/c.gif)
 * 在Chrome中运行js代码
 ![image](https://github.com/Hanqing1996/JavaScript-advance/blob/master/Chrome/GIF/e.gif)
+* 查看资源体积大小和下载时间
+![image](https://github.com/Hanqing1996/JavaScript-advance/blob/master/Chrome/GIF/e17.gif)
+* 查看dom内容加载完毕时间(用户可以看到页面内容，但有些图片还没被加载出来)和资源下载完毕时间(所有下载成功的图片都被看到)
+![image](https://github.com/Hanqing1996/JavaScript-advance/blob/master/Chrome/GIF/e21.gif)
+* 设置缓存
+![image](https://github.com/Hanqing1996/JavaScript-advance/blob/master/Chrome/GIF/e23.gif)
 
