@@ -113,8 +113,10 @@
 * 为hosts设置(伪造的)域名
 * get和post的区别
 * application/x-www-form-urlencoded
+* 请求的组成
+* 响应的组成
+* 请求和响应的Content-Type
 * 常见的Content-Type
-* 响应的Content-Type作用
 
 #### Chrome
 * 查看请求/响应头部,查看response内容
