@@ -119,6 +119,8 @@
 * 常见的Content-Type
 
 #### Chrome
+* Preserve log:记录每次页面重新加载后的页面资源下载情况
+![image](https://github.com/Hanqing1996/JavaScript-advance/blob/master/Chrome/GIF/dd.gif)
 * 查看请求/响应头部,查看response内容
 ![image](https://github.com/Hanqing1996/JavaScript-advance/blob/master/Chrome/GIF/b.gif)
 * 增加method选项
@@ -131,4 +133,6 @@
 ![image](https://github.com/Hanqing1996/JavaScript-advance/blob/master/Chrome/GIF/e21.gif)
 * 设置缓存
 ![image](https://github.com/Hanqing1996/JavaScript-advance/blob/master/Chrome/GIF/e23.gif)
+* Disable cache:清除当前页面缓存
+![image](https://github.com/Hanqing1996/JavaScript-advance/blob/master/Chrome/GIF/dd2.gif)
 

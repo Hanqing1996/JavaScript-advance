@@ -127,6 +127,10 @@ image/jpeg
 image/gif
 ```
 
+#### 缓存
+1. 有了缓存，浏览器就不必向服务器请求资源，只需要从磁盘/内存中读取资源即可，用户看到图片的速度会变快
+2. 
+
 
 #### [用Chrome学习HTTP](https://xiedaimala.com/tasks/5c46b237-9763-474c-910b-68ccb123bac8/video_tutorials/8a16c68d-b129-41a9-af1d-eb11c019244a)
 * [用Chrome查看form请求](https://github.com/Hanqing1996/JavaScript-advance/tree/master/HTTP/form-demo)
