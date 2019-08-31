@@ -127,9 +127,26 @@ image/jpeg
 image/gif
 ```
 
+#### path不包含query
+对于
+```
+if(path === '/2.html'){
+    ......
+    response.write('<div>我是一个div</div>')
+    response.end()
+  }
+```
+如果访问http://zhq.com:9999/1.html?random,则Response为
+```
+<div>我是一个div</div>
+```
+
 #### 缓存
-1. 有了缓存，浏览器就不必向服务器请求资源，只需要从磁盘/内存中读取资源即可，用户看到图片的速度会变快
+* 有了缓存，浏览器就不必向服务器请求资源，只需要从磁盘/内存中读取资源即可，用户看到图片的速度会变快
+* 资源更新后，需要将浏览器由从缓存中读取资源，改为向服务器请求资源，该怎么做?
+1. 
 2. 
+3.  
 
 
 #### [用Chrome学习HTTP](https://xiedaimala.com/tasks/5c46b237-9763-474c-910b-68ccb123bac8/video_tutorials/8a16c68d-b129-41a9-af1d-eb11c019244a)
@@ -145,7 +162,6 @@ image/gif
 ![image](https://github.com/Hanqing1996/JavaScript-advance/blob/master/HTTP/GIF/e15.gif)
 * [请求html和js](https://github.com/Hanqing1996/JavaScript-advance/tree/master/HTTP/html-js-demo)
 ![image](https://github.com/Hanqing1996/JavaScript-advance/blob/master/HTTP/GIF/e16.gif)
-* [请求json](https://github.com/Hanqing1996/JavaScript-advance/tree/master/HTTP/%E8%AF%B7%E6%B1%82json-demo)
-
-
+* [同一path下，根据不同query返回不同结果]()
+![image](https://github.com/Hanqing1996/JavaScript-advance/blob/master/HTTP/GIF/h2.gif)
 

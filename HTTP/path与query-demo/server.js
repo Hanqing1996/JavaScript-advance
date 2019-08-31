@@ -1,5 +1,3 @@
-运行:
-
 var http = require('http')
 var fs = require('fs')
 var url = require('url')
@@ -20,25 +18,27 @@ var server = http.createServer(function(request, response){
   var method = request.method
 
   /******** 从这里开始看，上面不要看 ************/
+  if(path==='/user'){
 
-  
-  if(path === '/2.html'){
-    response.statusCode = 200
-    
-    response.setHeader('Content-Type', 'text/html;charset=utf-8')
-    response.write('<div>我是一个div</div>')
-    response.end()
-  }else if(path==='/3.css'){
-    response.statusCode = 200
-    response.setHeader('Content-Type', 'text/css;charset=utf-8')
-    response.write('.className{color:red}')
-    response.end()
-  }
-  else if(path==='/4.js'){
-    response.statusCode = 200
-    response.setHeader('Content-Type', 'application/javascript;charset=utf-8')
-    response.write('console.log("I am js")')
-    response.end()
+    if(query.age>18){
+
+      response.setHeader('Content-Type', 'text/html;charset=utf-8')
+      response.write(`
+      <!DOCTYPE html>
+      <h1>欢迎来到成年人的世界</h1>
+      `)
+      response.end()
+
+    }
+    else{
+      response.setHeader('Content-Type', 'text/html;charset=utf-8')
+      response.write(`
+      <!DOCTYPE html>
+      <h1>oh 未成年人禁止入内</h1>
+      `)
+      response.end()
+    }
+   
   }
 
   /******** 代码结束，下面不要看 ************/
