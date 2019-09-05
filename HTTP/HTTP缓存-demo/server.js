@@ -20,11 +20,12 @@ var server = http.createServer(function(request, response){
   /******** 从这里开始看，上面不要看 ************/
   if(path==='/'){
     response.setHeader('Content-Type', 'text/html;charset=utf-8')
+    // response.setHeader('Cache-Control', 'max-age=3600')
     console.log('you ask server for html resource')
     response.write(`
     <!DOCTYPE html>
     <head>
-    <link rel="stylesheet" href="/style">  
+    <link rel="stylesheet" href="/style?random=12">    
     </head>
     <h1>你好</h1>
     <script src="/script"></script>
@@ -35,7 +36,7 @@ var server = http.createServer(function(request, response){
     response.setHeader('Cache-Control', 'max-age=3600')
     console.log('you ask server for style resource')
     response.write(`
-      h1{color:red;}
+      h1{color:green;}
     `)
     response.end()
   }else if(path === '/script'){

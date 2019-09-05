@@ -117,6 +117,7 @@
 * 响应的组成
 * 请求和响应的Content-Type
 * 常见的Content-Type
+* HTTP缓存
 
 #### Chrome
 * Preserve log:记录每次页面重新加载后的页面资源下载情况
