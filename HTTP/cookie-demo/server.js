@@ -20,7 +20,7 @@ var server = http.createServer(function(request, response){
   /******** 从这里开始看，上面不要看 ************/
   if(path==='/'){
     response.setHeader('Content-Type', 'text/html;charset=utf-8')
-    // response.setHeader('Cache-Control', 'max-age=3600')
+    response.setHeader('Set-Cookie', 'login=true')
     console.log('you ask server for html resource')
     response.write(`
     <!DOCTYPE html>
@@ -33,15 +33,12 @@ var server = http.createServer(function(request, response){
     response.end()
   }else if(path === '/style'){
     response.setHeader('Content-Type', 'text/css;charset=utf-8')
-    response.setHeader('Cache-Control', 'max-age=3600')
-    console.log('you ask server for style resource')
     response.write(`
       h1{color:green;}
     `)
     response.end()
   }else if(path === '/script'){
     response.setHeader('Content-Type', 'application/javascript;charset=utf-8')
-    console.log('you ask server for script resource')
     response.write(`
       console.log('我是js')
     `)

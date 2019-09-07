@@ -136,4 +136,5 @@
 ![image](https://github.com/Hanqing1996/JavaScript-advance/blob/master/Chrome/GIF/e23.gif)
 * Disable cache:清除当前页面缓存
 ![image](https://github.com/Hanqing1996/JavaScript-advance/blob/master/Chrome/GIF/dd2.gif)
-
+* 查看本页面cookie
+![image]()

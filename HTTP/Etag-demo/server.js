@@ -20,34 +20,32 @@ var server = http.createServer(function(request, response){
   /******** 从这里开始看，上面不要看 ************/
   if(path==='/'){
     response.setHeader('Content-Type', 'text/html;charset=utf-8')
-    // response.setHeader('Cache-Control', 'max-age=3600')
-    console.log('you ask server for html resource')
     response.write(`
     <!DOCTYPE html>
     <head>
     <link rel="stylesheet" href="/style">    
     </head>
     <h1>你好</h1>
-    <script src="/script"></script>
     `)
     response.end()
   }else if(path === '/style'){
-    response.setHeader('Content-Type', 'text/css;charset=utf-8')
-    response.setHeader('Cache-Control', 'max-age=3600')
-    console.log('you ask server for style resource')
-    response.write(`
-      h1{color:green;}
-    `)
-    response.end()
-  }else if(path === '/script'){
-    response.setHeader('Content-Type', 'application/javascript;charset=utf-8')
-    console.log('you ask server for script resource')
-    response.write(`
-      console.log('我是js')
-    `)
-    response.end()
-  }
+    // response.setHeader('Cache-Control', 'max-age=3600')
+    // console.log(`cache-control:${response.getHeader('cache-control')}`);
 
+    let ifNoneMatch=request.headers['if-none-match'];
+    console.log(ifNoneMatch);
+    if(ifNoneMatch==='Frank'){
+      response.statusCode=304
+      response.end()
+    }else{
+      response.setHeader('Content-Type', 'text/css;charset=utf-8')
+      response.setHeader('Etag', 'Frank')
+      response.write(`
+        h1{color:black;}
+      `)
+      response.end()
+    }
+  }
   /******** 代码结束，下面不要看 ************/
 })
 
