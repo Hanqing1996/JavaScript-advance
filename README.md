@@ -118,6 +118,12 @@
 * 请求和响应的Content-Type
 * 常见的Content-Type
 * HTTP缓存
+* Etag
+* 304
+* cookie
+* session
+* 面试答】cookie和session的区别与联系
+* 反向代理
 
 #### Chrome
 * Preserve log:记录每次页面重新加载后的页面资源下载情况

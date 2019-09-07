@@ -286,8 +286,11 @@ session[random]={login:true}
 3. 存储：cookie存在浏览器上,session存在服务器的某个地方(文件，数据库)
 4. 二者关系：session一般是基于cookie的,也可以基于localStorage(每次发送请求时,请求的头部不会从浏览器里取cookie)
 
-#### 反向代理
+#### [反向代理](https://xiedaimala.com/tasks/5c46b237-9763-474c-910b-68ccb123bac8/video_tutorials/0e744a43-2679-4fcb-a79b-5311850b6acf)
+* 什么是反向代理:代理服务器的代理(代理客户端的代理叫做正向代理)
 ![img](https://github.com/Hanqing1996/JavaScript-advance/blob/master/HTTP/Img/2019-09-07%2016-20-24%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png)
+* nginx实现反向代理
+![img](https://github.com/Hanqing1996/JavaScript-advance/blob/master/HTTP/Img/nginx%E5%AE%9E%E7%8E%B0%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86.png)
 
 
 #### [用Chrome学习HTTP](https://xiedaimala.com/tasks/5c46b237-9763-474c-910b-68ccb123bac8/video_tutorials/8a16c68d-b129-41a9-af1d-eb11c019244a)
