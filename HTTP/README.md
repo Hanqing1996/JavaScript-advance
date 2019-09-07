@@ -46,7 +46,6 @@ vi /etc/hosts
 127.0.0.1 zhq.com
 ```
 
-
 #### get和post的区别
 1. get一般没有请求的第4部分，而post有
 
@@ -96,7 +95,6 @@ response.setHeader('Content-Type', 'text/html;charset=utf-8') // text/html是格
 ```
 鎴戞槸涓€涓猟iv
 ```
-
 
 #### application/x-www-form-urlencoded
 1. 是Content-Type的一种，form提交时的请求体Content-Type即为application/x-www-form-urlencoded
@@ -272,7 +270,7 @@ let cookie=request.headers['cookie'] // 'sessionid=A36TY89'
 * 清除cookie
 chrome->Application->cookie->Clear All
 
-#### [session]()
+#### [session](https://github.com/Hanqing1996/JavaScript-advance/tree/master/HTTP/session-demo)
 * session是cookie的升级版(避免用户伪造cookie,又能唯一标识用户)
 ```
 // session是一个对象，有若干个键值对，键(足够复杂，无法人为伪造)存于cookie中
@@ -280,6 +278,16 @@ let random=Math.random()
 response.setHeader('Set-Cookie', `sessionid=${random}`)
 session[random]={login:true}
 ```
+* 在实现seesion的流程上,[逻辑](https://github.com/Hanqing1996/JavaScript-advance/tree/master/HTTP/session-demo)很简单,关键在于将session的键存在cookie中，然后在首页('/')通过cookie来判断session对应键的值是否存在及正确
+
+#### 【面试答】cookie和session的区别与联系
+1. 作用上：cookie用于唯一标识一个用户(作用在于“标识”，“区分”用户)；session用于记录用户的某些信息(作用不在于“标识”,在于记录密码,是不是VIP,购物车数量等)
+2. 原理上：cookie是HTTP协议层面的东西,通过设置本次response.Set-Cookie(HTTP的一个API)来影响下次的request.cookie;session与cookie无关，是后端框架通过某种方式来实现的
+3. 存储：cookie存在浏览器上,session存在服务器的某个地方(文件，数据库)
+4. 二者关系：session一般是基于cookie的,也可以基于localStorage(每次发送请求时,请求的头部不会从浏览器里取cookie)
+
+#### 反向代理
+
 
 
 #### [用Chrome学习HTTP](https://xiedaimala.com/tasks/5c46b237-9763-474c-910b-68ccb123bac8/video_tutorials/8a16c68d-b129-41a9-af1d-eb11c019244a)
