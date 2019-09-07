@@ -8,7 +8,13 @@ if(!port){
   process.exit(1)
 }
 
+const session={}
+
 var server = http.createServer(function(request, response){
+
+/**
+ * 每刷新一次页面或在地址栏按下一次回车,下面的代码就会执行一次 
+ */
   var parsedUrl = url.parse(request.url, true)
   var pathWithQuery = request.url 
   var queryString = ''
@@ -18,9 +24,20 @@ var server = http.createServer(function(request, response){
   var method = request.method
 
   /******** 从这里开始看，上面不要看 ************/
+
   if(path==='/'){
     response.setHeader('Content-Type', 'text/html;charset=utf-8')
-    let cookie=request.headers['cookie']
+    let cookie=request.headers['cookie'] // sessionid=????
+    let login=false
+    if(cookie){
+      
+      let sessionId=cookie.split("=")[1] // ????
+
+      if(session[sessionId]&&session[sessionId].login===true){
+        login=true;
+      }
+    }
+    
     let html=`
     <!DOCTYPE html>
     <h1>__hi__</h1>
@@ -29,7 +46,7 @@ var server = http.createServer(function(request, response){
     <input type="submit">
     </form>  
     `
-    if(cookie==='login=true'){
+    if(login){
       html=html.replace('__hi__','您好，登录用户')
     }else{
       html=html.replace('__hi__','您好，请登录')
@@ -37,10 +54,14 @@ var server = http.createServer(function(request, response){
     response.write(html)
     response.end()
   }else if(path === '/login'){
-    console.log(request.headers['cookie']);
+
     response.setHeader('Content-Type', 'text/html;charset=utf-8')
     if(query.password=="fff"){
-      response.setHeader('Set-Cookie', 'login=true')
+
+      let random=Math.random()
+      response.setHeader('Set-Cookie', `sessionid=${random}`)
+      session[random]={login:true}
+
       response.end("您已登录")
     }
     else{

@@ -1,3 +1,13 @@
+#### createServer
+```
+var server = http.createServer(function(request, response){
+    /**
+     * 每刷新一次页面或在地址栏按下一次回车,这里的代码就会执行一次 
+     */
+})
+```
+
+#### 获取首部字段
 ```
 // 获取响应首部字段
 response.getHeader('cache-control')
@@ -237,7 +247,7 @@ if(oldIfNoneMatch===newEtag){
 304 Not Modified：此状态码适用于客户端发送了一个有条件的请求（ If-Match，If-ModifiedSince，If-None-Match，If-Range，If-Unmodified-Since ）。比如客户端想获取某个资源，并且是在XXX时间修改过的新的资源，如果这个资源没有修改，服务端就返回304给客户端。
 ```
 
-#### cookie
+#### [cookie](https://github.com/Hanqing1996/JavaScript-advance/tree/master/HTTP/cookie-demo)
 * 登录网站后，刷新之后还处于登录状态，就需要cookie
 * cookie的作用是:通过设置本次response.Set-Cookie为"login=true",可以使得下次request.Cookie为"login=true"
 ```
@@ -253,9 +263,24 @@ response.Set-Cookie:login=true
 request.Cookie:login=true
 response.Set-Cookie:login=true
 ```
+* cookie是可以被伪造的
+* cookie是一个字符串，不是对象
+```
+response.setHeader('Set-Cookie', 'sessionid=A36TY89')
+let cookie=request.headers['cookie'] // 'sessionid=A36TY89'
+```
+* 清除cookie
+chrome->Application->cookie->Clear All
 
-#### cookie与缓存的区别
-cookie在关闭本页面后就会过期(被清除);缓存在关闭本页面后仍然存在,只有用Disable Cache来清除
+#### [session]()
+* session是cookie的升级版(避免用户伪造cookie,又能唯一标识用户)
+```
+// session是一个对象，有若干个键值对，键(足够复杂，无法人为伪造)存于cookie中
+let random=Math.random()
+response.setHeader('Set-Cookie', `sessionid=${random}`)
+session[random]={login:true}
+```
+
 
 #### [用Chrome学习HTTP](https://xiedaimala.com/tasks/5c46b237-9763-474c-910b-68ccb123bac8/video_tutorials/8a16c68d-b129-41a9-af1d-eb11c019244a)
 * [用Chrome查看form请求](https://github.com/Hanqing1996/JavaScript-advance/tree/master/HTTP/form-demo)
