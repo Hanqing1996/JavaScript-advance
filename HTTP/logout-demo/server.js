@@ -22,32 +22,34 @@ var server = http.createServer(function(request, response){
     response.setHeader('Content-Type', 'text/html;charset=utf-8')
     response.write(`
     <!DOCTYPE html>
-    <head>
-    <link rel="stylesheet" href="/style">    
+    <head>  
     </head>
-    <h1>你好</h1>
+    <h1>你好,请登录</h1>
+    <form action="/login">
+    <input type="password" name="password">
+    <input type="submit">
+    </form>  
     `)
     response.end()
-  }else if(path === '/style'){
-    // response.setHeader('Cache-Control', 'max-age=3600')
-    // console.log(`cache-control:${response.getHeader('cache-control')}`);
-
-    request.headers
-
-    let ifNoneMatch=request.headers['if-none-match'];
-    console.log(ifNoneMatch);
-    if(ifNoneMatch==='Frank'){
-      response.statusCode=304
-      response.end()
-    }else{
-      response.setHeader('Content-Type', 'text/css;charset=utf-8')
-      response.setHeader('Etag', 'Frank')
-      response.write(`
-        h1{color:black;}
-      `)
-      response.end()
+  }else if(path === '/login'){
+    console.log(request.headers['cookie']);
+    response.setHeader('Content-Type', 'text/html;charset=utf-8')
+    if(query.password=="fff"){
+      response.setHeader('Set-Cookie', 'login=true')
+      response.end("您已登录")
     }
+    else{
+      response.end("密码错了")
+    }
+
+    // http://zhq.com:9999/logout
+  }else if(path === '/logout'){
+    let d=new Date(0)
+    response.setHeader('Content-Type', 'text/html;charset=utf-8')
+    response.setHeader('Set-Cookie', `login=true;Expires=${d.toGMTString()}`)
+    response.end("您已退出登录")
   }
+
   /******** 代码结束，下面不要看 ************/
 })
 

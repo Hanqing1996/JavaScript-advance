@@ -137,4 +137,4 @@
 * Disable cache:清除当前页面缓存
 ![image](https://github.com/Hanqing1996/JavaScript-advance/blob/master/Chrome/GIF/dd2.gif)
 * 查看本页面cookie
-![image]()
+![image](https://github.com/Hanqing1996/JavaScript-advance/blob/master/Chrome/GIF/~kka.gif)

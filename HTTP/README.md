@@ -1,3 +1,11 @@
+```
+// 获取响应首部字段
+response.getHeader('cache-control')
+
+// 获取请求首部字段
+request.headers['Cookie']
+```
+
 #### 启动server.js
 ```
 node server.js 9999
@@ -230,9 +238,24 @@ if(oldIfNoneMatch===newEtag){
 ```
 
 #### cookie
-登录网站后，刷新之后还处于登录状态，就需要cookie
+* 登录网站后，刷新之后还处于登录状态，就需要cookie
+* cookie的作用是:通过设置本次response.Set-Cookie为"login=true",可以使得下次request.Cookie为"login=true"
+```
+response.setHeader('Set-Cookie', 'login=true')
+```
+1. 第一次请求与响应
+```
+request.Cookie:undefined
+response.Set-Cookie:login=true
+```
+2. 第二次请求与响应
+```
+request.Cookie:login=true
+response.Set-Cookie:login=true
+```
 
-
+#### cookie与缓存的区别
+cookie在关闭本页面后就会过期(被清除);缓存在关闭本页面后仍然存在,只有用Disable Cache来清除
 
 #### [用Chrome学习HTTP](https://xiedaimala.com/tasks/5c46b237-9763-474c-910b-68ccb123bac8/video_tutorials/8a16c68d-b129-41a9-af1d-eb11c019244a)
 * [用Chrome查看form请求](https://github.com/Hanqing1996/JavaScript-advance/tree/master/HTTP/form-demo)
