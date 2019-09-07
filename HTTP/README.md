@@ -287,7 +287,7 @@ session[random]={login:true}
 4. 二者关系：session一般是基于cookie的,也可以基于localStorage(每次发送请求时,请求的头部不会从浏览器里取cookie)
 
 #### 反向代理
-
+![img](https://github.com/Hanqing1996/JavaScript-advance/blob/master/HTTP/Img/2019-09-07%2016-20-24%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png)
 
 
 #### [用Chrome学习HTTP](https://xiedaimala.com/tasks/5c46b237-9763-474c-910b-68ccb123bac8/video_tutorials/8a16c68d-b129-41a9-af1d-eb11c019244a)
