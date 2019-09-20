@@ -140,9 +140,7 @@
 ![image](https://github.com/Hanqing1996/JavaScript-advance/blob/master/Chrome/GIF/e21.gif)
 * 设置缓存
 ![image](https://github.com/Hanqing1996/JavaScript-advance/blob/master/Chrome/GIF/e23.gif)
-* Disable cache:清除当前页面缓存
-![image](https://github.com/Hanqing1996/JavaScript-advance/blob/master/Chrome/GIF/dd2.gif)
-* 查看本页面cookie
+* 查看本页面cookie(清除cookie也在这里)
 ![image](https://github.com/Hanqing1996/JavaScript-advance/blob/master/Chrome/GIF/~kka.gif)
 * 伪造cookie
 ![image](https://github.com/Hanqing1996/JavaScript-advance/blob/master/Chrome/GIF/ii2.gif)
