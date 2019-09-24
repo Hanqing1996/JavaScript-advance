@@ -66,6 +66,7 @@
 * 字符串中添加变量
 * 函数接字符串
 * 为什么字符串不应该作为函数参数
+* split()
 
 
 #### [其它1](https://github.com/Hanqing1996/JavaScript-advance/tree/master/%E5%85%B6%E5%AE%831)

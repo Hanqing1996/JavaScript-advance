@@ -251,12 +251,12 @@ if(oldIfNoneMatch===newEtag){
 ```
 response.setHeader('Set-Cookie', 'login=true')
 ```
-1. 第一次请求与响应
+1. 第一次请求与响应(用户登录)
 ```
 request.Cookie:undefined
 response.Set-Cookie:login=true
 ```
-2. 第二次请求与响应
+2. 第二次请求与响应(展示用户信息)
 ```
 request.Cookie:login=true
 response.Set-Cookie:login=true

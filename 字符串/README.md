@@ -66,3 +66,11 @@ function sayName(name){
 
 sayName(person.nme) // 报错:peson is not defined
 ```
+#### split
+```
+str='abcdefgh'
+console.log(str.split('b')) // ['a','cdefgh']
+
+str='head something'
+console.log(str.split('head')) // ["", " something"]
+```
