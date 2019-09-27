@@ -10,7 +10,43 @@
 更灵活。一个东西拥有多种东西的属性
 
 #### Object.freeze()
+1. 对象被冻结后,不能向这个对象添加新的属性，不能删除已有属性，不能修改该对象已有属性的可枚举性、可配置性、可写性，以及不能修改已有属性的值。此外，冻结一个对象后该对象的原型也不能被修改。
+```
+const obj = {
+  prop: 42
+};
 
+Object.freeze(obj);
+
+obj.prop = 33;
+
+console.log(obj.prop); // 42
+```
+2. freeze() 返回和传入的参数相同的对象。
+```
+var obj = {
+  prop: function() {},
+  foo: 'bar'
+};
+
+var o = Object.freeze(obj);
+
+o === obj; // true
+```
+3. obj被冻结，但obj的对象类型属性不会被冻结
+```
+const obj={
+    child:{
+        name:'nezha'
+    }
+}
+
+Object.freeze(obj)
+
+obj.child.age=12 
+
+console.log(obj.child.age) // 12
+```
 
 #### Object.defineProperty()与get/set的区别
 1. get/set用于读写一个新创建的对象的属性
