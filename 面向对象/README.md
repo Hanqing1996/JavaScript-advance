@@ -9,6 +9,9 @@
 #### 多态
 更灵活。一个东西拥有多种东西的属性
 
+#### Object.freeze()
+
+
 #### Object.defineProperty()与get/set的区别
 1. get/set用于读写一个新创建的对象的属性
 ```
@@ -281,9 +284,9 @@ true
 这是因为obj与obj.__proto__这两个对象存储在不同的内存空间中，而obj.fn与obj.__proto__.fn存储同一个内存地址(fn的内存地址)
 
 
-#### object的存储
+#### [object的存储](https://xiedaimala.com/tasks/5833c9d4-ebd5-44e4-91b5-661f476f9cad/video_tutorials/ccd79503-4f54-4b31-9f91-6f76f6073722)
 ```
-// 在堆内存中开辟一块空间存储object的属性名和属性值,同时栈内存中保存对应地址
+// 在堆内存中开辟一块空间存储object的属性名和属性值,同时栈内存中保存对应堆地址
 var baba={
     name:'Mayun',
     child:{
@@ -294,17 +297,18 @@ var baba={
     }
 }
 
+// 栈内存
 baba:A11
 
-// A11内存情况
+// 堆内存A11处
 name:'Mayun'
 child:A22
 
-// A22内存情况
+// 堆内存A22处
 name:'Sicong'
 sayName:A34
 
-// A34内存情况
+// 堆内存A34处
 {name:sayName,functionBody:'console.log(this.name);'}
 ```
 
