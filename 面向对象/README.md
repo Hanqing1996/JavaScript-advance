@@ -9,6 +9,15 @@
 #### 多态
 更灵活。一个东西拥有多种东西的属性
 
+#### {sayHi(){console.log('h1')}}
+```
+const per={sayHi(){
+    console.log('h1')
+}}
+
+console.log(per) //{sayHi:function(){console.log('h1')}}
+```
+
 #### Object.freeze()
 1. 对象被冻结后,不能向这个对象添加新的属性，不能删除已有属性，不能修改该对象已有属性的可枚举性、可配置性、可写性，以及不能修改已有属性的值。此外，冻结一个对象后该对象的原型也不能被修改。
 ```
