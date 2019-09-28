@@ -54,6 +54,7 @@
 * [...arguments]
 * 交换两个数的值
 * join
+* splice
 * slice
 * sort
 * map

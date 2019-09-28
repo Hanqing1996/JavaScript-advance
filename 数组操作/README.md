@@ -117,6 +117,20 @@ Array.prototype.join = function(char){
   return result
 }
 ```
+
+#### [splice](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/splice)
+* arr.splice(从第几个元素开始操作,准备删除的元素个数,准备插入的元素)
+```
+var months = ['Jan', 'March', 'April', 'June'];
+
+// 在第1个元素处删除0个元素,再插入'Feb'
+months.splice(1, 0, 'Feb');
+console.log(months); // ['Jan', 'Feb', 'March', 'April', 'June']
+
+// 在第4个元素处删除1个元素,再插入['May'，'Sep','Oct']
+months.splice(4, 1, ['May'，'Sep','Oct']); // [ 'Jan', 'Feb', 'March', 'April', [ 'May', 'Sep', 'Oct' ] ]
+```
+
 #### slice
 * 语法
 ```
