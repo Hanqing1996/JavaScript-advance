@@ -119,6 +119,17 @@ user.age=13
 
 console.log(user);
 ```
+#### const服从块级作用域
+```
+{
+    const num=1
+    console.log(num) //1
+}
+{
+    const num=2
+    console.log(num) //2
+}
+```
 #### for循环细节
 ```
 for(语句1;语句2;语句4) {
