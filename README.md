@@ -110,6 +110,7 @@
 * 生成器(迭代器生成的语法糖)
 * for...of(迭代)
 * 迭代和遍历
+* NaN===NaN返回false
 
 #### [HTTP](https://github.com/Hanqing1996/JavaScript-advance/tree/master/HTTP)
 * curl -v
