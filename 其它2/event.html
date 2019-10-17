@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" value="">
+    <button>按钮</button>
+</body>
+<script>
+
+    // 手工触发 input 的 change 事件 
+    let input = document.getElementsByTagName('input')[0]
+    input.value = 'input value';
+    input.addEventListener('input', console.log('input is changed'), false);
+    var event = new InputEvent('input');
+    input.dispatchEvent(event);
+
+    // 手工触发 button 的 click 事件 
+    let button = document.getElementsByTagName('button')[0]
+    button.addEventListener('click', console.log('button is clicked'), false);
+    var event = new InputEvent('button');
+    button.dispatchEvent(event);
+
+</script>
+
+</html>
