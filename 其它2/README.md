@@ -90,7 +90,7 @@ a.next() // no next
 function * 发布器(){
     var version=0
     while(true){
-        version+=1
+        version+=1 
         yield version   
     }
 }
