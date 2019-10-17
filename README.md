@@ -103,6 +103,7 @@
 * 如何实现复杂对象的深度拷贝
 
 #### [其它2](https://github.com/Hanqing1996/JavaScript-advance/tree/master/%E5%85%B6%E5%AE%832)
+* [手动触发事件](https://github.com/Hanqing1996/JavaScript-advance/blob/master/%E5%85%B6%E5%AE%832/event.html)
 * 字面量
 * unicode(ES6)
 * sybmol
