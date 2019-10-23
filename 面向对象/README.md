@@ -293,13 +293,13 @@ type of [1,2,3] // object
 
 #### Object.keys(obj)
 ```
-let obj={0:'a',1:'b',2:'c'}
+let obj={prop1:'a',prop2:'b',prop3:'c'}
 let keys=Object.keys(obj)
 for(let i=0;i<keys.length;i++){
     console.log(keys[i])
 }
 
-// 输出:0 1 2    
+// 输出:prop1 prop2 prop3
 ```
 
 #### let a=Object.create(b):等价于a.__proto__=b
