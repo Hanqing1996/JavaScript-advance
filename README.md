@@ -112,6 +112,8 @@
 * for...of(迭代)
 * 迭代和遍历
 * NaN===NaN返回false
+* 4&&9
+* undefined&&9
 
 #### [HTTP](https://github.com/Hanqing1996/JavaScript-advance/tree/master/HTTP)
 * curl -v
