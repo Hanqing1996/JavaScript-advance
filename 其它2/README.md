@@ -155,3 +155,16 @@ for(let i=0;i<keys.length;i++)
 ```
 * 迭代用for...in,详见上面
 * 迭代是遵从一定顺序的遍历，数组的下标是有序的，所以数组可以迭代，而对象不可以，除非指定"顺序"
+
+#### 4&&9
+```
+let res=4&&9 // 4为真值,所以res=9
+console.log(res) // 9
+```
+
+#### undefined&&9
+```
+let res=undefined&&9 // undefined为假值,所以res=undefined
+console.log(res) // undefined
+```
+
