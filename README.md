@@ -89,6 +89,7 @@
 * 剩余参数
 * ...
 * {...obj1}深拷贝
+* var {name}={name:'libai'}
 * var {name,age,male}=per
 * var p={per}
 * {name:xingming}
