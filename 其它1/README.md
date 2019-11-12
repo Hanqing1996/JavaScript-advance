@@ -350,6 +350,12 @@ var gender=per.gender;
 
 console.log(name); // liming
 ```
+#### var {name}={name:'libai'}
+```
+var {name}={name:'libai'}
+console.log(name) // libai
+console.log(name)//{ name: 'libai' }
+```
 #### {name:xingming}
 * 重命名
 ```
