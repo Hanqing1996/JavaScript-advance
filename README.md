@@ -115,6 +115,8 @@
 * NaN===NaN返回false
 * 4&&9
 * undefined&&9
+* trim()
+* flag1&&flag2&&console.log('flag1　and flag2 all true')
 
 #### [HTTP](https://github.com/Hanqing1996/JavaScript-advance/tree/master/HTTP)
 * curl -v
