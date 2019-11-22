@@ -167,4 +167,15 @@ console.log(res) // 9
 let res=undefined&&9 // undefined为假值,所以res=undefined
 console.log(res) // undefined
 ```
-
+#### trim()
+```
+var str=`
+        haha
+            `
+console.log(str.trim()) // 'haha'   
+```
+#### flag1&&flag2&&console.log('flag1　and flag2 all true')
+```
+var flag1=true;var flag2=true;
+flag1&&flag2&&console.log('flag1　and flag2 all true')
+```
