@@ -14,13 +14,10 @@
 <script>
 let div=document.getElementsByClassName('divclass')[0]
 let button=document.getElementsByClassName('btn')[0]
-button.addEventListener('click',()=>{
-    console.log('button 被点击了')  
-    div.addEventListener('click',(e)=>{
-        console.log(e.target)
-        console.log('div 被点击了')
-    })
+//
+div.addEventListener('click',(e)=>{
+    console.log('div被点击了')
+    console.log(e.target)
 })
-
 </script>
 </html>

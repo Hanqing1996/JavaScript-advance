@@ -16,10 +16,20 @@ let div=document.getElementsByClassName('divclass')[0]
 let button=document.getElementsByClassName('btn')[0]
 button.addEventListener('click',()=>{
     console.log('button 被点击了')  
-    div.addEventListener('click',(e)=>{
-        console.log(e.target)
-        console.log('div 被点击了')
-    })
+/**
+ * setTimeout阻止了这一次button的click事件冒泡，也就是说只有第一次点击button会只打印"button 被点击了"，之后会打印"button被点击了"和"div被点击了"
+ * 本质上，原理是setTimeout的内容将在冒泡结束后执行，所以那时设置的div监听事件不会接收到任何可以触发它的信息
+ */
+
+    // 
+    setTimeout(()=>{
+        let eventHandler = () => {
+            console.log('div被点击了')
+            div.removeEventListener('click', eventHandler)
+        }
+
+        div.addEventListener('click', eventHandler)
+    },0)
 })
 
 </script>
