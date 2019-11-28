@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div class="parent1">
+        <div class="child1">child1</div>
+    </div>
+    <div class="parent2" style="width: 100px;height:200px;background-color: red">
+        <div class="child2" style="width: 50px;height:100px;background-color: blue">
+            <div class="child3">child3</div>
+        </div>
+    </div>
+</body>
+<script>
+let parent1=document.getElementsByClassName('parent1')[0]
+let child1=document.getElementsByClassName('child1')[0]
+let parent2=document.getElementsByClassName('parent2')[0]
+let child2=document.getElementsByClassName('child2')[0]
+let child3=document.getElementsByClassName('child3')[0]
+parent1.addEventListener('click',()=>{
+    console.log('parent1被点击了')
+})
+// child1的点击事件会冒泡到parent1
+child1.addEventListener('click',()=>{
+    console.log('child1被点击了')
+})
+parent2.addEventListener('click',()=>{
+    console.log('parent2被点击了')
+})
+child2.addEventListener('click',()=>{
+    console.log('child2被点击了')
+})
+// child3的点击事件会冒泡到child2,parent2,不会冒泡到parent1.child1
+child3.addEventListener('click',()=>{
+    console.log('child3被点击了')
+})
+</script>
+</html>

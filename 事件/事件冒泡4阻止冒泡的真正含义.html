@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div class="divclass" style="width: 100px;height:200px;background-color: red">
+
+        <button class="btn1">我是一号btn</button>
+        <button class="btn2">我是二号btn</button>
+    </div>
+</body>
+<script>
+let div=document.getElementsByClassName('divclass')[0]
+let button1=document.getElementsByClassName('btn1')[0]
+let button2=document.getElementsByClassName('btn2')[0]
+button1.addEventListener('click',()=>{
+    console.log('button1被点击了')
+    // 阻止button1的点击事件冒泡到div
+    e.stopPropagation()
+    div.addEventListener('click',()=>{
+    console.log('div被点击了')
+    })
+})
+button2.addEventListener('click',(e)=>{
+    console.log('button2被点击了')
+    // 阻止button2的点击事件冒泡到div
+    e.stopPropagation()
+})
+
+</script>
+</html>
