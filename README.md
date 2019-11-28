@@ -19,6 +19,10 @@
 * Promise
 * async/await
 
+#### [事件]()
+* [手动触发事件](https://github.com/Hanqing1996/JavaScript-advance/blob/master/%E5%85%B6%E5%AE%832/event.html)
+* [事件冒泡]()
+
 #### [面向对象](https://github.com/Hanqing1996/JavaScript-advance/tree/master/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1)
 * {sayHi(){console.log('h1')}}
 * Object.freeze()
@@ -104,7 +108,6 @@
 * 如何实现复杂对象的深度拷贝
 
 #### [其它2](https://github.com/Hanqing1996/JavaScript-advance/tree/master/%E5%85%B6%E5%AE%832)
-* [手动触发事件](https://github.com/Hanqing1996/JavaScript-advance/blob/master/%E5%85%B6%E5%AE%832/event.html)
 * 字面量
 * unicode(ES6)
 * sybmol
