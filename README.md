@@ -19,7 +19,7 @@
 * Promise
 * async/await
 
-#### [事件]()
+#### [事件](https://github.com/Hanqing1996/JavaScript-advance/blob/master/%E4%BA%8B%E4%BB%B6/README.md)
 * [手动触发事件](https://github.com/Hanqing1996/JavaScript-advance/blob/master/%E5%85%B6%E5%AE%832/event.html)
 * [事件冒泡](https://github.com/Hanqing1996/JavaScriptadvance/blob/master/%E4%BA%8B%E4%BB%B6/%E4%BA%8B%E4%BB%B6%E5%86%92%E6%B3%A1.html)
 
