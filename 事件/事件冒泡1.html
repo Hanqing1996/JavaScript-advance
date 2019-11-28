@@ -16,13 +16,8 @@ let div=document.getElementsByClassName('divclass')[0]
 let button=document.getElementsByClassName('btn')[0]
 button.addEventListener('click',()=>{
     console.log('button 被点击了')  
-    // setTimeout阻止了事件冒泡 
-    setTimeout(()=>{
-        console.log('接下来设置div的监听事件')
-        div.addEventListener('click',()=>{
-        console.log('div 被点击了')
-        })
-        console.log('div的监听事件设置完毕')
+    div.addEventListener('click',()=>{
+    console.log('div 被点击了')
     })
 })
 

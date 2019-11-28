@@ -15,10 +15,14 @@
 let div=document.getElementsByClassName('divclass')[0]
 let button=document.getElementsByClassName('btn')[0]
 button.addEventListener('click',()=>{
-    console.log('button被点击了')
+    console.log('button 被点击了')  
+    // setTimeout阻止了button的click事件冒泡 
+    setTimeout(()=>{
+        div.addEventListener('click',()=>{
+        console.log('div 被点击了')
+        })
+    },0)
 })
-div.addEventListener('click',()=>{
-    console.log('div被点击了')
-})
+
 </script>
 </html>
