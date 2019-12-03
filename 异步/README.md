@@ -133,7 +133,7 @@ pro.then(s=>console.log(s))
 
 // 10秒后输出apple
 
-// prom会立即被赋值为PromiseValue=undefined的Promise对象,但直到10秒后prom变为PromiseValue=undefined的Promise对象，才会执行then()
+// prom会立即被赋值为PromiseValue=undefined的Promise对象,但直到10秒后prom变为PromiseValue=apple的Promise对象，才会执行then()
 ```
 * Promise是一个对象，不是一个函数
 ```
