@@ -491,7 +491,7 @@ obj1.child.gender='female'
 
 console.log(obj2) // { name: 'Jack', child: { name: 'len', gender: 'female' } }
 ```
-#### JSON.parse(JSON.stringif(data))
+#### JSON.parse(JSON.stringify(data))
 * data不可以是复杂对象(复杂对象定义如下)
 1. data不包含日期,正则，函数，循环引用属性
 2. data不包含undefined属性
