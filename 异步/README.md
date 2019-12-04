@@ -485,6 +485,24 @@ console.log(result);
 #### setImmediate()
 
 #### process.nextTick()
-<<<<<<< HEAD
-=======
->>>>>>> 9d37dd3d92f2a23ed8cec76fda377b8a5ec989b3
+
+#### 一道关于 setTimeout 和 for 循环的面试题
+下面代码执行结果是什么?
+```
+for(var i=0;i<2;i++){
+setTimeout(()=>{console.log(i)},0)
+}
+```
+答案
+```
+2
+2
+```
+* 原因
+1. var i=0,相当于定义了一个全局变量i
+2. 对于setTimeout(fn,time),要意识到fn是一个回调函数，在time时间间隔后执行;but,setTimeout(fn,time)是立即执行的!!!也就是说,setTimeout立即执行了两次,但是两个回调函数是延迟执行的．
+3. 收到2启发
+```
+el.addEventListener('click',fn)
+```
+上面这句话其实也是立即执行的,只是其中回调函数fn是在el被点击后才执行的
