@@ -139,6 +139,7 @@
 * session
 * 面试答】cookie和session的区别与联系
 * 反向代理
+* 为什么入口文件不能加缓存
 
 #### Chrome
 * Preserve log:记录每次页面重新加载后的页面资源下载情况

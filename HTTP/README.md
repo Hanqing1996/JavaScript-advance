@@ -293,6 +293,16 @@ session[random]={login:true}
 ![img](https://github.com/Hanqing1996/JavaScript-advance/blob/master/HTTP/Img/nginx%E5%AE%9E%E7%8E%B0%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86.png)
 
 
+#### 为什么入口文件不能加缓存
+* [参考1(18:00开始)](https://xiedaimala.com/tasks/5c46b237-9763-474c-910b-68ccb123bac8/video_tutorials/292ecffa-86e3-4300-b44c-3ebe56e9e424)
+* [参考2](https://xiedaimala.com/tasks/3b5ffe52-ff02-47e3-96b2-690871b1d792/video_tutorials/d9d21fc5-0d37-478f-b00b-c3bca86d1a14)
+* 关键
+1.　html,css,js都是资源,最初都是发送请求从服务器端获得的
+2.　入口文件的作用是引入其它资源,将入口文件缓存就丧失了更新其它资源的机会
+* [浏览器设置:入口文件(第一个请求的文件)总是需要向服务器请求获取的](https://github.com/Hanqing1996/JavaScript-advance/blob/master/HTTP/GIF/a.gif)
+
+
+
 #### [用Chrome学习HTTP](https://xiedaimala.com/tasks/5c46b237-9763-474c-910b-68ccb123bac8/video_tutorials/8a16c68d-b129-41a9-af1d-eb11c019244a)
 * [用Chrome查看form请求](https://github.com/Hanqing1996/JavaScript-advance/tree/master/HTTP/form-demo)
 ![image](https://github.com/Hanqing1996/JavaScript-advance/blob/master/HTTP/GIF/e9.gif)
