@@ -9,16 +9,11 @@ var str=`
 
 console.log(str); // 包含空格，回车(4个)
 ```
-#### 字符串中添加变量
+#### 模板字符串`${str}`
 ```
-var num=5
-var str=`
-    <div>
-        <p>${ num }</p>
-    <div>   
-`
+let str='hh'
 
-console.log(str);
+console.log(`say${str}`)
 ```
 #### 函数接字符串
 ```
