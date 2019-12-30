@@ -70,7 +70,7 @@
 #### [字符串](https://github.com/Hanqing1996/JavaScript-advance/tree/master/%E5%AD%97%E7%AC%A6%E4%B8%B2)
 [教程](https://xiedaimala.com/tasks/05ad6931-9101-4c43-8810-893e787efb5f/video_tutorials/dafabdb1-724f-43c7-8b66-3b8037d3363e)
 * 包含空格和回车的字符串
-* 字符串中添加变量
+* 模板字符串`${str}`
 * 函数接字符串
 * 为什么字符串不应该作为函数参数
 * split()
