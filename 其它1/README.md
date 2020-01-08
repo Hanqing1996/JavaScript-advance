@@ -1,5 +1,22 @@
 # 其它
-
+#### export
+```
+// a.js
+export default "some data";
+```
+```
+// b.js
+import PrivateKey from "./a.js";
+```
+这段代码是（且仅仅是）以下代码的缩写：
+```
+// a.js
+export const someValue = "some data";
+```
+```
+// b.js
+import { someValue as PrivateKey } from "./a.js";
+```
 #### 默认值设置 num=num||1
 设置num的默认值为1
 ```
