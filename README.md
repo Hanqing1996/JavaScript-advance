@@ -77,6 +77,7 @@
 
 
 #### [其它1](https://github.com/Hanqing1996/JavaScript-advance/tree/master/%E5%85%B6%E5%AE%831)
+* export
 * 默认值设置 num=num||1
 * 7/3结果为小数
 * 6种数据类型
