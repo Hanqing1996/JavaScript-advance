@@ -1,4 +1,27 @@
 # 其它
+#### 用setTimeout模拟setInterval
+setInterval会不停执行，浪费内存，所以要改用setTimeout
+```
+let index = 0
+let run = () => {
+    console.log(index);
+    index++
+    setTimeout(run, 3000)
+}
+run()
+```
+等价于
+```
+let index = 0
+let run = () => {
+    setInterval(() => {
+        console.log(index);
+        index++
+    }, 3000)
+}
+run()
+```
+
 #### export
 ```
 // a.js
