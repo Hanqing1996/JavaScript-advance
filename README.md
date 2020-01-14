@@ -61,7 +61,7 @@
 * splice
 * slice
 * sort
-* map
+* [常用]map
 * filter
 * 用redue实现map
 * 用reduce实现filter
