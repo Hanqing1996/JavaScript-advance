@@ -209,7 +209,11 @@ Array.prototype.forEach(fn){
     }
 }
 ```
-#### map
+#### [常用]map
+* 典型场景：从获取子组件数组的name
+```
+let names=this.$children.map(item=>item.name)
+```
 * 语法
 ```
 arr=[1,2,3,4,5,6]
