@@ -123,6 +123,7 @@
 * undefined&&9
 * trim()
 * flag1&&flag2&&console.log('flag1　and flag2 all true')
+* 将字符串数组中的元素转为Number型，为什么不能直接用ParseInt
 
 #### [HTTP](https://github.com/Hanqing1996/JavaScript-advance/tree/master/HTTP)
 * curl -v
