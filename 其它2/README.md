@@ -189,18 +189,22 @@ console.log(numbers) // [1, NaN, NaN]
 ```
 arr.map(callback(currentValue,index,array){})
 ```
- * currentValue:数组中正在处理的当前元素。
- * index:数组中正在处理的当前元素的索引
- * array:数组
+    * currentValue:数组中正在处理的当前元素。
+    * index:数组中正在处理的当前元素的索引
+    * array:数组
 ```
 parseInt(string, radix);
 ```
- * string:要被解析的值
- * radix:进制（介于2和36之间的整数）
+    * string:要被解析的值
+    * radix:进制（介于2和36之间的整数）
 
 所以上述代码等价于
 ```
 pareInt(arr[0],0) // 1
 pareInt(arr[1],1) // NaN
 pareInt(arr[2],2) // NaN
+```
+* 正确姿势
+```
+var numbers=arr.map(n=>parseInt(n))
 ```
