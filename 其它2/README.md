@@ -179,3 +179,24 @@ console.log(str.trim()) // 'haha'
 var flag1=true;var flag2=true;
 flag1&&flag2&&console.log('flag1　and flag2 all true')
 ```
+#### 将字符串数组中的元素转为Number型，为什么不能直接用ParseInt
+```
+var arr=['1','2','3']
+var numbers=arr.map(parseInt)
+console.log(numbers) // [1, NaN, NaN]
+```
+* 原因
+arr.map(callback(currentValue,index,array){})
+> currentValue:数组中正在处理的当前元素。
+> index:数组中正在处理的当前元素的索引
+> array:数组
+parseInt(string, radix);
+> string:要被解析的值
+> radix:进制（介于2和36之间的整数）
+
+所以上述代码等价于
+```
+pareInt(arr[0],0) // 1
+pareInt(arr[1],1) // NaN
+pareInt(arr[2],2) // NaN
+```
