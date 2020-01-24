@@ -77,10 +77,13 @@ console.log('end'); // end
 
 #### 6个假值
 ```
-if(0){
+let value=0
+
+if(value) {
     console.log('yes');
 }
-else{
+
+if(!value){
     console.log('no');
 }
 
