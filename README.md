@@ -34,7 +34,7 @@
 * undefined的本质是window的只读属性
 * 设置对象的只读属性
 * configurable
-* obj['name']=12   obj[name]=12   obj={[name]:12}
+* obj['name']=12   obj[name]=12   obj={[name]:12}  obj={name:12}为空对象添加键值对
 * var obj={a,b,c}
 * var obj={sayHi(){}}
 * get与set
