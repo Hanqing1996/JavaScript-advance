@@ -214,7 +214,7 @@ a===1&&a===2&&a===3 // true
 let obj={}
 obj['name']=12
 
-obj // {'name':12}
+obj // {name:12}
 ```
 * obj[name]=12
 > name未赋值
