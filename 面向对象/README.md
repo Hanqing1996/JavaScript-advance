@@ -208,7 +208,7 @@ Object.defineProperty(window,'a',{
 a===1&&a===2&&a===3 // true
 ```
  
-#### obj['name']=12   obj[name]=12  obj={[name]:12}  obj={name:12}/为空对象添加键值对 
+#### obj['name']=12   obj[name]=12/为对象添加键值对   obj={[name]:12}  obj={name:12}/为空对象添加键值对 
 * obj['name']=12
 ```
 let obj={}
@@ -231,6 +231,10 @@ let obj={}
 obj[name]=12
 
 obj // {a:12}
+
+let age='b'
+obj[age]=15
+obj // {a:12,b:15}, 这是为已有键值对的对象添加键值对
 ```
 * obj={[name]:12}
 ```
