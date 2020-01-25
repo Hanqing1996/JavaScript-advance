@@ -9,6 +9,19 @@
 #### 多态
 更灵活。一个东西拥有多种东西的属性
 
+#### obj.age.type/undefined 与 obj.age.type.required/error
+```
+let obj={'age':12}
+obj.age //12
+obj.age.type // undefined
+obj.age.type.required // error
+```
+undefined 与 error 的区别
+```
+expect(errors.email).to.not.exist  // email is not defined
+expect(errors.email.required).to.not.exist  // TypeError
+```
+
 #### {sayHi(){console.log('h1')}}
 ```
 const per={sayHi(){
