@@ -18,8 +18,9 @@ obj.age.type.required // error
 ```
 undefined 与 error 的区别
 ```
-expect(errors.email).to.not.exist  // email is not defined
-expect(errors.email.required).to.not.exist  // TypeError
+errors.email=undefined
+expect(errors.email).to.not.exist  // errors.email 为 undefined,测试通过
+expect(errors.email.required).to.not.exist  // errors.email.required 为 error,测试不通过(会报错)
 ```
 
 #### {sayHi(){console.log('h1')}}
