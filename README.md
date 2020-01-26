@@ -47,7 +47,7 @@
 * 如何生成一个空对象
 * object
 * object的存储
-* Object.keys(obj):获取对象索引
+* Object.keys(obj):遍历对象属性
 * let a=Object.create(b):等价于a.__proto__=b
 * __proto__和prototype的区别
 * obj与obj.__proto__
