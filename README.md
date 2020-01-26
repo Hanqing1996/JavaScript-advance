@@ -1,4 +1,5 @@
 #### [函数](https://github.com/Hanqing1996/JavaScript-advance/tree/master/%E4%BD%A0%E7%9C%9F%E7%9A%84%E6%87%82%E5%87%BD%E6%95%B0%E5%90%97)
+* 一道关于函数和对象的面试题目
 * 函数不一定总有返回值
 * 词法分析树 
 * 变量提升 
