@@ -9,6 +9,14 @@
 #### 多态
 更灵活。一个东西拥有多种东西的属性
 
+#### 为已有的类添加公共属性
+```
+Human.prototype.newFn=()=>{
+    ...
+}
+```
+原理:obj.fn=obj._prop_.fn
+
 #### let obj={} obj.age={} 内存变化
 ```
 let obj={} 
