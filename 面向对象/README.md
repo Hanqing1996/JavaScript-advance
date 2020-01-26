@@ -16,6 +16,16 @@ Human.prototype.newFn=()=>{
 }
 ```
 原理:obj.fn=obj._prop_.fn
+```
+class Validator {
+
+    // 添加公共方法
+    add(newType,fn){
+        Validator.prototype[newType]=fn
+    }
+    ...
+}
+```
 
 #### let obj={} obj.age={} 内存变化
 ```
