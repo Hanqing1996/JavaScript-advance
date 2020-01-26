@@ -1,5 +1,6 @@
 #### [函数](https://github.com/Hanqing1996/JavaScript-advance/tree/master/%E4%BD%A0%E7%9C%9F%E7%9A%84%E6%87%82%E5%87%BD%E6%95%B0%E5%90%97)
-* 一道关于函数和对象的面试题目
+* let obj={} obj.age={} 内存变化
+* 几道关于函数和对象的面试题目
 * if(temp=1+2) 不是判断temp是否等于3
 * 函数不一定总有返回值
 * var和let
