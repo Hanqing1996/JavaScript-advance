@@ -2,8 +2,117 @@
 * [Chrome performance](https://zhuanlan.zhihu.com/p/29879682)
 
 # 函数
+#### 几道关于函数和对象的面试题目
+```
+let obj={}
+obj.age=undefined
 
-#### if(a=b)
+function ensureObject(prop){
+    if(typeof prop != 'Object'){
+        prop={}
+    }
+}
+
+ensureObject(obj.age)
+console.log(obj)
+```
+> 打印出来的结果？为什么？
+```
+undefined
+```
+* 这个问题牵涉到两个知识点
+    * [函数参数是局部变量](https://github.com/Hanqing1996/JavaScript-advance/tree/master/%E4%BD%A0%E7%9C%9F%E7%9A%84%E6%87%82%E5%87%BD%E6%95%B0%E5%90%97)
+    * [object的存储](https://github.com/Hanqing1996/JavaScript-advance/tree/master/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1)
+> 所以上面代码等效于
+```
+let obj={}
+obj.age=undefined
+let pro =obj.age
+pro={}
+console.log(obj.age);
+```
+内存变化过程为
+```
+let obj={}
+obj.age=undefined
+
+//栈内存：
+obj:A1
+
+//堆内存A1处
+{age:undefined}
+```
+```
+let pro =obj.age
+
+//栈内存
+pro:undefined
+```
+```
+pro={}
+
+//栈内存
+pro:A2
+
+//堆内存A2处
+{}
+```
+综上,堆内存A1处没有被修改
+---
+```
+let obj={}
+obj.age=undefined
+
+function ensureObject(prop){
+    if(typeof prop.age != 'Object'){
+        prop.age={}
+    }
+}
+
+ensureObject(obj)
+console.log(obj)
+```
+> 打印出来的结果是什么？为什么？
+```
+{ age: {} }
+```
+原因同上题，上面代码等效于
+```
+let obj={}
+obj.age=undefined
+let pro =obj
+pro.age={}
+console.log(obj.age);
+```
+内存变化如下
+```
+let obj={}
+obj.age=undefined
+
+//栈内存：
+obj:A1
+
+//堆内存A1处
+{age:undefined}
+```
+```
+let pro =obj
+
+//栈内存：
+pro:A1
+```
+```
+pro.age={}
+
+//堆内存A1处
+{age:A3}
+
+//堆内存A3处
+{}
+```
+综上,堆内存A1处被修改了
+
+#### if(temp=1+2) 不是判断temp是否等于3
 ```
 let temp;
 
@@ -17,25 +126,6 @@ let temp=1+2;
 if(temp)
 console.log('end'); // end
 ```
-
-#### 6个假值
-```
-if(0){
-    console.log('yes');
-}
-else{
-    console.log('no');
-}
-
-// no
-```
-1. false (布尔型)
-2. null (用于定义空的或者不存在的引用)
-3. undefined (未定义值)
-4. 0 (数值型)
-5. '' (空字符串) (字符型)
-6. NaN
-
 
 #### 函数不一定总有返回值
 ```
