@@ -1,6 +1,9 @@
 #### [函数](https://github.com/Hanqing1996/JavaScript-advance/tree/master/%E4%BD%A0%E7%9C%9F%E7%9A%84%E6%87%82%E5%87%BD%E6%95%B0%E5%90%97)
 * 一道关于函数和对象的面试题目
+* if(temp=1+2) 不是判断temp是否等于3
 * 函数不一定总有返回值
+* var和let
+* function.length:返回函数在声明时的参数个数
 * 词法分析树 
 * 变量提升 
 * js的预编译和解释执行
