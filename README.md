@@ -28,6 +28,7 @@
 * 事件冒泡
 
 #### [面向对象](https://github.com/Hanqing1996/JavaScript-advance/tree/master/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1)
+* 为已有的类添加公共属性
 * let obj={} obj.age={} 内存变化
 * obj.age.type/undefined 与 obj.age.type.required/error
 * {sayHi(){console.log('h1')}}
