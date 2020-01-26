@@ -9,6 +9,33 @@
 #### 多态
 更灵活。一个东西拥有多种东西的属性
 
+#### let obj={} obj.age={} 内存变化
+```
+let obj={} 
+obj.age=undefined
+obj.age={}
+```
+内存变化
+```
+let obj={}
+obj.age=undefined
+
+// 栈内存
+obj:A1
+
+// 堆内存A1处
+age:undefined
+```
+```
+obj.age={}
+
+// 堆内存A1处
+age:A2
+
+// 堆内存A2处
+{}
+```
+
 #### obj.age.type/undefined 与 obj.age.type.required/error
 ```
 let obj={'age':12}
