@@ -65,8 +65,10 @@
 * [...arguments]
 * 交换两个数的值
 * join
-* splice
-* slice
+* splice:删除
+* slice:切片
+* shift:删除第一个元素
+* unshift:头部插入元素
 * sort
 * [常用]map
 * filter
