@@ -117,8 +117,7 @@ Array.prototype.join = function(char){
   return result
 }
 ```
-
-#### [splice](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/splice)
+#### [splice:删除](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/splice)
 * arr.splice(从第几个元素开始操作,准备删除的元素个数,准备插入的元素)
 ```
 var months = ['Jan', 'March', 'April', 'June'];
@@ -131,7 +130,7 @@ console.log(months); // ['Jan', 'Feb', 'March', 'April', 'June']
 months.splice(4, 1, ['May'，'Sep','Oct']); // [ 'Jan', 'Feb', 'March', 'April', [ 'May', 'Sep', 'Oct' ] ]
 ```
 
-#### slice
+#### slice:切片
 * 语法
 ```
 arr=[1,2,3,4,5,6,7];
@@ -154,6 +153,18 @@ Array.prototype.slice = function (begIndex, endIndex) {
     }
     return result;
 }
+```
+#### shift:删除第一个元素
+```
+let arr=[2,3,4]
+arr.shift()
+arr // [3, 4]
+```
+#### unshift:头部插入元素
+```
+let arr=[3,4]
+arr.unshift(5)
+arr// [5, 3, 4]
 ```
 #### sort
 * 语法
