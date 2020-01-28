@@ -9,7 +9,7 @@
 #### 多态
 更灵活。一个东西拥有多种东西的属性
 
-#### 
+#### person2 = {name:"rick"};重新开辟内存空间给person2
 ```
 let setPerson = function(person2){
  person2.name = "kevin";
