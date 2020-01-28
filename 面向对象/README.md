@@ -9,6 +9,56 @@
 #### 多态
 更灵活。一个东西拥有多种东西的属性
 
+#### 
+```
+let setPerson = function(person2){
+ person2.name = "kevin";
+ person2 = {name:"rick"};
+};
+let person = {name:"alan"};
+setPerson(person);
+
+console.log(person.name) // "kevin"
+```
+等效于
+```
+let person = {name:"alan"};
+let person2 =person // 浅拷贝
+person2.name = "kevin";
+person2 = {name:"rick"}; // 重定向，即重新开辟内存空间给person2
+```
+内存变化过程为
+```
+let person = {name:"alan"};
+
+//栈内存：
+person:A1
+
+//堆内存A1处
+{name:"alan"}
+```
+```
+let person2 =person 
+
+//栈内存：
+person2:A1
+```
+```
+person2.name = "kevin";
+
+//堆内存A1处
+{name:"kevin"}
+```
+```
+person2 = {name:"rick"}; 
+
+//栈内存：
+person2:A2
+
+//堆内存A2处
+{name:"rick"}
+```
+所以堆内存A1处被修改了一次，变为"kevin"
 #### arr.indexOf(obj)
 ```
 let obj={name:'libai'}
@@ -19,6 +69,8 @@ arr.indexOf(copy) // -1
 arr.indexOf(obj) // 0
 ```
 原因：indexOf是按内存索引对象，而copy是obj的深拷贝，二者处于不同的内存空间中
+* 浅拷贝一样找不到
+
 > 如果我们想要判断数组中有无某个对象，应该用filter
 ```
 let obj={name:'libai'}
