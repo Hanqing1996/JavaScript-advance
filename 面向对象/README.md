@@ -9,6 +9,17 @@
 #### 多态
 更灵活。一个东西拥有多种东西的属性
 
+#### arr.indexOf(obj)
+```
+let obj={name:'libai'}
+let arr=[obj]
+let copy = JSON.parse(JSON.stringify(obj))
+
+arr.indexOf(copy) // -1
+arr.indexOf(obj) // 0
+```
+原因：indexOf是按内存索引对象，而copy是obj的深拷贝，二者处于不同的内存空间中
+
 #### 为已有的类添加公共属性
 ```
 Human.prototype.newFn=()=>{
