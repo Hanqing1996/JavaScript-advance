@@ -69,8 +69,15 @@ arr.indexOf(copy) // -1
 arr.indexOf(obj) // 0
 ```
 原因：indexOf是按内存索引对象，而copy是obj的深拷贝，二者处于不同的内存空间中
-* 浅拷贝一样找不到
+* 但是浅拷贝是找得到的
+```
+let obj={name:'libai'}
+let arr=[obj]
+let copy = obj
 
+arr.indexOf(copy) // 0
+```
+由此可以推测indexOf的索引依据是obj是否与arr元素中的某个元素指向同一个堆地址
 > 如果我们想要判断数组中有无某个对象，应该用filter
 ```
 let obj={name:'libai'}
