@@ -166,7 +166,7 @@ let arr=[3,4]
 arr.unshift(5)
 arr// [5, 3, 4]
 ```
-#### sort
+#### sort:没有返回值
 * 语法
 ```
 arr=[1,2,3,4,5,6,7];
@@ -189,6 +189,13 @@ Array.prototype.sort=function(fn){
     }
 }
 ```
+* 默认的sort是按字典序排序的
+```
+let arr=[1,11,101,123,112]
+undefined
+arr.sort() // [1, 101, 11, 112, 123]
+```
+
 #### forEach(忘掉forEach,只用map)
 * 语法
 ```
@@ -250,6 +257,24 @@ Array.prototype.forEach(fn){
     return result;
 }
 ```
+#### 用 map 和 sort 判断两个数组的元素id是否完全一致
+在实际项目中，用于判断用户是否选中所有数据（全选）
+```
+    let dataIds = this.dataSource.map(item => item.id).sort()
+    let selectedIds = this.selectedItems.map(item => item.id).sort()
+    if (dataIds.length !== selectedIds.length)
+        return false
+    else {
+        let notEqual = false
+        for (let i = 0; i < dataIds.length; i++) {
+            if (dataIds[i] !== selectedIds[i])
+                notEqual = true
+        }
+        return !notEqual // 全选为true,没有全选为false
+    }
+}
+```
+
 #### filter
 * 语法
 ```
