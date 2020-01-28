@@ -19,6 +19,18 @@ arr.indexOf(copy) // -1
 arr.indexOf(obj) // 0
 ```
 原因：indexOf是按内存索引对象，而copy是obj的深拷贝，二者处于不同的内存空间中
+> 如果我们想要判断数组中有无某个对象，应该用filter
+```
+let obj={name:'libai'}
+let arr=[obj]
+let copy = JSON.parse(JSON.stringify(obj))
+
+// 接下来通过id查找
+let targetId=obj.id
+if(arr.filter(item=>item.id===targetId).length){
+    console.log('找到了')
+}
+```
 
 #### 为已有的类添加公共属性
 ```
