@@ -195,6 +195,13 @@ let arr=[1,11,101,123,112]
 undefined
 arr.sort() // [1, 101, 11, 112, 123]
 ```
+#### 对象数组按某个字段排序
+```
+let dataSource=[{name:'libai',score:80},{name:'zhangfei',score:90},{name:'dufu',score:82}]
+dataSource.sort((a,b)=>a.score-b.score)
+
+dataSource // [{name:'libai',score:80},{name:'dufu',score:82},{name:'zhangfei',score:90}]
+```
 
 #### forEach(忘掉forEach,只用map)
 * 语法
@@ -227,6 +234,7 @@ Array.prototype.forEach(fn){
     }
 }
 ```
+
 #### [常用]map
 * 典型场景：从获取子组件数组的name
 ```
