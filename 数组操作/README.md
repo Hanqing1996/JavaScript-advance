@@ -11,7 +11,7 @@ typepf Array.prototype // object
 ```
 
 #### 常见的伪数组
-* DOM元素集合是伪数组
+* DOM元素集合是伪数组(HTMLCollection)
 ```
 <ul>
     <li>1111</li>
