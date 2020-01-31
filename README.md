@@ -112,6 +112,7 @@
 * ...
 * {...obj1}深拷贝
 * var {name}={name:'libai'}
+* function createToast({propsData}){}  和 createToast( {propsData: toastOptions})
 * var {name,age,male}=per
 * var p={per}
 * {name:xingming}
