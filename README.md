@@ -77,6 +77,7 @@
 * [常用]map
 * 用 map 和 sort 判断两个数组的元素id是否完全一致
 * filter
+* 对象数组移除某个元素：copy = copy.filter(item => item.id !== targetId)
 * 用redue实现map
 * 用reduce实现filter
  
