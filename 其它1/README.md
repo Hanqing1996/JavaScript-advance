@@ -406,6 +406,22 @@ var {name}={name:'libai'}
 console.log(name) // libai
 console.log(name)//{ name: 'libai' }
 ```
+#### function createToast({propsData}){}  和 createToast( {propsData: toastOptions})
+* 定义
+```
+function createToast({propsData})
+{
+    let toast = new Constructor({
+        propsData
+    })
+}
+```
+* 调用
+```
+toastOptions={columns:[],selected:'news'}
+createToast( {propsData: toastOptions})
+```
+
 #### {name:xingming}
 * 重命名
 ```
