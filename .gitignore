@@ -4,3 +4,4 @@ node_modules
 .idea
 
 ajax/uploadAndDownload/node_modules
+ajax/uploadAndDownload/uploads
