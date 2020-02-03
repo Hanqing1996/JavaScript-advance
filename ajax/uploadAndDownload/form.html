@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="http://localhost:3000/upload" method="post" enctype="multipart/form-data">
+    <input type="file" name="xxx">
+    <button type="submit">上传</button>
+</form>
+</body>
+<script>
+    let f=document.querySelector('form')
+    f.addEventListener('submit',(e)=>{
+        // e.preventDefault() 要放在第一行
+        e.preventDefault()
+
+        let formData=new FormData()
+        let fileInput=document.querySelector('input[name="xxx"]')
+        formData.append('xxx',fileInput.files[0])
+
+        let xhr=new XMLHttpRequest()
+        xhr.open('POST',f.action)
+        xhr.onload=()=>{
+            console.log(xhr.response);
+        }
+        xhr.send(formData)
+    })
+</script>
+</html>
