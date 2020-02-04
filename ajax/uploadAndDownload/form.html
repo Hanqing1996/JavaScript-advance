@@ -6,11 +6,13 @@
 </head>
 <body>
 <form action="http://localhost:3000/upload" method="post" enctype="multipart/form-data">
-    <input type="file" name="xxx">
+    <input type="file" name="uploadFile">
     <button type="submit">上传</button>
 </form>
+<img src="" alt="">
 </body>
 <script>
+    // 上传文件并预览
     let f=document.querySelector('form')
     f.addEventListener('submit',(e)=>{
         // e.preventDefault() 要放在第一行
@@ -18,15 +20,24 @@
         e.preventDefault()
 
         let formData=new FormData()
-        let fileInput=document.querySelector('input[name="xxx"]')
-        formData.append('xxx',fileInput.files[0])
+        let fileInput=document.querySelector('input[name="uploadFile"]')
+        formData.append('uploadFile',fileInput.files[0])
 
         let xhr=new XMLHttpRequest()
+
+        // 初始化一个请求,包括指定请求方式，服务器位置等等
         xhr.open('POST',f.action)
-        xhr.onload=()=>{
-            console.log(xhr.response);
-        }
+
+        // 发送请求
         xhr.send(formData)
+
+        // XMLHttpRequest 请求成功完成时调用的函数。
+        xhr.onload=()=>{
+            console.log(`我要获取的图片Id为：${xhr.response}`);
+            let img=document.querySelector('img')
+            img.src=`http://localhost:3000/download/${xhr.response}`
+            console.log(`img.src 设置完成时间：第${new Date().getMilliseconds()}毫秒`);
+        }
     })
 </script>
 </html>
