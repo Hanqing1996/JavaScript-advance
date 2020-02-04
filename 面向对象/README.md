@@ -9,6 +9,20 @@
 #### 多态
 更灵活。一个东西拥有多种东西的属性
 
+#### 对象转字符串（序列化）
+```
+let obj={name:'libai',age:20}
+JSON.stringify(obj) // "{name:'libai',age:20}"
+```
+
+#### 字符串转对象（反序列化）
+```
+JSON.parse('{"foo" : 1 }'); // {foo:1}
+```
+
+#### 为什么后端给前端传的是字符串而非对象
+> 因为 HTTP 协议只支持字符串或二进制
+
 #### 'age' in obj
 ```
 let obj={name:'libai',age:20,gender:true}

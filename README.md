@@ -28,6 +28,9 @@
 * 事件冒泡
 
 #### [面向对象](https://github.com/Hanqing1996/JavaScript-advance/tree/master/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1)
+* 对象转字符串（序列化）
+* 字符串转对象（反序列化）
+* 为什么后端给前端传的是字符串而非对象
 * 'age' in obj
 * person2 = {name:"rick"};重新开辟内存空间给person2
 * arr.indexOf(obj)
