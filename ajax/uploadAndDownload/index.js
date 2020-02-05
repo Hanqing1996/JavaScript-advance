@@ -10,6 +10,7 @@ app.use(cors()) // 允许跨域
 
 // 这里的 'file' 与 form.html 里的 'file' 对应
 app.post('/upload',  upload.single('uploadFile'), function (req, res, next) {
+    console.log(req.file);
     let fileName=req.file.filename
     let object={id:fileName}
     res.end(JSON.stringify(object))

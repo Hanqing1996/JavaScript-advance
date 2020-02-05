@@ -172,6 +172,8 @@
 * 用 ajax 上传并预览图片
 
 #### Chrome
+* 切换网络
+![image](https://github.com/Hanqing1996/JavaScript-advance/blob/master/Chrome/GIF/trigger.gif)
 * Preserve log:记录每次页面重新加载后的页面资源下载情况
 ![image](https://github.com/Hanqing1996/JavaScript-advance/blob/master/Chrome/GIF/dd.gif)
 * 查看请求/响应头部,查看response内容

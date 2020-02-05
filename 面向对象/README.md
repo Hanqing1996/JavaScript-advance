@@ -29,7 +29,7 @@ let obj={name:'libai',age:20,gender:true}
 'age' in obj // true
 ```
 
-#### person2 = {name:"rick"};重新开辟内存空间给person2
+#### person2 = {name:"rick"};重新开辟内存空间给 person2
 ```
 let setPerson = function(person2){
  person2.name = "kevin";
