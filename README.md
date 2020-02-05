@@ -173,6 +173,7 @@
 
 #### Chrome
 * 切换网络
+> 注意每次刷新页面后网络将恢复为 online 状态
 ![image](https://github.com/Hanqing1996/JavaScript-advance/blob/master/Chrome/GIF/trigger.gif)
 * Preserve log:记录每次页面重新加载后的页面资源下载情况
 ![image](https://github.com/Hanqing1996/JavaScript-advance/blob/master/Chrome/GIF/dd.gif)
