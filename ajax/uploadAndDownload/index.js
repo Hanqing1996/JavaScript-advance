@@ -10,12 +10,13 @@ app.use(cors()) // 允许跨域
 
 // 这里的 'file' 与 form.html 里的 'file' 对应
 app.post('/upload',  upload.single('uploadFile'), function (req, res, next) {
-
-    res.end(req.file.filename)
+    let fileName=req.file.filename
+    let object={id:fileName}
+    res.end(JSON.stringify(object))
 })
 
 
-app.get('/download/:name', function (req, res, next) {
+app.get('/preview/:name', function (req, res, next) {
     console.log(`服务器响应 download 时间：第${new Date().getMilliseconds()}毫秒`);
     var options = {
         root: path.join(__dirname, 'uploads'),

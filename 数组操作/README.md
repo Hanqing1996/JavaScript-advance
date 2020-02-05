@@ -90,6 +90,14 @@ function fn(){
 fn.call(undefined,1,2,3);
 ```
 
+#### [...arr] 是 arr 的深拷贝 
+```
+let arr=[1,2]
+let arr2=[...arr]
+arr2.push(3)
+arr // [1,2]
+```
+
 #### 交换两个数的值
 ```
 a=3;

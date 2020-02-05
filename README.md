@@ -26,6 +26,10 @@
 #### [事件](https://github.com/Hanqing1996/JavaScript-advance/blob/master/%E4%BA%8B%E4%BB%B6/README.md)
 * [手动触发事件](https://github.com/Hanqing1996/JavaScript-advance/blob/master/%E5%85%B6%E5%AE%832/event.html)
 * 事件冒泡
+* 浏览器窗口事件
+    * resize：调整文档视图大小时触发
+    * scroll：
+
 
 #### [面向对象](https://github.com/Hanqing1996/JavaScript-advance/tree/master/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1)
 * 对象转字符串（序列化）
@@ -68,7 +72,7 @@
 #### [数组](https://github.com/Hanqing1996/JavaScript-advance/tree/master/%E6%95%B0%E7%BB%84%E6%93%8D%E4%BD%9C)
 * Array和Array.prototype
 * 伪数组
-* [...arguments]
+* [...arr] 是 arr 的深拷贝 
 * 交换两个数的值
 * join
 * splice:删除
