@@ -90,13 +90,22 @@ function fn(){
 fn.call(undefined,1,2,3);
 ```
 
-#### [...arr] 是 arr 的深拷贝 
+#### [...arr] 是 arr 的深拷贝吗
 ```
 let arr=[1,2]
 let arr2=[...arr]
 arr2.push(3)
 arr // [1,2]
 ```
+```
+let arr1=[{age:11},{age:12}]
+let arr2=[...arr1]
+arr2[1].age=15
+arr1 // [ { age: 11 }, { age: 15 } ]
+arr2 // [ { age: 11 }, { age: 15 } ]
+```
+> let arr2=[...arr] 的含义是复制元素在内存中的栈地址。所以如果 arr 中某个元素为对象，则该元素为深拷贝，如果某个元素为数值一类，则该元素为浅拷贝
+
 
 #### 交换两个数的值
 ```

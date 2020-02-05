@@ -72,7 +72,7 @@
 #### [数组](https://github.com/Hanqing1996/JavaScript-advance/tree/master/%E6%95%B0%E7%BB%84%E6%93%8D%E4%BD%9C)
 * Array和Array.prototype
 * 伪数组
-* [...arr] 是 arr 的深拷贝 
+* [...arr] 是 arr 的深拷贝吗
 * 交换两个数的值
 * join
 * splice:删除
