@@ -271,14 +271,24 @@ arr.forEach((item,index)=>{
 
 arr // [10,10,10]
 ```
-对于对象数组，同理
+对于对象数组，同理，但应该使用"更新字段"而非"对象赋值"
 ```
+// 更新字段
 let arr=[{age:12},{age:13}]
+let obj={age:10}
 arr.forEach((item,index)=>{
-    arr[index].age=10 
+    arr[index].age=obj.age 
 })
 
 arr // [{age:10},{age:10}]
+```
+注意不要用以下写法
+```
+// 对象赋值
+let arr=[{age:12},{age:13}]
+arr.forEach((item,index)=>{
+    arr[index]= obj
+})
 ```
 
 #### [常用]map
