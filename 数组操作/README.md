@@ -220,7 +220,7 @@ dataSource.sort((a,b)=>a.score-b.score)
 dataSource // [{name:'libai',score:80},{name:'dufu',score:82},{name:'zhangfei',score:90}]
 ```
 
-#### forEach(忘掉forEach,只用map)
+#### forEach
 * 语法
 ```
 arr=[1,2,3,4,5,6,7];
@@ -250,6 +250,35 @@ Array.prototype.forEach(fn){
         }
     }
 }
+```
+
+#### forEach 实现列表更新
+> 注意 forEach 的参数 item 只是一个值的副本（若元素为对象，则 item 为一个堆地址值）
+```
+let arr=[1,2,3]
+arr.forEach(item=>{
+    item=10 // item 只是每个元素值的副本，对 item 进行赋值无法影响原数组
+})
+
+arr // [1,2,3]
+```
+想要更新原数组，必须使用 index
+```
+let arr=[1,2,3]
+arr.forEach((item,index)=>{
+    arr[index]=10 // item 只是每个元素值的副本，对 item 进行赋值无法影响原数组
+})
+
+arr // [10,10,10]
+```
+对于对象数组，同理
+```
+let arr=[{age:12},{age:13}]
+arr.forEach((item,index)=>{
+    arr[index].age=10 
+})
+
+arr // [{age:10},{age:10}]
 ```
 
 #### [常用]map
@@ -371,3 +400,6 @@ array2=arr.reduce((result,item)=>{
     return result
 },[])
 ```
+
+#### Icon-font 如何生成 svj.js 文件
+我的项目->下载至本地->获取到 iconfont.js 文件-> 将 iconfont.js 加入项目，重命名为 svg.js

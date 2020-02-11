@@ -81,6 +81,7 @@
 * unshift:头部插入元素
 * sort
 * 对象数组按某个字段排序
+* forEach 实现列表更新
 * [常用]map
 * 用 map 和 sort 判断两个数组的元素id是否完全一致
 * filter
