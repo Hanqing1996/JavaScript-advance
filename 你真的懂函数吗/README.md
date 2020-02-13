@@ -399,6 +399,12 @@ var fn=(i,j)=> return i+j;
 
 console.log(fn(2,3)); // 5
 ```
+如果箭头函数返回一个对象，必须加 return 及{}
+```
+let fn=(age)=>{return {currentAge:age+1}}
+console.log(fn(14)) //{currentAge:15}
+```
+
 * 箭头函数没有this
 ```
 setTimeout(function(){
