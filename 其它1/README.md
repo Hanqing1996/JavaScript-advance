@@ -1,4 +1,18 @@
 # 其它
+#### 清除页面定时器:window.clearInterval(timerId)
+```
+let timerId=setInterval(() => {
+    n += 10
+    this.setState({
+    style: {
+        transform: `translateX(${n}%)`
+    }
+    })
+    if(n>=100){
+    window.clearInterval(timerId)
+    }
+}, 1000)
+```
 #### 用setTimeout模拟setInterval
 setInterval会不停执行，浪费内存，所以要改用setTimeout
 ```
