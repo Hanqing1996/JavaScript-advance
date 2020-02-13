@@ -2,6 +2,60 @@
 * [Chrome performance](https://zhuanlan.zhihu.com/p/29879682)
 
 # 函数
+#### return 的坑
+* 不 return 任何东西，相当于 return undefined
+```
+function fn(){
+    console.log('hi')
+}
+
+let a=fn()
+console.log(a) // undefined
+```
+等价于 
+```
+function fn(){
+    console.log('hi')
+    return undefined
+}
+
+let a=fn()
+console.log(a) // undefined
+```
+* return 只认识与它同行的字符
+```
+function fn(){
+    return
+    `str`
+}
+
+let a=fn()
+console.log(a) // undefined
+```
+等价于
+```
+function fn(){
+    return undefined
+}
+
+let a=fn()
+console.log(a) // undefined
+```
+解决方法
+```
+function fn(){
+    return(
+    `str`
+    )
+}
+
+let a=fn()
+console.log(a) // `str`
+```
+
+
+
+
 #### 几道关于函数和对象的面试题目
 ```
 let obj={}
