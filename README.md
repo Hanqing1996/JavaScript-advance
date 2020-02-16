@@ -10,6 +10,8 @@
 * js的预编译和解释执行
 * 函数的callstack 
 * this 
+* 对象内部的 this 和 Class 内部的 this
+* Class 内部的箭头函数可以用来保存该类
 * call/apply 
 * bind
 * 箭头函数

@@ -369,6 +369,69 @@ person.sayHi.call({name:'haha'})  // 这时函数sayHi的this就不是person了
 7. [为什么需要this](https://github.com/Hanqing1996/JavaScript-advance/blob/master/%E4%BD%A0%E7%9C%9F%E7%9A%84%E6%87%82%E5%87%BD%E6%95%B0%E5%90%97/%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81this.js)
 8. this的意义在于为函数指定一个依附的对象，但实际上不是所有函数都需要一个依附的对象(比如求和函数)
 
+#### 对象内部的 this 和 Class 内部的 this
+* 对象内部的 this
+```
+window.a=1000
+
+let obj={
+    a:12,
+    b:this.a+1
+}
+
+console.log(obj) //{a:12,b:1001} 说明对象内部的 this 为 window（浏览器中如此,Node.js 环境可能不同）
+```
+* Class 内部的 this
+```
+class Obj{
+    a=12
+    b=this.a+1
+}
+
+let obj2=new Obj()
+console.log(obj2.b) // 13 说明 Class 内部的 this 就是 Obj
+```
+#### Class 内部的箭头函数可以用来保存该类
+* 普通函数无法保存 Obj
+```
+class Obj{
+    a=12
+    fn=function(){
+        console.log(this.a)
+    }
+}
+
+let o=new Obj()
+
+class Obj2{
+    a=15
+    fn2=o.fn
+}
+
+let o2=new Obj2
+o2.fn2() // 15
+```
+* 箭头函数可以保存 Obj
+```
+class Obj{
+    a=12
+    fn=()=>{
+        console.log(this.a)
+    }
+}
+
+let o=new Obj()
+
+class Obj2{
+    a=15
+    fn2=o.fn
+}
+
+let o2=new Obj2
+o2.fn2() // 12
+```
+
+
 #### call与apply
 1. 唯一的区别在于参数
 ```
@@ -485,7 +548,8 @@ let fn=(age)=>{return {currentAge:age+1}}
 console.log(fn(14)) //{currentAge:15}
 ```
 
-* 箭头函数没有this
+* 箭头函数没有 this
+> 在箭头函数内部出现的 this 被箭头函数认为是一个叫做 this 的普通变量
 ```
 setTimeout(function(){
     console.log(this);
@@ -515,6 +579,10 @@ fn.call({name:'liming'});
 
 // 结果为window,即强制绑定this失败
 ```
+* 在A对象中的箭头函数，其内部 this 值为
+
+
+
 #### 柯里化函数
 * 示例
 ```
