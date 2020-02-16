@@ -122,6 +122,7 @@
 * 处理默认参数
 * 剩余参数
 * ...
+* obj={name:'liabi',age:12} obj2={...obj,age:13} 
 * {...obj1}深拷贝
 * var {name}={name:'libai'}
 * function createToast({propsData}){}  和 createToast( {propsData: toastOptions})

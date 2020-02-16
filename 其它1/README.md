@@ -387,6 +387,13 @@ let obj3={...obj1,...obj2};
 console.log(obj2) // { age: 12 }
 ```
 
+#### obj={name:'liabi',age:12} obj2={...obj,age:13} 
+```
+let obj={name:'liabi',age:12}
+let obj2={...obj,age:13} 
+console.log(obj2) // {name:'liabi',age:13} ,即age 被覆盖了
+```
+
 #### {name,age,male}
 * 解构赋值
 ```
