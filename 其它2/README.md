@@ -19,6 +19,13 @@ console.log(a) // a is not defined
 }
 console.log(a) // 2
 ```
+3. function 不服从块级作用域
+```
+{
+    function a(){console.log('haha')}
+}
+console.log(a) // function a(){console.log('haha')}
+```
 
 #### 字面量
 * 字面量：不是构造出来的量(顾名思义的量)
