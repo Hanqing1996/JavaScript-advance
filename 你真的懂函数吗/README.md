@@ -409,14 +409,14 @@ class Obj2{
 }
 
 let o2=new Obj2
-o2.fn2() // 15
+o2.fn2() // 15 ,等价于 o2.fn2.call(o2),所以 this 为 o2
 ```
 * 箭头函数可以保存 Obj
 ```
 class Obj{
     a=12
     fn=()=>{
-        console.log(this.a)
+        console.log(this.a) // 箭头函数认为 this 是一个变量，按照上述 Class 内部 this 的特点,this={a:12...},就此亘古不变
     }
 }
 
@@ -428,7 +428,7 @@ class Obj2{
 }
 
 let o2=new Obj2
-o2.fn2() // 12
+o2.fn2() // 12,读取 this 这个变量，其值为 {a:12...}
 ```
 
 
