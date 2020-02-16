@@ -229,7 +229,7 @@ console.log(fn.length); // 3
         console.log(a)
     }
     {
-        a=3
+        a=3 // a 的值被修改为3
         fn() // 3
     }
 }
@@ -245,6 +245,43 @@ console.log(fn.length); // 3
         fn() // 2 
     }
 }
+```
+* special
+> 这次声明的 fn,只能找这次声明的 x;
+```
+let sum=0
+function haha() {
+    let x = sum
+    // fn 声明了多次，每次声明的 fn 可以访问该次声明时块级作用域内声明的 x
+    function fn() {
+        console.log(x)
+        console.log(sum)
+    }
+    sum++
+    return fn
+}
+
+haha()() // 0 1
+haha()() // 1 2
+haha()() // 2 3
+```
+```
+let sum=0
+function haha() {
+    let x = sum
+    // fn 声明了多次，每次声明的 fn 可以访问该次声明时块级作用域内声明的 x
+    function fn() {
+        console.log(x)
+        console.log(sum)
+    }
+    sum++
+    x=20
+    return fn
+}
+
+haha()() // 20 1
+haha()() // 20 2
+haha()() // 20 3
 ```
 
 #### 变量提升
