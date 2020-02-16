@@ -264,25 +264,38 @@ function haha() {
 haha()() // 0 1
 haha()() // 1 2
 haha()() // 2 3
-```
-```
-let sum=0
-function haha() {
-    let x = sum
-    // fn 声明了多次，每次声明的 fn 可以访问该次声明时块级作用域内声明的 x
-    function fn() {
-        console.log(x)
-        console.log(sum)
-    }
-    sum++
-    x=20
-    return fn
-}
 
-haha()() // 20 1
-haha()() // 20 2
-haha()() // 20 3
+
+
+
+/* 
+// 预编译(声明)和解释执行(运行)过程如下
+
+// 全局声明
+let sum
+function haha(){}
+
+// 全局运行
+sum=0
+haha()()
+
+// 第一个 haha 声明
+let x
+function fn(){}
+
+// 第一个 haha 运行
+sum++
+x=20
+return fn
+
+// 第一个 haha()/fn 声明
+
+// 第一个 haha()/fn 运行
+console.log(x)
+console.log(sum)
+*/
 ```
+
 
 #### 变量提升
 1. 所有的声明都会被提升到当前作用域的最顶端

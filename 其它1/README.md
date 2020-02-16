@@ -131,6 +131,23 @@ var a=1
 var a=2
 ```
 
+#### var服从函数作用域，不服从块级作用域
+* var服从函数作用域
+```
+function fn(){
+    var a=2
+}
+
+console.log(a) // a is not defined
+```
+* var 不服从块级作用域
+```
+{
+    var a=2
+}
+console.log(a) // 2
+```
+
 #### let不存在变量提升
 ```
 let a=1
