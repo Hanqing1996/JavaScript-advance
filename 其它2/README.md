@@ -1,3 +1,25 @@
+#### 【ES6】块级作用域{}
+1. let 和 const 服从块级作用域的。
+```
+{
+    let a=2
+}
+console.log(a) // a is not defined
+```
+```
+{
+    const a=2
+}
+console.log(a) // a is not defined
+```
+2. var 不服从块级作用域
+```
+{
+    var a=2
+}
+console.log(a) // 2
+```
+
 #### 字面量
 * 字面量：不是构造出来的量(顾名思义的量)
 ```
