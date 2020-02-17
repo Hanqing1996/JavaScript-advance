@@ -217,6 +217,7 @@ console.log(fn.length); // 3
 ```
 
 #### 词法分析树
+![image](https://github.com/Hanqing1996/JavaScript-advance/blob/master/%E4%BD%A0%E7%9C%9F%E7%9A%84%E6%87%82%E5%87%BD%E6%95%B0%E5%90%97/images/tree.jpg)
 1. 一个函数所能访问的变量在函数定义时就已经决定了 
 2. 一个函数所能访问的变量的值不是在函数定义时就能决定的 
 * [介绍](https://xiedaimala.com/tasks/f3b7885d-ac51-4c41-a498-d01d532cc651/video_tutorials/76247167-7764-4c49-bf78-53b4d126da7a)
