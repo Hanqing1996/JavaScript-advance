@@ -40,10 +40,12 @@ test(2);
 // test声明
 function a() {} // 局部变量a的值被修改为一个函数
 function d() {}
+// var a // 参数a视为局部变量，但已经有函数a,所以声明无效
 //var a // 此声明无效
 var b
 
 // test运行
+a=2 // 参数，视为 test 内部的局部变量
 console.log(a); // [Function: a]
 a=123;
 console.log(a); // 123
