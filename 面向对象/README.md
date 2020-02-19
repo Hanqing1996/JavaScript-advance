@@ -250,6 +250,22 @@ Object.defineProperty(oldObj,'a',{
 oldObj.a=3
 console.log(oldObj.a) // 3
 ``` 
+3. 
+```
+let _name = 'MyName'
+let obj = {}
+Object.defineProperty(obj, 'name', {
+    get(){
+        return _name
+    },
+    set(value){
+        _name = value  // _name=value;obj['name']=_name
+    }
+})
+
+obj.name = 'NewName'
+console.log(_name) // 'NewName'
+```
 #### 关键字的概念
 * 关键字不能声明同名变量
 ```

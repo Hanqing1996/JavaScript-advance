@@ -34,6 +34,19 @@ var fn=function(){
 
 console.log(fn`${name}是${category}`);// liming是好人
 ```
+```
+{
+    function fn(strings, name, age) {
+        return name + strings[0] + strings[1] + age
+    }
+    const name = 'libai'
+    const age = 18
+
+    const output = fn`我是${name}，今年${age}`
+
+    console.log(output) // libai我是，今年18
+}
+```
 #### 为什么字符串不应该作为函数参数
 * 传字符串
 ```
