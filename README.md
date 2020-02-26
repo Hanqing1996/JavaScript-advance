@@ -39,9 +39,8 @@
 * 字符串转对象（反序列化）
 * 为什么后端给前端传的是字符串而非对象
 * 'age' in obj
-* person2 = {name:"rick"};重新开辟内存空间给person2
+* person2 = {name:"rick"};重新开辟内存空间给 person2
 * arr.indexOf(obj)
-* 为已有的类添加公共属性
 * let obj={} obj.age={} 内存变化
 * obj.age.type/undefined 与 obj.age.type.required/error
 * {sayHi(){console.log('h1')}}
@@ -50,26 +49,34 @@
 * 关键字的概念
 * Object的属性遍历
 * enumerable:设置某个属性是否可被遍历到
-* 【面试】实现a===1&&a===2&&a===3
 * undefined的本质是window的只读属性
 * 设置对象的只读属性
 * configurable
-* obj['name']=12   obj[name]=12/为对象添加键值对   obj={[name]:12}  obj={name:12}为空对象添加键值对
+* a===1&&a===2&&a===3
+* obj['name']=12   obj[name]=12/为对象添加键值对   obj={[name]:12}  obj={name:12}/为空对象添加键值对 
 * var obj={a,b,c}
 * var obj={sayHi(){}}
-* get与set
 * 如何生成一个空对象
-* object
-* object的存储
-* Object.keys(obj):遍历对象属性
+* Object.keys(obj)
+* [object的存储](https://xiedaimala.com/tasks/5833c9d4-ebd5-44e4-91b5-661f476f9cad/video_tutorials/ccd79503-4f54-4b31-9f91-6f76f6073722)
+* 函数是一个对象
 * let a=Object.create(b):等价于a.__proto__=b
-* __proto__和prototype的区别
-* obj与obj.__proto__
-* 原型链
-* 私有属性与共有属性
 * 对构造函数中的this的理解
-* 构造函数
-* new/create/class
+* 函数Human的两种调用方法
+* 为已有的类添加公共属性
+* 构造函数规则
+* __proto__和prototype的区别
+* [__proto__ 的优点：省内存](https://xiedaimala.com/tasks/5833c9d4-ebd5-44e4-91b5-661f476f9cad/video_tutorials/ccd79503-4f54-4b31-9f91-6f76f6073722)
+* 访问 __proto__ 
+* 为什么是原型"链"
+* class 中的 __proto__
+* constructor 
+* 下面写法会覆盖Solider.prototype，导致constructor丢失
+* new
+* 私有属性与共有属性
+* 用js模拟继承(__proto__/new/create/class)
+* class
+* super
 * js的对象和JSON的对象的区别
 
 #### [数组](https://github.com/Hanqing1996/JavaScript-advance/tree/master/%E6%95%B0%E7%BB%84%E6%93%8D%E4%BD%9C)
