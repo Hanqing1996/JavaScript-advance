@@ -37,6 +37,7 @@ run()
 ```
 
 #### export
+1. 常见用法
 ```
 // a.js
 export default "some data";
@@ -54,6 +55,16 @@ export const someValue = "some data";
 // b.js
 import { someValue as PrivateKey } from "./a.js";
 ```
+2. 将 import 和 export 放在一句话里
+```
+export {default as GIcon} from './components/button/icon'
+```
+等价于
+```
+import {GIcon} from './components/button/icon'
+export GIcon
+```
+
 #### 默认值设置 num=num||1
 设置num的默认值为1
 ```
