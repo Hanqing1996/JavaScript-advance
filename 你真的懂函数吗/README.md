@@ -416,7 +416,91 @@ money-=10 // 往上，最近处 money 的值为90,因此 money 的值变为80
 console.log(money)
 */
 ```
+* 案例4（函数保存 money 状态）
+```
+let makeAccount=(n)=>{
+    let money=n
+    return (instruction)=>{
+        return (amount)=>{
+            money-=amount
+            console.log(money)
+        }
+    }
+}
 
+
+let account=makeAccount(100)
+account('take')(25)
+account('take')(25)
+
+// 全局声明
+let makeAccount
+let account
+
+// 全局运行
+makeAccount=()=>{...}
+makeAccount(100)
+
+// makeAccount 声明
+let n
+let money
+
+// makeAccount 运行
+n=100
+money=n // money=100
+return ()=>{...}
+
+// 全局运行
+account=(instruction)=>{
+    return (amount)=>{
+        money-=amount
+        console.log(money)
+    }
+}
+
+account('take')
+
+// account 声明
+let instruction
+
+// acount 运行
+instruction='take'
+return (amount)=>{
+    money-=amount
+    console.log(money)
+}
+
+// 全局运行
+account('take')(25)
+
+// account('take') 声明
+let amount
+
+// account('take') 运行
+amount=25
+money-=amount // 往上瞅，money为100，所以这里变为 75
+
+
+// 全局运行
+account('take')(25)
+
+// account 声明
+let instruction
+
+// acount 运行
+instruction='take'
+return (amount)=>{
+    money-=amount
+    console.log(money)
+}
+
+// account('take') 声明
+let amount
+
+// account('take') 运行
+amount=25
+money-=amount // 往上瞅，money为75，所以这里变为50
+```
 
 #### 变量提升
 1. 所有的声明都会被提升到当前作用域的最顶端
