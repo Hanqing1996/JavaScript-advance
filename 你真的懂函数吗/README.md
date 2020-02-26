@@ -220,6 +220,8 @@ console.log(fn.length); // 3
 ![image](https://github.com/Hanqing1996/JavaScript-advance/blob/master/%E4%BD%A0%E7%9C%9F%E7%9A%84%E6%87%82%E5%87%BD%E6%95%B0%E5%90%97/images/tree.jpg)
 1. 一个函数所能访问的变量在函数定义时就已经决定了 
 2. 一个函数所能访问的变量的值不是在函数定义时就能决定的 
+3. 想要知道一个函数能访问哪些变量，要根据词法分析树。
+4. 想要知道一个函数在执行时，访问的某个变量值是多少，要根据预编译(声明)和解释执行(运行)过程，找最近出现的该变量的值
 * [介绍](https://xiedaimala.com/tasks/f3b7885d-ac51-4c41-a498-d01d532cc651/video_tutorials/76247167-7764-4c49-bf78-53b4d126da7a)
 * 作用
 > 确定当前函数能访问哪些变量
@@ -247,28 +249,8 @@ console.log(fn.length); // 3
     }
 }
 ```
-* special
-> 这次声明的 fn,只能找这次声明的 x;
+* 案例一
 ```
-let sum=0
-function haha() {
-    let x = sum
-    // fn 声明了多次，每次声明的 fn 可以访问该次声明时块级作用域内声明的 x
-    function fn() {
-        console.log(x)
-        console.log(sum)
-    }
-    sum++
-    return fn
-}
-
-haha()() // 0 1
-haha()() // 1 2
-haha()() // 2 3
-
-
-
-
 /* 
 // 预编译(声明)和解释执行(运行)过程如下
 
@@ -278,22 +260,160 @@ function haha(){}
 
 // 全局运行
 sum=0
-haha()()
+haha()
 
 // 第一个 haha 声明
 let x
 function fn(){}
 
 // 第一个 haha 运行
-sum++
-x=20
+x=sum
+sum++ // sum 的值变为1
 return fn
+
+// 全局运行
+haha()()
 
 // 第一个 haha()/fn 声明
 
 // 第一个 haha()/fn 运行
 console.log(x)
-console.log(sum)
+console.log(sum) // 往上瞅，最近处 sum 的值为1，所以打印1
+
+// 全局运行
+haha()
+
+// 第二个 haha 声明
+let x
+function fn(){}
+
+// 第二个 haha 运行
+x=sum
+sum++ // sum 的值变为2
+return fn
+
+// 第二个 haha()/fn 声明
+
+// 第二个 haha()/fn 运行
+console.log(x)
+console.log(sum) // 往上瞅，最近处 sum 的值为2，所以打印2
+*/
+```
+* 案例2
+```
+const taker=()=>{
+    let money=100
+    return (n)=>{
+        money-=n
+        console.log(money)
+    }
+}
+
+taker()(10)
+taker()(20)
+
+/*
+// 全局声明
+const taker
+
+// 全局运行
+taker=()=>{...}
+taker()
+
+// taker 声明
+let money
+
+// taker 运行
+money=100
+return (n)=>{}
+
+// 全局运行
+taker()(10)
+
+// (n)=>{} 声明
+let n
+
+// (n)=>{} 运行
+n=10
+money-=n // 往上瞅，最近处 money 的值为100,因此 money 的值变为90
+console.log(money)
+
+// 全局运行
+taker()
+
+// taker 声明
+let money
+
+// taker 运行
+money=100
+return (n)=>{}
+
+// 全局运行
+taker()(20)
+
+// (n)=>{} 声明
+let n
+
+// (n)=>{} 运行
+n=20
+money-=n // 往上瞅，最近处 money 的值为100,因此 money 的值变为80
+console.log(money)
+*/
+```
+* 案例三（闭包）
+```
+const taker=function(){
+    console.log('f 执行')
+    let money=100
+    return (n)=>{
+        money-=n
+        console.log(money)
+    }
+}()
+
+taker(10)
+taker(20)
+
+
+/*
+// 全局声明 
+const taker
+
+// 全局运行
+function(){...}()
+
+// function(){...} 声明
+let money 
+
+// function(){...} 运行
+money=100 // A1
+return (n)=>{
+    money-=n
+    console.log(money)
+}
+
+// 全局运行
+taker=(n)=>{
+    money-=n
+    console.log(money)
+}
+
+taker(10)
+
+// taker 声明
+
+// taker运行
+money-=10 // 往上瞅，最近处 money 的值为100,因此 money 的值变为90
+console.log(money)
+
+// 全局声明
+taker(20)
+
+// taker 声明
+
+// taker运行
+money-=10 // 往上，最近处 money 的值为90,因此 money 的值变为80
+console.log(money)
 */
 ```
 
