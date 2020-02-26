@@ -111,23 +111,6 @@ if(arr.filter(item=>item.id===targetId).length){
 }
 ```
 
-#### 为已有的类添加公共属性
-```
-Human.prototype.newFn=()=>{
-    ...
-}
-```
-原理:obj.fn=obj._prop_.fn
-```
-class Validator {
-
-    // 添加公共方法
-    add(newType,fn){
-        Validator.prototype[newType]=fn
-    }
-    ...
-}
-```
 
 #### let obj={} obj.age={} 内存变化
 ```
@@ -467,18 +450,6 @@ var obj=Object.create(null)
 obj // No properties
 ```
 
-
-
-#### object
-1. 对象
-2. 函数
-3. 数组
-* 注意
-```
-typeof Array // function
-type of [1,2,3] // object
-```
-
 #### Object.keys(obj)
 ```
 let obj={prop1:'a',prop2:'b',prop3:'c'}
@@ -489,33 +460,6 @@ for(let i=0;i<keys.length;i++){
 
 // 输出:prop1 prop2 prop3
 ```
-
-#### let a=Object.create(b):等价于a.__proto__=b
-```
-let name='libai'
-let b={name}
-let a=Object.create(b)
-
-a.name // libai
-```
-
-#### __proto__和prototype的区别
-1. 函数才有prototype
-2. 对象才有__proto__
-
-#### obj与obj.__proto__
-1. obj不等于obj.__proto__
-```
-[1,2,3]===[1,2,3].__proto__
-false
-```
-2. obj.fn与obj.__proto__.fn
-```
-[1,2,3].slice===[1,2,3].__proto__.slice
-true
-```
-这是因为obj与obj.__proto__这两个对象存储在不同的内存空间中，而obj.fn与obj.__proto__.fn存储同一个内存地址(fn的内存地址)
-
 
 #### [object的存储](https://xiedaimala.com/tasks/5833c9d4-ebd5-44e4-91b5-661f476f9cad/video_tutorials/ccd79503-4f54-4b31-9f91-6f76f6073722)
 ```
@@ -545,71 +489,6 @@ sayName:A34
 {name:sayName,functionBody:'console.log(this.name);'}
 ```
 
-#### [原型链](https://xiedaimala.com/tasks/5833c9d4-ebd5-44e4-91b5-661f476f9cad/video_tutorials/ccd79503-4f54-4b31-9f91-6f76f6073722)
-```
-let obj={name:'libai',age:17}
-console.log(obj.toString()) // ƒ toString() { [native code] }
-```
-为什么我们创建的 obj 会具有 toString 方法？这是因为 js 的发明者们发现对象总是有公共属性/方法的。
-```
-let obj1={name:'libai',gender:true,sleep(){console.log('I'm sleeping')}}
-let obj2={name:'zhangfei',gender:true,sleep(){console.log('I'm sleeping')}}
-let obj3={home:'hz',gender:true,sleep(){console.log('I'm sleeping')}}
-```
-比如上述代码中，每个对象都有 gender 这个属性和 sleep 这个方法，但是每个对象都需要独立划分出两片内存空间存储它们。这在内存紧张的上世纪是极为浪费内存的行为。于是 js 的发明者想到，
-```
-// 栈内存
-obj1:A1111
-obj2:A2222
-obj3:A3333
-
-// 堆内存A444处
-gender:true
-sleep:A555
-
-// 堆内存A555处
-{name:sleep,functionBody:'console.log('I'm sleeping');'}
-
-// 堆内存A1111处
-name:'libai'
-__proto__:A444
-
-// 堆内存A2222处
-name:'zhangfei'
-__proto__:A444
-
-// 堆内存A3333处
-home:'hz'
-__proto__:A444
-```
-堆内存A444处存放公共的属性/方法；每个对象只需通过 __proto__ 即可访问到它们。
-
-#### protype:公共属性/方法
-1. window.Array.protype：数组公共属性/方法
-2. window.Function.protype：
-3. window.Object.protype：
-
-#### 为何都是Object,数组有push方法,而对象没有；函数有console.log方法,而对象没有
-1. 数组
-```
-arr=[1,2,3]
-
-arr.__proto=window.Array.protype(有push方法)
-window.Array.protype.__proto__=window.Object.protype
-```
-2. 函数
-```
-fn1=function(){}
-
-fn1.__proto__=window.Function.protype(有console.log方法)
-window.Function.protype.__proto=window.Object.protype
-```
-3. 对象
-```
-obj1={}
-
-obj1.__proto__=window.Object.protype
-```
 #### 函数是一个对象
 ```
 // obj是一个函数，也是一个对象
@@ -634,27 +513,17 @@ obj.__proto__=objGongYong
 obj.call(obj) // hello world
 ```
 
-
-#### 私有属性与共有属性
-见[作业第三题](https://github.com/Hanqing1996/JavaScript-advance/blob/master/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/%E4%BD%9C%E4%B8%9A.js)
-
-#### new
-* [教程](https://xiedaimala.com/tasks/5833c9d4-ebd5-44e4-91b5-661f476f9cad/video_tutorials/4312943e-4fd3-4225-97e5-d4f04d6845be)
-* [文章](https://zhuanlan.zhihu.com/p/23987456)
-* [不用new创造solider](https://github.com/Hanqing1996/JavaScript-advance/blob/master/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/createsolider_without_new.js)
-* [用new创造solider](https://github.com/Hanqing1996/JavaScript-advance/blob/master/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/createsolider_with_new.js)
-
-
-#### prototype
-* Solioder.prototype的作用是在var s=new Solider()时,为对象s指定其__proto__
-
-#### constructor 
-* constructor的作用是记录对象是由哪个公共构造函数创建的
+#### let a=Object.create(b):等价于a.__proto__=b
 ```
-Solider.prototype = {
-  constructor: Solider
-}
+let name='libai'
+let b={name}
+let a=Object.create(b)
+
+a.name // libai
 ```
+
+
+
 #### 对构造函数中的this的理解
 * 是{}
 
@@ -705,6 +574,146 @@ Human.call(per,'yellow','xiaoming')
 console.log(per); // { hobby: 'football', color: 'yellow', name: 'xiaoming' }
 ```
 
+#### 为已有的类添加公共属性
+```
+Human.prototype.newFn=()=>{
+    ...
+}
+```
+原理:obj.fn=obj._prop_.fn
+```
+class Validator {
+
+    // 添加公共方法
+    add(newType,fn){
+        Validator.prototype[newType]=fn
+    }
+    ...
+}
+```
+
+#### 构造函数规则
+1. 构造函数大写
+2. 构造函数省略Create
+3. 构造函数若无参数，则不加()
+```
+new Solider
+```
+
+#### __proto__和prototype的区别
+1. 函数才有prototype（window.XXX.prototype 除外）
+2. 对象才有__proto__
+
+#### [__proto__ 的优点：省内存](https://xiedaimala.com/tasks/5833c9d4-ebd5-44e4-91b5-661f476f9cad/video_tutorials/ccd79503-4f54-4b31-9f91-6f76f6073722)
+```
+let obj={name:'libai',age:17}
+console.log(obj.toString()) // ƒ toString() { [native code] }
+```
+为什么我们创建的 obj 会具有 toString 方法？这是因为 js 的发明者们发现对象总是有公共属性/方法的。
+```
+let obj1={name:'libai',gender:true,sleep(){console.log('I'm sleeping')}}
+let obj2={name:'zhangfei',gender:true,sleep(){console.log('I'm sleeping')}}
+let obj3={home:'hz',gender:true,sleep(){console.log('I'm sleeping')}}
+```
+比如上述代码中，每个对象都有 gender 这个属性和 sleep 这个方法，但是每个对象都需要独立划分出两片内存空间存储它们。这在内存紧张的上世纪是极为浪费内存的行为。于是 js 的发明者想到，
+```
+// 栈内存
+obj1:A1111
+obj2:A2222
+obj3:A3333
+
+// 堆内存A444处
+gender:true
+sleep:A555
+
+// 堆内存A555处
+{name:sleep,functionBody:'console.log('I'm sleeping');'}
+
+// 堆内存A1111处
+name:'libai'
+__proto__:A444
+
+// 堆内存A2222处
+name:'zhangfei'
+__proto__:A444
+
+// 堆内存A3333处
+home:'hz'
+__proto__:A444
+```
+堆内存A444处存放公共的属性/方法；每个对象只需通过 __proto__ 即可访问到它们。
+
+#### 访问 __proto__ 
+* 函数，数组，对象的 __proto__ 可以分别通过以下途径访问到
+```
+let obj={name:'libai'}
+obj.__proto__===window.Object.prototype // true
+window.Object.prototype.age=13
+obj.age //13
+```
+```
+let fn=()=>{console.log('hi')}
+fn.__proto__===window.Function.prototype // true
+```
+```
+let arr=[1,2,3]
+arr.__proto__===window.Array.prototype // true
+```
+* Number,String,Symbol,Undefiend,Boolean 等同理
+```
+let a=12
+a.__proto__===window.Number.prototype // true
+```
+```
+let str='hi'
+str.__proto__===window.String.prototype // true
+```
+
+#### 为什么是原型"链"
+> 首先要明白层级关系，window.Object.prototype 是一切的顶端，window.Array.prototype,window.Array.prototype 都次于它。
+```
+// 修改 window.Object.prototype，会影响到 window.Array.prototype
+window.Object.prototype.age=1000
+window.Array.prototype.age //1000
+```
+``` 
+// 但是修改 window.Array.prototype 不会影响 window.Object.prototype
+window.Array.prototype.name='libai'
+window.Object.prototype.age //undefined
+```
+> 如果我们想访问 arr.age，那么浏览器首先找 arr 有无 age字段，没有则去找 window.Array.prototype，再找不到则去找 window.Object.prototype。这构成了一条链状关系。
+```
+window.Object.prototype.age=1000
+let arr=[1,2]
+arr.age //1000
+```
+
+#### class 中的 __proto__
+* new
+```
+jack = new Human(); 
+```
+等价于
+```
+jack.__proto__=Human.prototype
+```
+* extends
+```
+Asian extends Human
+```
+等价于
+```
+Asian.prototype.__proto__ = Human.prototype
+```
+
+#### constructor 
+* constructor的作用是记录对象是由哪个公共构造函数创建的
+```
+Solider.prototype = {
+  constructor: Solider
+}
+```
+
 #### 下面写法会覆盖Solider.prototype，导致constructor丢失
 ```
 Solider.protoype = {
@@ -721,19 +730,19 @@ Solider.protoype = {
   Solider.prototype.行走 = function(){ /*走俩步的代码*/}
   Solider.prototype.奔跑 = function(){ /*狂奔的代码*/  }
 ```
+
 #### new
+* [教程](https://xiedaimala.com/tasks/5833c9d4-ebd5-44e4-91b5-661f476f9cad/video_tutorials/4312943e-4fd3-4225-97e5-d4f04d6845be)
+* [文章](https://zhuanlan.zhihu.com/p/23987456)
+* [不用new创造solider](https://github.com/Hanqing1996/JavaScript-advance/blob/master/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/createsolider_without_new.js)
+* [用new创造solider](https://github.com/Hanqing1996/JavaScript-advance/blob/master/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/createsolider_with_new.js)
 * new关注的是：什么是共有的，什么是私有的
 1. 凡公有的，交给Solider.prototype(公共构造函数constructor、公共属性)
 2. 凡私有的，交给Solider，在其中设置私有属性和方法(this.)
 
+#### 私有属性与共有属性
+见[作业第三题](https://github.com/Hanqing1996/JavaScript-advance/blob/master/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/%E4%BD%9C%E4%B8%9A.js)
 
-#### 构造函数规则
-1. 构造函数大写
-2. 构造函数省略Create
-3. 构造函数若无参数，则不加()
-```
-new Solider
-```
 
 #### 用js模拟继承(__proto__/new/create/class)
 * 需求
@@ -746,14 +755,13 @@ Solider的基类是Human,用Solider可以得到一个对象s,s具有作为Solide
 5. [IE(面试考)：用create实现Solider.prototype.__proto__ = Human.prototype](https://github.com/Hanqing1996/JavaScript-advance/blob/master/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/%E7%94%A8js%E6%A8%A1%E6%8B%9F%E7%BB%A7%E6%89%BF5.js)
 6. [ES6:class](https://github.com/Hanqing1996/JavaScript-advance/blob/master/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/%E7%94%A8js%E6%A8%A1%E6%8B%9F%E7%BB%A7%E6%89%BF6.js)
 
-#### create()
-```
-A=Object.create(B);
-```
-等价于
-```
-A.__proto__ = B;
-```
+#### class
+* class A extends B:说明B是A的父类
+* 在class中，constructor(){}内部的，为私有属性；外部的，为共有属性
+* super()只能为父类传递私有属性，不能传递公有属性,公有属性是由extends实现的
+* 注意公有属性只能是函数，而私有属性可以是函数，也可以不是函数
+* class的本质仍然是函数(一个无法call的函数)
+
 #### super
 * 作用:为s设置作为Human的属性
 ```
@@ -763,17 +771,6 @@ super("yellow", "nezha")
 ```
 Human.call(this, "yellow", "nezha")
 ```
-#### class
-* class A extends B:说明B是A的父类
-* A extends B
-实现了
-```
-A.prototype.__proto__ = B.prototype
-```
-* 在class中，constructor(){}内部的，为私有属性；外部的，为共有属性
-* super()只能为父类传递私有属性，不能传递公有属性,公有属性是由extends实现的
-* 注意公有属性只能是函数，而私有属性可以是函数，也可以不是函数
-* class的本质仍然是函数(一个无法call的函数)
 
 #### js的对象和JSON的对象的区别
 1. JSON的对象，属性名必须用""括起来
