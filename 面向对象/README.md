@@ -545,9 +545,44 @@ sayName:A34
 {name:sayName,functionBody:'console.log(this.name);'}
 ```
 
-#### object的原型链
-* [toString()是怎么来的](https://xiedaimala.com/tasks/5833c9d4-ebd5-44e4-91b5-661f476f9cad/video_tutorials/ccd79503-4f54-4b31-9f91-6f76f6073722)
-* 原型链的优点：省内存
+#### [原型链](https://xiedaimala.com/tasks/5833c9d4-ebd5-44e4-91b5-661f476f9cad/video_tutorials/ccd79503-4f54-4b31-9f91-6f76f6073722)
+```
+let obj={name:'libai',age:17}
+console.log(obj.toString()) // ƒ toString() { [native code] }
+```
+为什么我们创建的 obj 会具有 toString 方法？这是因为 js 的发明者们发现对象总是有公共属性/方法的。
+```
+let obj1={name:'libai',gender:true,sleep(){console.log('I'm sleeping')}}
+let obj2={name:'zhangfei',gender:true,sleep(){console.log('I'm sleeping')}}
+let obj3={home:'hz',gender:true,sleep(){console.log('I'm sleeping')}}
+```
+比如上述代码中，每个对象都有 gender 这个属性和 sleep 这个方法，但是每个对象都需要独立划分出两片内存空间存储它们。这在内存紧张的上世纪是极为浪费内存的行为。于是 js 的发明者想到，
+```
+// 栈内存
+obj1:A1111
+obj2:A2222
+obj3:A3333
+
+// 堆内存A444处
+gender:true
+sleep:A555
+
+// 堆内存A555处
+{name:sleep,functionBody:'console.log('I'm sleeping');'}
+
+// 堆内存A1111处
+name:'libai'
+__proto__:A444
+
+// 堆内存A2222处
+name:'zhangfei'
+__proto__:A444
+
+// 堆内存A3333处
+home:'hz'
+__proto__:A444
+```
+堆内存A444处存放公共的属性/方法；每个对象只需通过 __proto__ 即可访问到它们。
 
 #### protype:公共属性/方法
 1. window.Array.protype：数组公共属性/方法
