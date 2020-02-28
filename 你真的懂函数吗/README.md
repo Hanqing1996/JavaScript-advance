@@ -814,7 +814,7 @@ console.log(fn(14)) //{currentAge:15}
 ```
 
 * 箭头函数没有 this
-> 在箭头函数内部出现的 this 被箭头函数认为是一个叫做 this 的普通变量
+> 在箭头函数内部出现的 this 被箭头函数认为是一个叫做 this 的普通变量，其值取决于上下文环境。
 ```
 setTimeout(function(){
     console.log(this);
@@ -844,9 +844,20 @@ fn.call({name:'liming'});
 
 // 结果为window,即强制绑定this失败
 ```
-* 在A对象中的箭头函数，其内部 this 值为
+* class 内的箭头函数
+```
+class A{
+    constructor(){
+        this.n=1
+        this.fn=()=>{
+            console.log(this) // 这个 this 的值与 this.fn 的 this 一致，即 A
+        }
+    }
+}
 
-
+const a=new A()
+a.fn() // A {n: 1, fn: }
+```
 
 #### 柯里化函数
 * 示例
