@@ -134,6 +134,18 @@ Array.prototype.join = function(char){
   return result
 }
 ```
+* 如果数组包含 undefined 呢
+> undefined 会变成一个空格
+```
+let arr=[1,2,3,undefined,undefined,4]
+arr.join(' ') // "1 2 3   4"
+```
+> 不想要多余空格呢?
+```
+let arr=[1,2,3,undefined,undefined,4]
+arr.filter(Boolean).join(' ') // "1 2 3 4"
+```
+
 #### [splice:删除](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/splice)
 * arr.splice(从第几个元素开始操作,准备删除的元素个数,准备插入的元素)
 ```
