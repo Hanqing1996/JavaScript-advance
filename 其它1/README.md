@@ -539,6 +539,23 @@ var [a, ,b]=[1,2,3]
 console.log(a) // 1
 console.log(b) // 3
 ```
+#### const newFormValue = {...props.value, [name]: value}
+> 用于合并属性
+```
+const props={
+    value:{
+        username:'',
+        password:''
+    }
+}
+
+const name='username'
+const value='libai'
+
+const newFormValue = {...props.value, [name]: value}
+
+console.log(newFormValue)//{username: "libai", password: ""}
+```
 
 #### 深度拷贝 
 > 另外开辟一片内存空间，两个对象，分别置于两片空间
