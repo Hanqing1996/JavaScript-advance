@@ -131,6 +131,7 @@
 * 剩余参数
 * ...
 * obj={name:'liabi',age:12} obj2={...obj,age:13} 
+* const newFormValue = {...props.value, [name]: value}
 * {...obj1}深拷贝
 * var {name}={name:'libai'}
 * function createToast({propsData}){}  和 createToast( {propsData: toastOptions})
