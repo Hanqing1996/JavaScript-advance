@@ -422,6 +422,37 @@ array2=arr.reduce((result,item)=>{
     return result
 },[])
 ```
+#### flat:拍平数组
+```
+// flat:拍平多维数组（二维->一维）
+const flat=(array)=>{
+    let result=[]
+    array.forEach((item)=> {
+        if (item instanceof Array) {
+            result.push(...item)
+        } else {
+            result.push(item)
+        }
+    })
+    return result
+}
+
+let arr=[1,2,[3,4]]
+console.log(flat(arr)) // [1, 2, 3, 4]
+```
+
+#### zip:拉拉链
+```
+const zip=(arr)=>{
+    let res={}
+    arr.map(item=>{
+        res={...res,[item[0]]:item[1]}
+    })
+}
+const arr=[['a',1],['b',2],['c',3]]
+console.log(res)// {a: 1, b: 2, c: 3}
+```
+#### 去除数组中的 undefiend 元素
 
 #### Icon-font 如何生成 svj.js 文件
 我的项目->下载至本地->获取到 iconfont.js 文件-> 将 iconfont.js 加入项目，重命名为 svg.js
