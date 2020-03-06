@@ -98,6 +98,9 @@
 * 对象数组移除某个元素：copy = copy.filter(item => item.id !== targetId)
 * 用redue实现map
 * 用reduce实现filter
+* flat:拍平数组
+* zip:拉拉链
+* 去除数组中的 undefiend 元素
  
 
 #### [字符串](https://github.com/Hanqing1996/JavaScript-advance/tree/master/%E5%AD%97%E7%AC%A6%E4%B8%B2)
