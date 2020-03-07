@@ -1,3 +1,288 @@
+## Eventloop
+
+#### 【面试】
+> 是一个变化的状态
+
+#### Node.js 中的 Eventloop
+> 注意进入 Timers/checkout 阶段后，会把该阶段已有队列中所有任务清空，然后立即进入下个阶段。如果清空过程中又有任务入队，不在本轮做处理，等到下次进入该阶段时再做处理。
+* 阶段划分
+```
+Timers->Poll（停留一段时间）->Checkout->Timers...
+```
+* API 与对应阶段
+1. seTimeout
+> 被放入 Timers 阶段的任务队列。
+2. setImmediate
+> 被放入 checkout阶段的任务队列。
+3. process.nextTick
+> 会被放入指针所指阶段，并立即被执行（在执行完毕所有同步任务后，优先于该阶段所有异步任务执行，可以认为是被放在队列头部）。
+4. then
+> Node.js 的 Promise 的 then 实现是基于以上API的，比如如果是基于 nextTrick,那就按照 nextTrick 思考。
+* poll 的特点
+1. 会停留一段时间，期间不断询问有无异步任务需被处理。
+2. 若在 poll 阶段，此时 Timer/Checkout 有异步任务到了需要被处理的时候，则停止等待，立即进入下个阶段
+* "入队"与"执行"
+> 指针指在A阶段，事件可能同时被放入 B 阶段队列，但是事件（回调函数）执行必须要等到指针指向B阶段
+
+#### Chrome 的 Eventloop
+* 组成
+> Chrome 的 Eventloop 包含 宏任务（一会儿再做）和微任务（马上做）
+
+> 微任务全部执行完毕后，才开始执行宏任务
+* 对应API
+1. setTimeout=>宏任务
+2. .then(fn)=>微任务
+3. 有关 await 的面试题,转化成 promise 再做。注意 new Promise(fn) 是同步的。
+
+#### 更广范围上的宏任务/微任务
+* 微任务
+```
+Promise.then
+process.nextTick(Node.js 环境)
+```
+* 宏任务
+```
+script
+setTimeout
+setInterval
+I/O
+UI交互事件
+setImmediate(Node.js 环境)
+```
+
+#### 面试题目怎么区分是 node.js 还是 浏览器
+> 没有 Node.js API(nextTick,setImmediate),一律视为浏览器环境
+
+
+#### Node.js 的 Eventloop 面试题
+1. 画图（三个阶段）
+2. 默认规则：题目如果没有用 setTimeout 包裹，则一开始为 Timers 阶段。否则 setTimeout 内一开始为 poll 阶段。
+* 例1
+```
+// f1
+setTimeout(()=>{
+    console.log(`1`)   
+},3000)
+
+// f2
+setTimeout(()=>{
+    console.log(`2`)   
+},3000)
+```
+> 1 2
+
+f1 被放入 Timers 队列，f2 被放入 Timers 队列。按照队列的先进先出特点，一定会先执行 f1,再执行 f2。
+* 例2
+```
+// f1
+setTimeout(()=>{
+    console.log(0)  
+    // f2
+    setTimeout(()=>{
+        console.log(1)
+    },0)
+    // f3
+    setImmediate(()=>{
+        console.log(2)
+    })  
+},3000)
+```
+> 0 2 1
+
+f1 被放入 Timers 队列。进入 Timers 阶段时，f1被执行，然后进入 poll 阶段。 f2 被放入 Timers 阶段，f3 被放入 checkout 阶段。然后进入 checkout 阶段，f3 被执行，然后进入 Timers 阶段，f1 被执行。
+* 例3
+```
+// f1
+setTimeout(()=>{
+    console.log(0) 
+    // f2
+    setTimeout(()=>{
+        console.log(1)
+        // f3
+        process.nextTick(()=>{
+            console.log(2)
+        },0)
+    },0)
+    // f4
+    setImmediate(()=>{
+        console.log(3)
+    }) 
+    // f5
+    process.nextTick(()=>{
+        console.log(4)
+    },0)
+},3000)
+
+```
+> 0 4 3 1 2 
+
+f1 被放入 Timers 队列。进入 Timers 阶段时，f1被执行，然后队列。进入 poll 阶段。f2 被放入 Timers 阶段，f4 被放入 checkout 阶段，f5 被放入目前所在的 poll 阶段，且立即被执行。然后进入 checkout 阶段，f4 被执行。然后进入 Timers 阶段，f2 被执行。
+* 例4
+```
+// f1
+setTimeout(()=>{
+    console.log(1)
+    // f2
+    setImmediate(()=>{
+        console.log(2)
+        // f3
+        setTimeout(()=>{
+            console.log(3)
+        },0)
+    })
+
+    // f4
+    setTimeout(()=>{
+        console.log(4)
+        // f5
+        setImmediate(()=>{
+            console.log(5)
+        })
+    },0)
+
+},3000)
+```
+> 1 2 4 3 5
+
+f1 被放入 Timers 队列。进入 Timers 阶段时，f1被执行，然后进入 poll 阶段。f2 被放入 checkout 阶段，f4 被放入 Timers 阶段。然后进入 checkout 阶段，f2被执行，f3 被放入 Timers 阶段。然后进入 Timers 阶段，f4 被执行，f5 被放入 checkout 阶段。然后f3 被执行。然后进入poll 阶段，然后进入 checkout 阶段，f5 被执行。
+* 例5
+```
+// f1
+setTimeout(()=>{
+    console.log(1)
+    // f2
+    process.nextTick(()=>{
+        console.log(2)
+      })
+  })
+// f3
+setImmediate(()=>{
+    console.log(3)
+})
+//f4
+process.nextTick(()=>{
+    console.log(4)
+})
+```
+> 4 1 2 3 
+
+f1 被放入 Timers 队列，f3 被放入 checkout 阶段， f4 被放入当前的 Timers 阶段并被立即执行。然后 f1 被执行，进入 poll 阶段。f2 被放入 poll 阶段并立即被执行。然后进入 checkout 阶段，f3 被执行。
+
+
+
+
+#### Chrome 的 Eventloop 面试题
+1. 画图（两个任务队列，宏任务队列，微任务队列）
+2. 抓住关键：微任务队列清空后，才执行宏任务队列
+3. 对于 await 的等价转化
+```
+async function fn(){
+    console.log(1)
+}
+
+await fn()
+console.log(2)
+```
+等价于
+```
+async function fn(){
+    console.log(1)
+}
+
+fn().then(()=>{
+    console.log(2)
+})
+```
+4. 记住 new Promise(xxx) 是同步的，且应该视为是普普通通地执行了一个函数
+5. 记住微任务队列清空后才开始执行宏任务队列
+* 例1
+```
+async function async1(){
+    console.log(1)
+    await async2()
+    // f1
+    console.log(2)
+}
+
+async function async2(){
+    console.log(3)
+}
+
+async1()
+// f3
+new Promise((resolve)=>{
+    console.log(4)
+    resolve();
+}).then(
+    // f2
+    ()=>{
+        console.log(5)}
+    )
+```
+> 1 3 4 2 5 
+
+async1执行。async2执行。f1 入微任务队列。f3（new Promise） 执行。f2 入微任务队列。然后 f1执行，f2 执行。
+* 例2
+```
+console.log(1);
+
+// f1
+setTimeout(function() {
+  console.log(2);
+}, 0);
+
+              // f2
+let promise = new Promise((resolve, reject)=>{
+    console.log(3)
+    resolve()
+})
+
+promise.then(
+    // f3
+    ()=>{
+        console.log(4);
+    }
+    ).then(
+    // f4    
+    ()=>{
+        console.log(5);
+});
+```
+> 1 3 4 5 2
+
+f1 放入宏任务队列。f2 执行。f3 入微任务队列。f4 入微任务队列。f3 执行，f4 执行。微任务队列清空，因此 f1 执行。
+* 例3
+```
+async function async1(){
+	console.log(1)
+    await async2()
+    // f2
+	console.log(2)
+}
+async function async2(){
+	console.log(3)
+}
+console.log(4)
+// f1
+setTimeout(()=>{
+	console.log(5)
+})
+async1()
+// f3
+new Promise((resolve)=>{
+	console.log(6)
+	resolve()
+}).then( 
+    // f4 
+    ()=>{
+	console.log(7)
+    }
+)
+console.log(8)
+```
+> 4 1 3 6 8 2 7 5
+
+f1 放入宏任务队列。async1执行。f2 入微任务队列。f3 执行，f4 入微任务队列。f2 执行，f4 执行，f1 执行。
 #### [函数](https://github.com/Hanqing1996/JavaScript-advance/tree/master/%E4%BD%A0%E7%9C%9F%E7%9A%84%E6%87%82%E5%87%BD%E6%95%B0%E5%90%97)
 * return 的坑
 * 几道关于函数和对象的面试题目
