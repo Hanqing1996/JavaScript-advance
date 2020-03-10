@@ -384,7 +384,8 @@ f1 放入宏任务队列。async1执行。f2 入微任务队列。f3 执行，f4
 * 用redue实现map
 * 用reduce实现filter
 * flat:拍平数组
-* zip:拉拉链
+* zip:拉拉链（数组变为对象）
+* entries（对象变为数组）
 * 去除数组中的 undefiend 元素
  
 
