@@ -399,6 +399,10 @@ f1 放入宏任务队列。async1执行。f2 入微任务队列。f3 执行，f4
 
 
 #### [其它1](https://github.com/Hanqing1996/JavaScript-advance/tree/master/%E5%85%B6%E5%AE%831)
+* charCodeAt(0) 获取字母对应 ASCII 码
+```
+console.log('b'.charCodeAt(0)) // 98
+```
 * 用setTimeout模拟setInterval
 * 清除页面定时器:window.clearInterval(timerId)
 * export
