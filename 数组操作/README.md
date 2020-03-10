@@ -441,7 +441,7 @@ let arr=[1,2,[3,4]]
 console.log(flat(arr)) // [1, 2, 3, 4]
 ```
 
-#### zip:拉拉链
+#### zip:拉拉链（数组变对象）
 ```
 const zip=(arr)=>{
     let res={}
@@ -452,7 +452,17 @@ const zip=(arr)=>{
 const arr=[['a',1],['b',2],['c',3]]
 console.log(res)// {a: 1, b: 2, c: 3}
 ```
-#### 去除数组中的 undefiend 元素
 
+#### entries（对象变数组）
+```
+const obj={A:[1,2,3],B:[4,5,6],C:[7,8,9]}
+const arr=Object.entries(obj) 
+console.log(arr) // [['A',[1,2,3]],['B',[4,5,6]],['C',[7,8,9]]]
+```
+#### 去除数组中的 undefiend 元素
+```
+let arr=[1,undefined,2,'a',undefined]
+arr.filter(Boolean) // [1, 2, "a"]
+```
 #### Icon-font 如何生成 svj.js 文件
 我的项目->下载至本地->获取到 iconfont.js 文件-> 将 iconfont.js 加入项目，重命名为 svg.js
