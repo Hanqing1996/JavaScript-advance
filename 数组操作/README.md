@@ -224,6 +224,7 @@ let arr=[1,11,101,123,112]
 undefined
 arr.sort() // [1, 101, 11, 112, 123]
 ```
+
 #### 对象数组按某个字段排序
 ```
 let dataSource=[{name:'libai',score:80},{name:'zhangfei',score:90},{name:'dufu',score:82}]
