@@ -380,6 +380,7 @@ f1 放入宏任务队列。async1执行。f2 入微任务队列。f3 执行，f4
 * [常用]map
 * 用 map 和 sort 判断两个数组的元素id是否完全一致
 * filter
+* filter 实现 updateNameById:this.data.filter(tag=>tag.id===targetId)[0].name=targetName
 * 对象数组移除某个元素：copy = copy.filter(item => item.id !== targetId)
 * 用redue实现map
 * 用reduce实现filter
