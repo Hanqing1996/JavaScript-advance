@@ -539,7 +539,19 @@ data.push({id:4,name:'four'})
 console.log(list) // [{id: 1, name: "one"},{id: 2, name: "two"},{id: 3, name: "three"}，,{id: 4, name: "four"}]
 console.log(data) // [{id: 1, name: "one"},{id: 2, name: "two"},{id: 3, name: "three"}，,{id: 4, name: "four"}]
 ```
+* fetch 的坑
+```
+const TagListViewModel={
+	data:[]
+	fetch() {
+		this.data = JSON.parse(window.localStorage.getItem(localStorageKeyName) || '[]');
+		return this.data
+	    }
+}
 
+window.taglist=TagListViewModel.fetch() // TagListViewModel.data 与 window.taglist 指向同一片内存空间
+TagListViewModel.fetch() //!!!  TagListViewModel.data重定向，导致 TagListViewModel.data 与 window.taglist解绑
+```
 
 
 #### Chrome
