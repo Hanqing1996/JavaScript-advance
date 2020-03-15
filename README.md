@@ -498,6 +498,50 @@ require('vue',callback)
 6. UMD（uniform module define）
 > 兼容 1-5 模块定义方法
 
+
+#### 重定向
+>  数组的引用传递，在 vue 中非常常见。所以有必要搞清楚。
+
+> 为贴合实际开发，下面举的例子都是对象数组，随机应变
+
+* 删除.错误姿势（深拷贝）
+```
+let data=[{id:1,name:'one'},{id:2,name:'two'},{id:3,name:'three'}]
+let list=data
+data=data.filter(tag=>tag.id!==1) // 想删除项的 id 为1,相当于给 data 重定向
+console.log(list) // [{id: 1, name: "one"},{id: 2, name: "two"},{id: 3, name: "three"}]
+console.log(data) // [{id: 2, name: "two"},{id: 3, name: "three"}]
+```
+* 删除.正确姿势（浅拷贝）
+```
+let data=[{id:1,name:'one'},{id:2,name:'two'},{id:3,name:'three'}]
+let list=data
+const idList = data.map(tag => tag.id)
+const targetIndex=idList.indexOf(1)// 想删除项的 id 为1
+data.splice(targetIndex,1)
+console.log(list) // [{id: 2, name: "two"},{id: 3, name: "three"}]
+console.log(data) // [{id: 2, name: "two"},{id: 3, name: "three"}]
+```
+* 修改.正确姿势（浅拷贝）
+```
+let data=[{id:1,name:'one'},{id:2,name:'two'},{id:3,name:'three'}]
+let list=data
+let target=data.filter(tag=>tag.id===1)[0]
+target.name='updatedOne'
+console.log(list) // [{id: 1, name: "updatedOne"},{id: 2, name: "two"},{id: 3, name: "three"}]
+console.log(data) // [{id: 1, name: "updatedOne"},{id: 2, name: "two"},{id: 3, name: "three"}]
+```
+* 增加.正确姿势（浅拷贝）
+```
+let data=[{id:1,name:'one'},{id:2,name:'two'},{id:3,name:'three'}]
+let list=data
+data.push({id:4,name:'four'})
+console.log(list) // [{id: 1, name: "one"},{id: 2, name: "two"},{id: 3, name: "three"}，,{id: 4, name: "four"}]
+console.log(data) // [{id: 1, name: "one"},{id: 2, name: "two"},{id: 3, name: "three"}，,{id: 4, name: "four"}]
+```
+
+
+
 #### Chrome
 * 切换网络
 > 注意每次刷新页面后网络将恢复为 online 状态
