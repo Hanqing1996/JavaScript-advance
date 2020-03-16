@@ -400,6 +400,13 @@ f1 放入宏任务队列。async1执行。f2 入微任务队列。f3 执行，f4
 
 
 #### [其它1](https://github.com/Hanqing1996/JavaScript-advance/tree/master/%E5%85%B6%E5%AE%831)
+* const arr,只能保证 arr 对应地址不变，如果想禁止 push等操作，应该配合 Object.freeze() 使用
+```
+const arr=[1,2,3]
+
+arr=[4,5,6] // 报错
+arr.push(5) // 可以添加
+```
 * charCodeAt(0) 获取字母对应 ASCII 码
 ```
 console.log('b'.charCodeAt(0)) // 98
