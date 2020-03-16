@@ -553,6 +553,31 @@ window.taglist=TagListViewModel.fetch() // TagListViewModel.data 与 window.tagl
 TagListViewModel.fetch() //!!!  TagListViewModel.data重定向，导致 TagListViewModel.data 与 window.taglist解绑
 ```
 
+#### fetch 只执行一次
+> fetch 只在为 person.data 赋值时执行一次
+```
+const fetch=()=>{
+    console.log('fetch 执行了')
+    return [1,2,3]
+}
+
+const person={
+    data:fetch()
+}
+```
+> 在调用 person.data 时，fetch 不执行
+```
+const fetch=()=>{
+    console.log('fetch 执行了')
+    return [1,2,3]
+}
+
+const person={
+    data:fetch()
+}
+
+console.log(person.data)
+```
 
 #### Chrome
 * 切换网络
