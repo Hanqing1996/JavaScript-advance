@@ -14,6 +14,11 @@
 let obj={name:'libai',age:20}
 JSON.stringify(obj) // "{name:'libai',age:20}"
 ```
+* 不可以直接 toString()
+```
+let person={age:12,name:'libai'}
+person.toString() //"[object Object]"
+```
 
 #### 字符串转对象（反序列化）
 ```
