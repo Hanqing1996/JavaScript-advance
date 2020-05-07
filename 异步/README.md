@@ -472,6 +472,48 @@ async function myFunction() {
 }
 ```
 
+#### await 用法
+* 用 promise 封装 readFile
+```
+read: () => {
+    let list;
+    return new Promise((resolve, reject) => {
+        fs.readFile(dbPath, {flag: 'a+'}, (err, data) => {
+            if (err) {
+                reject(err);
+            }else{
+                resolve(list)
+            }
+        })
+    })
+}
+```
+```
+let list=await read();
+console.log(list);
+```
+* 用 promise 封装 writeFile
+```
+    write: (list) => {
+        const result = JSON.stringify(list)
+        return new Promise((resolve, reject) => {
+            fs.writeFile(dbPath, result, (err) => {
+                if (err) {
+                    return reject(err);
+                }
+                resolve('write successfully')
+            });
+
+        })
+    }
+```
+```
+// 对 list 的操作
+let information=await db.write(list);
+if(information==='write successfully'){
+    console.log('update state successfully');
+}
+```
 
 #### 我对异步的理解
 
