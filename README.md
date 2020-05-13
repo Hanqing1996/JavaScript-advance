@@ -529,6 +529,17 @@ data.splice(targetIndex,1)
 console.log(list) // [{id: 2, name: "two"},{id: 3, name: "three"}]
 console.log(data) // [{id: 2, name: "two"},{id: 3, name: "three"}]
 ```
+* 边遍历边删除是可以的
+```
+this.giftSelected.forEach((gift: any,giftIndex:number) => {
+    // 找到该商品对应的 gift
+    if (gift.parent_goodsId == good.goodsId) {
+	......	
+	// 从 giftSelected 中剔除 gift
+	this.giftSelected.splice(giftIndex,1)
+    }
+})
+```
 * 修改.正确姿势（浅拷贝）
 ```
 let data=[{id:1,name:'one'},{id:2,name:'two'},{id:3,name:'three'}]
