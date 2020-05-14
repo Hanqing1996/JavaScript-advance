@@ -529,8 +529,9 @@ data.splice(targetIndex,1)
 console.log(list) // [{id: 2, name: "two"},{id: 3, name: "three"}]
 console.log(data) // [{id: 2, name: "two"},{id: 3, name: "three"}]
 ```
-* 边遍历边删除是可以的
+* 边遍历边删除是不可以的！！！！
 ```
+// 以下做法是不行的！！！
 this.giftSelected.forEach((gift: any,giftIndex:number) => {
     // 找到该商品对应的 gift
     if (gift.parent_goodsId == good.goodsId) {
@@ -538,6 +539,23 @@ this.giftSelected.forEach((gift: any,giftIndex:number) => {
 	// 从 giftSelected 中剔除 gift
 	this.giftSelected.splice(giftIndex,1)
     }
+})
+```
+* 删除.正确姿势（将所有待删除 index 放入数组中，再遍历之）
+```
+// 待删除 Index 列表
+let toSpliceIndex=[]
+this.serviceSelected.forEach((service: any, serviceIndex: any) => {
+	// 找到该商品对应的已选中服务
+	if (service.parent_goodsId == good.goodsId) {
+		// 待删除 Index 列表
+		toSpliceIndex.push(serviceIndex)
+		}
+})
+
+// 遍历待删除 Index 列表
+toSpliceIndex.forEach((index:any)=>{
+	this.serviceSelected.splice(index, 1)
 })
 ```
 * 修改.正确姿势（浅拷贝）
