@@ -519,7 +519,7 @@ data=data.filter(tag=>tag.id!==1) // 想删除项的 id 为1,相当于给 data �
 console.log(list) // [{id: 1, name: "one"},{id: 2, name: "two"},{id: 3, name: "three"}]
 console.log(data) // [{id: 2, name: "two"},{id: 3, name: "three"}]
 ```
-* 删除.正确姿势（浅拷贝）
+* 只有一个需要删除
 ```
 let data=[{id:1,name:'one'},{id:2,name:'two'},{id:3,name:'three'}]
 let list=data
@@ -528,6 +528,10 @@ const targetIndex=idList.indexOf(1)// 想删除项的 id 为1
 data.splice(targetIndex,1)
 console.log(list) // [{id: 2, name: "two"},{id: 3, name: "three"}]
 console.log(data) // [{id: 2, name: "two"},{id: 3, name: "three"}]
+```
+* 有多个需要删除.用 filter
+```
+
 ```
 * 边遍历边删除是不可以的！！！！
 ```
@@ -541,8 +545,10 @@ this.giftSelected.forEach((gift: any,giftIndex:number) => {
     }
 })
 ```
-* 删除.正确姿势（将所有待删除 index 放入数组中，再遍历之）
+* 将所有待删除 index 放入数组中，再遍历之 也是不可以的！！！
 ```
+// 以下做法是不行的！！！
+
 // 待删除 Index 列表
 let toSpliceIndex=[]
 this.serviceSelected.forEach((service: any, serviceIndex: any) => {
@@ -558,6 +564,7 @@ toSpliceIndex.forEach((index:any)=>{
 	this.serviceSelected.splice(index, 1)
 })
 ```
+* 删除
 * 修改.正确姿势（浅拷贝）
 ```
 let data=[{id:1,name:'one'},{id:2,name:'two'},{id:3,name:'three'}]
