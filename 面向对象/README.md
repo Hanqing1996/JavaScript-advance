@@ -785,6 +785,26 @@ const p2=new Human('zhangxu')
 console.log(p1.myFn===p2.myFn);// false,因为 myFn 是私有方法
 console.log(p1.otherFn===p2.otherFn);// true,因为 otherFn 是共有方法
 ```
+以上写法等价于
+```
+class Human {
+
+    // 共有方法
+    otherFn(){
+
+    }
+    constructor(name) {
+        this.name=name
+        this.myFn=()=>{}
+    }
+}
+
+const p1=new Human('libai')
+const p2=new Human('zhangxu')
+
+console.log(p1.myFn===p2.myFn);// false,因为 myFn 是私有方法
+console.log(p1.otherFn===p2.otherFn);// true,因为 otherFn 是共有方法
+```
 * super()只能为父类传递私有属性，不能传递公有属性,公有属性是由extends实现的
 * 注意公有属性只能是函数，而私有属性可以是函数，也可以不是函数
 * class的本质仍然是函数(一个无法call的函数)
