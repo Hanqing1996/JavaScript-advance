@@ -762,10 +762,33 @@ Solider的基类是Human,用Solider可以得到一个对象s,s具有作为Solide
 
 #### class
 * class A extends B:说明B是A的父类
-* 在class中，constructor(){}内部的，为私有属性；外部的，为共有属性
+* 在class中，constructor(){}内部的方法，为私有方法；外部的方法，为共有方法
+* 在 constructor 外定义私有方法
+```
+class Human {
+
+    // 私有方法
+    myFn=()=>{}
+
+    // 共有方法
+    otherFn(){
+
+    }
+    constructor(name) {
+        this.name=name
+    }
+}
+
+const p1=new Human('libai')
+const p2=new Human('zhangxu')
+
+console.log(p1.myFn===p2.myFn);// false,因为 myFn 是私有方法
+console.log(p1.otherFn===p2.otherFn);// true,因为 otherFn 是共有方法
+```
 * super()只能为父类传递私有属性，不能传递公有属性,公有属性是由extends实现的
 * 注意公有属性只能是函数，而私有属性可以是函数，也可以不是函数
 * class的本质仍然是函数(一个无法call的函数)
+
 
 #### super
 * 作用:为s设置作为Human的属性
