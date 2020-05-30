@@ -1,3 +1,81 @@
+## 继承与组合
+#### 继承vs组合
+1. 组合：“继承，类都是垃圾玩意，不要用。”
+2. 组合认为对象是“功能”的组合。
+3. 如果我们的代码是继承实现的，那么有扩展需求时可能难以实现。而如果我们的代码是用组合实现的，那么有扩展需求时会容易实现
+> 比如我们用继承写了很多类
+```
+robot
+    .run()
+    murderRobot
+        .kill()
+    cleanRobot
+        .clean()
+
+
+animal
+    .poop()
+    dog
+        .wang()
+    cat
+        .miao()
+```
+现在需要构造狗型杀人机器人
+* 继承：‘...wtf’
+* 组合："可以做到，但是继承和类是垃圾，所以我先重构原先的代码"
+```
+const run=()=>{
+}
+
+const kill=()=>{
+}
+
+const clean=()=>{
+}
+
+const robot=(run)=>{
+    return{
+       run
+    }
+}
+
+// murderRobot 是 run,kill 的功能组合
+const murderRobot=(run,kill)=>{
+    return{
+        run,kill
+    }
+}
+
+// cleanRobot 是 run,clean 的功能组合
+const cleanRobot=(run,clean)=>{
+    return{
+        run,clean
+    }
+}
+
+// animal,dog,cat 同理
+```
+现在构造狗型杀人机器人
+```
+// 分析：狗型杀人机器人，是 run,kill,wang 的功能组合
+const murderRobotDog=(run,kill,wang)=>{
+    return{
+        run,kill,wang
+    }
+}
+```
+
+#### 什么时候用组合
+* vue 的 mixin
+* vue 开发插件（添加到全局）
+```
+Vue.use(...)
+```
+
+
+
+
+
 ## Eventloop
 
 #### 【面试】
