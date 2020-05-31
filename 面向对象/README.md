@@ -9,6 +9,14 @@
 #### 多态
 更灵活。一个东西拥有多种东西的属性
 
+#### delete 删除对象的某个属性
+```
+let per={name:"libai",age:20}
+
+delete per.name
+
+console.log(per) // {age:20}
+```
 #### 对象转字符串（序列化）
 ```
 let obj={name:'libai',age:20}
