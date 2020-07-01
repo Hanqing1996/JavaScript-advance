@@ -564,21 +564,27 @@ console.log('b'.charCodeAt(0)) // 98
 * 用 ajax 上传并预览图片
 
 #### JS 模块化
-1. 代码和代码之间如何隔开-立即执行函数
-2. common.js（node.js 发明）
-```
-module.exports
-exports.a=...
-let fs=require('fs')
-```
-3. AMD（async module define，即 requre.js，node.js 发明）
-```
-require('vue',callback)
-```
-4. CMD（中国人发明，common module define）
-5. export/import（ES6）
-6. UMD（uniform module define）
-> 兼容 1-5 模块定义方法
+* 历史发展
+	1. 代码和代码之间如何隔开-立即执行函数
+	2. common.js（node.js 发明）
+	```
+	module.exports
+	exports.a=...
+	let fs=require('fs')
+	```
+	3. AMD（async module define，即 requre.js，node.js 发明）
+	```
+	require('vue',callback)
+	```
+	4. CMD（中国人发明，common module define）
+	5. export/import（ES6）
+	6. UMD（uniform module define）
+	> 兼容 1-5 模块定义方法
+ * [difference between default and named exports](https://stackoverflow.com/questions/36795819/when-should-i-use-curly-braces-for-es6-import/36796281#36796281)
+ 
+
+
+
 
 
 #### 重定向
