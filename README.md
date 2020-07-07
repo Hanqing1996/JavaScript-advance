@@ -4,7 +4,8 @@
 -1 == 0; // false
 true ? true : false; // true
 ```
-* 参考:https://stackoverflow.com/questions/3619797/why-are-javascript-negative-numbers-not-always-true-or-false,https://javascriptweblog.wordpress.com/2011/02/07/truth-equality-and-javascript/
+* 参考1：https://stackoverflow.com/questions/3619797/why-are-javascript-negative-numbers-not-always-true-or-false
+* 参考2：https://javascriptweblog.wordpress.com/2011/02/07/truth-equality-and-javascript/
 
 
 ## 继承与组合
