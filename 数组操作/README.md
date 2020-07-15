@@ -385,7 +385,7 @@ Array.prototype.filter(fn){
 ```
 arr=[1,2,3,4,5,6]
 
-arr.reduce((result,item)=>result+=item,0) // 这里会返回result值!!!
+arr.reduce((result,item)=>result+=item,0) // 0即为result的初值，最终会返回result值!!!
 ```
 * 实现
 ```
@@ -402,6 +402,28 @@ Array.prototype.reduce(fn,init){
     return result;
 }
 ``` 
+#### react 的 custom hook
+```
+export const useMethods = (initialValue, methods) => {
+    const [value, setValue] = useState(initialValue);
+    const boundMethods = useMemo(
+        () => Object.entries(methods).reduce(
+            (methods, [name, fn]) => {
+                const method = (...args) => {
+                    setValue(value => fn(value, ...args));
+                };
+                methods[name] = method;
+                return methods;
+            },
+            {}
+        ),
+        [methods]
+    );
+    return [value, boundMethods];
+};
+```
+
+
 #### 用redue实现map
 ```
 array2 = array.map( (v) => v+1 )
