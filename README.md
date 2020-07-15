@@ -404,6 +404,7 @@ f1 放入宏任务队列。async1执行。f2 入微任务队列。f3 执行，f4
 
 
 #### [面向对象](https://github.com/Hanqing1996/JavaScript-advance/tree/master/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1)
+* Object.entries(object1))
 * delete 删除对象的某个属性
 * 对象转字符串（序列化）
 * 字符串转对象（反序列化）
