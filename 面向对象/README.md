@@ -9,6 +9,17 @@
 #### 多态
 更灵活。一个东西拥有多种东西的属性
 
+#### Object.entries(object1))
+```
+const object1 = {
+  a: 'somestring',
+  b: 42
+};
+
+console.log(Object.entries(object1)))// [['a','somestring'],['b',42]]
+```
+
+
 #### delete 删除对象的某个属性
 ```
 let per={name:"libai",age:20}
