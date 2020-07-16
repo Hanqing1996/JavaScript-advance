@@ -64,6 +64,33 @@ export {default as GIcon} from './components/button/icon'
 import {GIcon} from './components/button/icon'
 export GIcon
 ```
+2. “只执行一次”
+在一个应用（比如 create-react-app）里
+```
+// useTags.tsx
+import {useState} from 'react';
+import createId from "../lib/idCreator";
+
+console.log('file do');
+
+const useTags = () => {
+    console.log('useTags do')
+    return {tags, createTag}
+}
+
+export default useTags
+```
+如果有两个页面（组件）import 了 useTags.tsx 的 useTags 方法
+```
+// Tags.tsx
+import useTags from "../../store/useTags";
+```
+```
+//MoneyTags.tsx
+import useTags from "../../store/useTags";
+```
+> 从 Tags 页面切换到 MoneyTags 页面，'useTags do'会输出两次，但是'file do'只会输出一次（Tags 页面mounted的那次）。也就是说尽管被引用的方法会多次被调用，但原js文件只执行一次
+
 
 #### 默认值设置 num=num||1
 设置num的默认值为1
