@@ -550,6 +550,41 @@ a=()=>{{age:1+1}}
 #### call stack
 call stack存放的是函数调用的入口(当前位置)
 
+#### 箭头函数中的this，是在定义函数的时候就确定是哪个变量的，而不是在执行函数的时候确定的!!!
+
+> 相反，普通函数（以 function 开头）中的 this 是在执行函数时才确定是哪个变量的。
+
+```
+// 在执行 obj.getThis 的时候，才确定了 this 是 obj
+
+let obj={
+  name:'libai',
+  getThis:function(){
+  	console.log(this)
+  }
+}
+
+obj.name='dufu'
+
+obj.getThis() //  { name: "dufu", getThis: function(){console.log(this)}
+```
+    
+```
+// 在定义 obj.getThis 的时候，就确定了 this 是 window
+
+let obj={
+  name:'libai',
+  getThis:()=>{
+  	console.log(this)
+  }
+}
+
+obj.name='dufu'
+
+obj.getThis() //  window
+```
+
+
 #### this
 1. this这个概念只与函数有关,常见的有如下场景
 ```
