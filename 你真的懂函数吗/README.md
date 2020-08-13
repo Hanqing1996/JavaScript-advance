@@ -206,6 +206,16 @@ for(let i=0;i<5;i++)
     setTimeout(()=>{console.log(i);},1000);
 }
 ```
+#### let 的暂时死区
+> 就是用 let 声明的变量，不能在初始化之前访问它。
+```
+{
+    console.log(x);// 报错：x is not defined
+    let x;
+    x=2;
+}
+```
+[let 的创建，初始化，赋值过程](https://github.com/Hanqing1996/-JavaScript-core-principles-parsing/blob/master/README.md#let-%E5%A3%B0%E6%98%8E%E7%9A%84%E5%88%9B%E5%BB%BA%E5%88%9D%E5%A7%8B%E5%8C%96%E5%92%8C%E8%B5%8B%E5%80%BC%E8%BF%87%E7%A8%8B)
 
 
 #### function.length
