@@ -19,20 +19,16 @@
 
 #### ===
 * [参考](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Strict_equality)
-
+```
 If the operands are of different types, return false.
-
 If both operands are objects, return true only if they refer to the same object.
-
 If both operands are null or both operands are undefined, return true.
-
 If either operand is NaN, return false.
-
 Otherwise, compare the two operand's values:
-	* Numbers must have the same numeric values. +0 and -0 are considered to be the same value.
-	* Strings must have the same characters in the same order.
-	* Booleans must be both true or both false.
-
+	Numbers must have the same numeric values. +0 and -0 are considered to be the same value.
+	Strings must have the same characters in the same order.
+	Booleans must be both true or both false.
+```
 #### == 与 === 的不同
 > 最显着的区别在于，严格等于运算符不尝试类型转换。相反，严格相等运算符始终将不同类型的操作数视为不同。
 
