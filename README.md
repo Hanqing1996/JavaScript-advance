@@ -25,7 +25,7 @@ setTimeout(()=>{
 
 // 浏览器 直接报错：Uncaught SyntaxError: Invalid or unexpected token
 ```
-2. 生成AST
+2. 生成AST，查看代码对应AST的网站:https://esprima.org/demo/parse.html#
 3. 确定词法作用域；
 * Parser 是一个单纯的前置操作，所有代码通过 Parser 解析完毕后，再执行代码，创建各种执行上下文环境。
 
