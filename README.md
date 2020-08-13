@@ -10,7 +10,7 @@ true ? true : false; // true
 ---
 参考：[JavaScript 引擎（V8）是如何工作的](https://github.com/jejuin/Blog/issues/6)
 #### Parser
-* Parser 是V8引擎的一部分。 V8 引擎会扫描所有的源代码，进行词法分析，生成 Tokens。然后，Parser 做了以下工作
+* Parser 是V8引擎的一部分。 V8 引擎会扫描所有的源代码，进行<strong>词法分析</strong>，生成 Tokens。然后，Parser 做了以下工作（所谓“语法分析”）
 1. 分析语法错误：遇到错误的语法会抛出异常
 ```
 function fn(){
@@ -89,6 +89,11 @@ function fn(){
 ```
 
 
+---
+#### 关于声明
+所有的“声明”：
+1. 都意味着 JavaScript 将可以通过语法分析（就是上面提到的 Parser 工作）发现那些声明的标识符。
+2. 标识符对应的变量 / 常量“一定”会在代码执行前就已经被创建在作用域中。
 ---
 ## 继承与组合
 #### 继承vs组合
