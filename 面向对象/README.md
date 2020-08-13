@@ -795,7 +795,10 @@ function Person(option){
 
 let p=new Person({age:12,gender:true})
 ```
-
+* 注意 new 返回的一定是对象
+```
+typeof new String('11');// object
+```
 
 
 
