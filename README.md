@@ -627,7 +627,7 @@ console.log('b'.charCodeAt(0)) // 98
 * 【ES6】块级作用域{}
 * 字面量
 * unicode(ES6)
-* sybmol
+* symbol
 * 迭代器
 * 生成器(迭代器生成的语法糖)
 * for...of(迭代)
