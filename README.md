@@ -7,7 +7,68 @@ true ? true : false; // true
 * 参考1：https://stackoverflow.com/questions/3619797/why-are-javascript-negative-numbers-not-always-true-or-false
 * 参考2：https://javascriptweblog.wordpress.com/2011/02/07/truth-equality-and-javascript/
 
+---
+参考：[JavaScript 引擎（V8）是如何工作的](https://github.com/jejuin/Blog/issues/6)
+#### Parser
+* Parser 是V8引擎的一部分。 V8 引擎会扫描所有的源代码，进行词法分析，生成 Tokens。然后，Parser 做了以下工作
+1. 分析语法错误：遇到错误的语法会抛出异常
+```
+function fn(){
+    let a='ss;
+    console.log('hh')
+}
 
+console.log('1')
+setTimeout(()=>{
+    fn()
+},5000)
+
+// 浏览器 直接报错：Uncaught SyntaxError: Invalid or unexpected token
+```
+2. 生成AST
+3. 确定词法作用域；
+* Parser 是一个单纯的前置操作，所有代码通过 Parser 解析完毕后，再执行代码，创建各种执行上下文环境。
+
+#### Pre-Parser
+* Parser 解析器又称为 full parser（全量解析） 或者 eager parser（饥饿解析）。它会解析所有立即执行的代码，包括语法检查，生成 AST，以及确定词法作用域。
+* Pre-Parser 又称为惰性解析，它只解析未被立即执行的代码（如函数），不生成 AST ，只确定作用域，以此来提高性能。当预解析后的代码开始执行时，才进行 Parser 解析。
+```
+function foo() {
+    console.log('a');
+    function inline() {
+        console.log('b')
+    }
+}
+
+(function bar() {
+    console.log('c')
+})()；
+
+foo();
+```
+1. 当 V8 引擎遇到 foo 函数声明时，发现它未被立即执行，就会采用 Pre-Parser 对其进行解析。
+2. 当 V8 遇到(function bar() {console.log(c)})()时，它会知道这是一个立即执行表达式（IIFE），会立即被执行，所以会使用 Parser 对其解析。
+3. 当 foo 函数被调用时，会使用 Parser 对 foo 函数进行解析。
+
+
+#### 函数创建
+一个函数要被运行前，才会被创建
+```
+// parser 会解析 fn
+function fn(){
+	
+}
+```
+
+#### Ignition
+> Ignition 负责将 AST 转换为中间代码（字节码 Bytecode），这个过程通常被称为预编译阶段。执行上下文生命周期的创建阶段就是在该阶段进行的。
+> 准确来说，V8 有两种方式执行代码：一种是 Ignition  解释器直接解释字节码执行；另一种是执行TurboFan优化编译后的机器代码。所以执行上下文生命周期的执行阶段，是由Ignition  或者TurboFan进行的。
+
+
+
+
+
+---
 ## 继承与组合
 #### 继承vs组合
 1. 组合：“继承，类都是垃圾玩意，不要用。”
