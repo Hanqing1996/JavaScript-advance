@@ -769,7 +769,7 @@ Solider.protoype = {
 #### new 做了什么
 1. 让 new 出的实例指向构造函数的原型
 2. 通过执行构造函数，为 new 出的实例增加属性
-3. 
+3. 不管构造函数有没有返回值，newFunc 都会返回一个具有新属性的构造函数实例
 ```
 function newFunc(father, ...rest) {
   var result = {};
