@@ -764,6 +764,41 @@ Solider.protoype = {
 1. 凡公有的，交给Solider.prototype(公共构造函数constructor、公共属性)
 2. 凡私有的，交给Solider，在其中设置私有属性和方法(this.)
 
+
+----
+#### new 做了什么
+1. 让 new 出的实例指向构造函数的原型
+2. 通过执行构造函数，为 new 出的实例增加属性
+3. 
+```
+function newFunc(father, ...rest) {
+  var result = {};
+  result.__proto__ = father.prototype;// 让 result 指向 father 的原型
+  var result2 = father.apply(result, rest); // 执行构造函数 father，为 result 添加属性
+  if (
+    // 构造函数 father 若有返回值，则已赋值给 result2，直接返回 result2
+    (typeof result2 === 'object' || typeof result2 === 'function') &&
+    result2 !== null
+  ) {
+    return result2;
+  }
+  // 构造函数没有返回值，则将 result 返回（由于前面执行构造函数时的 this 指定是result,所以 result 此时已经有了新的属性）
+  return result;
+}
+```
+比如
+```
+function Person(option){
+  this.age=option.age
+  this.gender=option.gender
+}
+
+let p=new Person({age:12,gender:true})
+```
+
+
+
+
 #### 私有属性与共有属性
 见[作业第三题](https://github.com/Hanqing1996/JavaScript-advance/blob/master/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/%E4%BD%9C%E4%B8%9A.js)
 
