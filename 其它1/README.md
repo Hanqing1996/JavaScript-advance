@@ -1,4 +1,145 @@
 # 其它
+
+#### 类型判断
+* typeof
+* constructor
+* instanceof
+* Object.prototype.toString
+
+> 对于数组类型，还有 Array.isArray 可以用于判断~
+
+#### instanceof
+> A instanceof B:判断 A 是不是 B 的一个实例。本质上是判断 A.__proto__ 是否等于 B.prototype
+
+> 注意，instanceof可以准确的判断复杂数据类型，但是不能正确判断基本数据类型
+```
+console.log(12 instanceof Number)  // false
+console.log('22' instanceof String)  // false
+console.log(true instanceof Boolean) // false
+console.log(null instanceof Object) // false
+console.log(undefined instanceof Object) // false
+
+console.log([] instanceof Array)   // true
+console.log({a: 1} instanceof Object) // true
+function a() {}
+console.log(a instanceof Function)  // true
+console.log(new Date() instanceof Date)  //true
+```
+* 模拟实现一个 instanceof
+```
+const self_instanceof = function (instance, constructor) {
+    let instance_proto = instance.__proto__;
+    let constructor_proto = constructor.prototype;
+
+    while(true) {
+        // 找到终点返回false
+       if (instance_proto === null) {return false};
+       // 找到返回true
+       if (instance_proto === constructor_proto) {return true};
+        // 当实例与构造函数原型不相同, 沿着原型链继续向上查找
+        instance_proto = instance_proto.__proto__;
+    }
+}
+console.log([] instanceof Array)   // true
+console.log(self_instanceof([], Array))  // true
+```
+* null 和 undefined 类型无法通过 instanceof 检测
+
+#### typeof 
+* typeof 是一个运算符，就跟加减乘除一样
+* typeof 能检测出六种类型的值
+* undefined
+```
+let a=undefined
+typeof a // "undefined"
+```
+* boolean 
+```
+let a=false
+typeof a // "boolean"
+```
+* string
+```
+let a="str"
+typeof a // "string"
+```
+* function
+```
+let fn=function(){}
+typeof fn // 'function'
+```
+* number
+```
+let a=123
+typeof a // "number"
+```
+<strong>但是， Object 下细分的类型，如 Array、Function、Date、RegExp、Error typeOf 是没法区分的</strong>
+```javascript
+var date = new Date();
+var error = new Error();
+console.log(typeof date); // object
+console.log(typeof error); // object
+```
+* null 类型无法通过 typeof检测
+```
+let a=null
+console.log(typeof a) //"object"
+```
+
+#### constructor
+> constructor属性表示原型对象与构造函数之间的关联关系
+```
+console.log('22'.constructor === String)             // true
+console.log(true.constructor === Boolean)            // true
+console.log([].constructor === Array)                // true
+console.log(document.constructor === HTMLDocument)   // true
+console.log(window.constructor === Window)           // true
+console.log(new Number(22).constructor === Number)   // true
+console.log(new Function().constructor === Function) // true
+console.log((new Date()).constructor === Date)       // true
+console.log(new RegExp().constructor === RegExp)     // true
+console.log(new Error().constructor === Error)       // true
+```
+* null 和 undefined 是无效的对象，因此是不会有 constructor 存在的，这两种类型的数据需要通过其他方式来判断。
+
+#### Object.prototype.toString
+> 可以识别至少 14 种类型
+
+```javascript
+// 以下是11种：
+var number = 1;          // [object Number]
+var string = '123';      // [object String]
+var boolean = true;      // [object Boolean]
+var und = undefined;     // [object Undefined]
+var nul = null;          // [object Null]
+var obj = {a: 1}         // [object Object]
+var array = [1, 2, 3];   // [object Array]
+var date = new Date();   // [object Date]
+var error = new Error(); // [object Error]
+var reg = /a/g;          // [object RegExp]
+var func = function a(){}; // [object Function]
+
+function checkType() {
+    for (var i = 0; i < arguments.length; i++) {
+        console.log(Object.prototype.toString.call(arguments[i]))
+    }
+}
+
+checkType(number, string, boolean, und, nul, obj, array, date, error, reg, func)
+```
+除了以上 11 种之外，还有：
+```javascript
+console.log(Object.prototype.toString.call(Math)); // [object Math]
+console.log(Object.prototype.toString.call(JSON)); // [object JSON]
+```
+除了以上 13 种之外，还有：
+```javascript
+function a() {
+    console.log(Object.prototype.toString.call(arguments)); // [object Arguments]
+}
+a();
+```
+---
 #### 类型转换
 * 参考：[JavaScript 深入之头疼的类型转换](https://github.com/mqyqingfeng/Blog/issues/159)	
 * 核心:
