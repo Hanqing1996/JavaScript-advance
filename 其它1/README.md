@@ -241,6 +241,137 @@ fn.valueOf() //ƒ fn(){console.log(1)}
   首先调用 ToPrimitive (input 是对象类型)，在获得一个基本类型的值后调用ToString（注意不是 toString 哦）
 
 * 转数字
+## 对象转字符串和数字
+
+> 为了掌握对象如何转换成字符串/数字。我们必须先了解对象的 toString 方法和 valueOf 方法。
+
+#### 对象的 toString 方法
+
+* 当调用对象的 toString 方法时，其实调用的是 Object.prototype 上的 toString 方法。
+
+```javascript
+Object.prototype.toString.call({a: 1}) // "[object Object]"
+({a: 1}).toString() // "[object Object]"
+({a: 1}).toString === Object.prototype.toString // true
+```
+
+* 普通对象，调用 toString 方法会根据这个对象的[[class]]内部属性，返回由 "[object " 和 class 和 "]" 三个部分组成的字符串。
+
+* 然而其它对象根据各自的特点，定义了更多版本的 toString 方法。例如:
+
+  1. 数组的 toString 方法将每个数组元素转换成一个字符串，并在元素之间添加逗号后合并成结果字符串。
+
+     ```javascript
+     console.log([].toString()) // ""
+     console.log([1, 2, 3].toString()) // 1,2,3
+     ```
+
+  2. 函数的 toString 方法返回源代码字符串。
+
+     ```javascript
+     console.log((function(){var a = 1;}).toString()) // function (){var a = 1;}
+     ```
+
+  3. 日期的 toString 方法返回一个可读的日期和时间字符串。
+
+     ```javascript
+     console.log((new Date(2010, 0, 1)).toString()) // Fri Jan 01 2010 00:00:00 GMT+0800 (CST)
+     ```
+
+  4. RegExp 的 toString 方法返回一个表示正则表达式直接量的字符串。
+
+     ```javascript
+     console.log((/\d+/g).toString()) // /\d+/g
+     ```
+
+  5. 原始类型值 value 的包装对象，调用 toString 方法 等价于 String(value)
+
+     ```javascript
+     console.log(new Number(123).toString()) // 123
+     
+     // 等价于
+     console.log(String(123)) // 123
+     ```
+
+#### 对象的 valueOf 方法
+
+* 普通对象，以及数组，函数调用  valueOf 方法返回自身
+
+```javascript
+let obj={n:1}
+console.lopg(obj.valueOf()) // {n:1}
+
+let arr=[1,2,3]
+arr.valueOf() // [1,2,3]
+
+function fn(){
+    console.log(1)
+}
+fn.valueOf() //ƒ fn(){console.log(1)}
+```
+
+* 日期，返回1970 年 1 月 1 日以来的毫秒数。
+
+  ```javascript
+  var date = new Date(2017, 4, 21);
+  console.log(date.valueOf()) // 1495296000000
+  ```
+
+* 原始类型值的包装对象，返回原始类型值
+
+  ```javascript
+  console.log(new Number(123).valueOf()) // 123 
+  ```
+
+#### ToPrimitive
+
+* ToPrimitive 方法会在对象转字符串数字的流程中被调用，但这不是它唯一的应用场景
+
+* 语法
+
+  ```javascript
+  ToPrimitive(input[, PreferredType])
+  ```
+
+第一个参数是 input，表示要处理的输入值。input的类型任意，可能是对象，可能是基本类型
+
+第二个参数是 PreferredType，非必填，表示希望转换成的类型，有两个值可以选，Number 或者 String。
+
+当不传入 PreferredType 时，如果 input 是日期类型，相当于传入 String，否则，都相当于传入 Number。
+
+如果传入的 input 是 Undefined、Null、Boolean、Number、String 类型，直接返回该值。
+
+如果是 ToPrimitive(obj, Number)，处理步骤如下：
+
+1. 如果 obj 为 基本类型，直接返回
+2. 否则，调用 valueOf 方法，如果返回一个原始值，则 JavaScript 将其返回。
+3. 否则，调用 toString 方法，如果返回一个原始值，则 JavaScript 将其返回。
+4. 否则，JavaScript 抛出一个类型错误异常。
+
+如果是 ToPrimitive(obj, String)，处理步骤如下：
+
+1. 如果 obj为 基本类型，直接返回
+2. 否则，调用 toString 方法，如果返回一个原始值，则 JavaScript 将其返回。
+3. 否则，调用 valueOf 方法，如果返回一个原始值，则 JavaScript 将其返回。
+4. 否则，JavaScript 抛出一个类型错误异常。
+
+> 也就是说，在不报错的情况下，必然返回一个基本类型（number,string,boolean,null,undefiend）的值
+
+---
+
+#### 对象转字符串数字流程
+
+* 转字符串
+
+  其实还是调用 String(value) ,要研究的是 value 为对象时 String 方法具体做了哪些事
+
+  | 参数类型 | 结果                                                         |
+  | -------- | ------------------------------------------------------------ |
+  | Object   | 1. primValue = ToPrimitive(input, String)                                                                   2. 返回ToString(primValue). |
+
+  首先调用 ToPrimitive (input 是对象类型)，在获得一个基本类型的值后调用ToString（注意不是 toString 哦）
+
+* 转数字
 
   其实还是调用 Nuimber(value) ,要研究的是 value 为对象时 Number 方法具体做了哪些事
 
@@ -252,20 +383,19 @@ fn.valueOf() //ƒ fn(){console.log(1)}
 
   ---
 
-  #### 对象转字符串流程总结
+#### 对象转字符串流程总结
 
-  1. 如果对象具有 toString 方法，则调用这个方法。看能否返回一个原始值
+1. 如果对象具有 toString 方法，则调用这个方法。看能否返回一个原始值
 
-  2. 如果对象没有 toString 方法，或者这个方法并不返回一个原始值，则试图调用 valueOf 方法，看能否返回一个原始值
-  3. 如果1或2得到一个原始值 value，则 ToString(value) 的结果即为最终结果；否则抛出一个类型错误异常。
+2. 如果对象没有 toString 方法，或者这个方法并不返回一个原始值，则试图调用 valueOf 方法，看能否返回一个原始值
+3. 如果1或2得到一个原始值 value，则 ToString(value) 的结果即为最终结果；否则抛出一个类型错误异常。
 
-  #### 对象转数字流程
+#### 对象转数字流程
 
-  1. 如果对象具有 valueOf 方法，则调用这个方法。看能否返回一个原始值
+1. 如果对象具有 valueOf 方法，则调用这个方法。看能否返回一个原始值
 
-  2. 如果对象没有 valueOf 方法，或者这个方法并不返回一个原始值，则试图调用 toString 方法，看能否返回一个原始值
-  3. 如果1或2得到一个原始值 value，则 ToNumber(value) 的结果即为最终结果；否则抛出一个类型错误异常。
----
+2. 如果对象没有 valueOf 方法，或者这个方法并不返回一个原始值，则试图调用 toString 方法，看能否返回一个原始值
+3. 如果1或2得到一个原始值 value，则 ToNumber(value) 的结果即为最终结果；否则抛出一个类型错误异常。
 #### ==和===
 #### ==
 * [参考](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/%E7%9B%B8%E7%AD%89)
