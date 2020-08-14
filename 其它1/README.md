@@ -396,6 +396,7 @@ fn.valueOf() //ƒ fn(){console.log(1)}
 
 2. 如果对象没有 valueOf 方法，或者这个方法并不返回一个原始值，则试图调用 toString 方法，看能否返回一个原始值
 3. 如果1或2得到一个原始值 value，则 ToNumber(value) 的结果即为最终结果；否则抛出一个类型错误异常。
+```javascript
 console.log(Number({})) // NaN
 /**
  * 1. valueOf({}) 得到 object 类型的 {}，由于不是基本类型，接下来调用 toString 方法
@@ -437,6 +438,7 @@ console.log(Number(new Date(2010, 0, 1))) // 1262275200000
  * 2. ToNumber(1262275200000)，返回 1262275200000
  */
 console.log(Number(new Error('a'))) // NaN
+```
 #### ==和===
 #### ==
 * [参考](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/%E7%9B%B8%E7%AD%89)
