@@ -56,6 +56,8 @@ console.log(Number(" ")) // 0
 console.log(Number("123 123")) // NaN
 console.log(Number("foo")) // NaN
 console.log(Number("100a")) // NaN
+
+console.log(Number("\n")) // 0
 ```
 > 如果向 ToNumber 传入一个字符串，它会试图将其转换成一个整数或浮点数，而且会忽略所有前导的 0，如果有一个字符不是数字，结果都会返回 NaN，鉴于这种严格的判断，我们一般还会使用更加灵活的 parseInt 和 parseFloat 进行转换。如果传入字符串为"",则返回0
 
@@ -134,6 +136,7 @@ Object.prototype.toString.call({a: 1}) // "[object Object]"
      ```javascript
      console.log([].toString()) // ""
      console.log([1, 2, 3].toString()) // 1,2,3
+     console.log([null]).toString()) //""
      ```
 
   2. 函数的 toString 方法返回源代码字符串。
@@ -505,14 +508,12 @@ console.log(new Date(2017, 04, 21) + 123) // Sun May 21 2017 00:00:00 GMT+0800 (
  * ToString("Sun May 21 2017 00:00:00 GMT+0800 (中国标准时间)")+ToString(123)，结果为 Sun May 21 2017 00:00:00 GMT+0800 (中国标准时间)123 
 */
 ```
-
-
-
 ---
 #### ==和===
 #### ==
 * [参考](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/%E7%9B%B8%E7%AD%89)
 ```
+// 共5条比较规则，都不满足则直接返回 false
 如果两个操作数都是对象，则仅当两个操作数都引用同一个对象时才返回true。
 如果一个操作数是null，另一个操作数是undefined，则返回true。
 如果两个操作数是不同类型的，就会尝试在比较之前将它们转换为相同类型：
@@ -520,24 +521,91 @@ console.log(new Date(2017, 04, 21) + 123) // Sun May 21 2017 00:00:00 GMT+0800 (
 	如果操作数之一是Boolean，则将布尔操作数转换为1或0。
 		如果是true，则转换为1。
 		如果是 false，则转换为0。
-	如果操作数之一是对象，另一个是数字或字符串，会尝试使用对象的valueOf()和toString()方法将对象转换为字符串。
+	<strong>x是字符串或者数字，y是对象，判断x == ToPrimitive(y)</strong>
 如果操作数具有相同的类型，则将它们进行如下比较：
 	String：true仅当两个操作数具有相同顺序的相同字符时才返回。
 	Number：true仅当两个操作数具有相同的值时才返回。+0并被-0视为相同的值。如果任一操作数为NaN，则返回false。
-	Boolean：true仅当操作数为两个true或两个时才返回false。
+	Boolean：true仅当操作数为两个true或两个false时才返回false。
+
+以上都不满足，直接返回 false
+	
 ```
+```javascript
+console.log( 42 == ['42']) // true
+/**
+ * ToPrimitive(['42'],number) 返回'42'
+ * 现在就是判断 42=='42'，需将'42'转为数字类型
+ */
+
+console.log(false == undefined) // false
+/**
+ * "如果操作数之一是Boolean，则将布尔操作数转换为1或0。"
+ * 现在就是判断 0==undefined，不满足任何情况，直接返回 false
+ */
+console.log([] == ![]) // true
+/**
+ * 这里有个坑，![]=false ,类型是 Boolean
+ * 所以其实是判断 []==fasle
+ * "如果操作数之一是Boolean，则将布尔操作数转换为1或0。",
+ * 所以现在判断 []==0
+ * "x是字符串或者数字，y是对象，判断x == ToPrimitive(y)",而ToPrimitive([],number)结果为""
+ * 所以现在判断 ""==0
+ * "数字与字符串进行比较时，会尝试将字符串转换为数字值",而String("")=0
+ * 而0==0,当然是true
+ */
+
+
+console.log(false == "0") // true
+/**
+ * 
+ * 先将 false 转为数字类型0
+ * 现在判断 0=="0"
+ * 将“0”转为数字类型0
+ * 0==0.结果为 true
+ */
+
+console.log(false == 0) // true
+console.log(false == "") 
+/**
+ * 先将 false 转为数字类型0
+ * 现在判断 0==""
+ * 将""转为数字类型0
+ * 0==0,结果为 true
+ */
+
+console.log("" == 0) // true
+console.log("" == []) // true
+/**
+ * ToPrimitive([],number)结果为 ""
+ * ""=="",结果为true
+ */
+
+console.log([] == 0) // true
+console.log("" == [null]) 
+/**
+ * ToPrimitive([null],number)结果为""
+ * ""=="",结果为true
+ */
+console.log(0 == "\n")
+/**
+ * Number("\n")结果为0
+ * 0==0,结果为true
+ */
+```
+
+
 
 #### ===
 * [参考](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Strict_equality)
 ```
-If the operands are of different types, return false.
-If both operands are objects, return true only if they refer to the same object.
-If both operands are null or both operands are undefined, return true.
-If either operand is NaN, return false.
-Otherwise, compare the two operand's values:
-	Numbers must have the same numeric values. +0 and -0 are considered to be the same value.
-	Strings must have the same characters in the same order.
-	Booleans must be both true or both false.
+如果两个操作数类型不同，直接返回 false。
+如果两个操作数都是对象，则仅当两个操作数都引用同一个对象时才返回true。
+如果一个操作数都是null或都是undefined，则返回true。
+如果有一个操作数是NaN，则返回false。
+如果操作数具有相同的类型，则将它们进行如下比较：
+	String：true仅当两个操作数具有相同顺序的相同字符时才返回。
+	Number：true仅当两个操作数具有相同的值时才返回。+0并被-0视为相同的值。如果任一操作数为NaN，则返回false。
+	Boolean：true仅当操作数为两个true或两个false时才返回false。
 ```
 ---
 #### == 与 === 的不同
