@@ -1,7 +1,8 @@
 # 其它
 #### 类型转换
-* [参考](https://github.com/mqyqingfeng/Blog/issues/159)
+* 参考：[JavaScript 深入之头疼的类型转换](https://github.com/mqyqingfeng/Blog/issues/159)	
 * 以下提到的“基本类型”是指 string,number,boolean,undefined,null
+* 以下提到的方法中，<code>ToString</code>,<code>ToNumber</code>,<code>ToPrimitive</code> 不暴露出来（属于底层方法） 。<code>toString</code>,<code>valueOf</code> 是直接暴露出来的。
 #### 原始值转布尔
 我们使用 Boolean 函数将类型转换成布尔类型，在 JavaScript 中，只有 6 种值可以被转换成 false，其他都会被转换成 true。
 ```
