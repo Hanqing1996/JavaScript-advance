@@ -1,4 +1,24 @@
 # 其它
+#### 类型转换
+* [参考](https://github.com/mqyqingfeng/Blog/issues/159)
+#### 原始值转布尔
+我们使用 Boolean 函数将类型转换成布尔类型，在 JavaScript 中，只有 6 种值可以被转换成 false，其他都会被转换成 true。
+```
+console.log(Boolean()) // false
+
+console.log(Boolean(false)) // false
+
+console.log(Boolean(undefined)) // false
+console.log(Boolean(null)) // false
+console.log(Boolean(+0)) // false
+console.log(Boolean(-0)) // false
+console.log(Boolean(NaN)) // false
+console.log(Boolean("")) // false
+```
+注意 <code>Boolean(-2)</code> 的结果是 true
+
+
+---
 #### ==和===
 #### ==
 * [参考](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/%E7%9B%B8%E7%AD%89)
@@ -29,6 +49,7 @@ Otherwise, compare the two operand's values:
 	Strings must have the same characters in the same order.
 	Booleans must be both true or both false.
 ```
+---
 #### == 与 === 的不同
 > 最显着的区别在于，严格等于运算符不尝试类型转换。相反，严格相等运算符始终将不同类型的操作数视为不同。
 
