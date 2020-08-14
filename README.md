@@ -575,8 +575,9 @@ f1 放入宏任务队列。async1执行。f2 入微任务队列。f3 执行，f4
 
 
 #### [其它1](https://github.com/Hanqing1996/JavaScript-advance/tree/master/%E5%85%B6%E5%AE%831)
-* 类型判断
+* 类型判断（typeof,constructor,instanceof,Object.prototype.toString）
 * 类型转换（ToPrimitive,ToString,ToNumber,toString,valueOf）
+* 【面试】构造一个用于识别类型的函数
 * JSON.stringify
 * 算术操作符（+）
 * ==和===
