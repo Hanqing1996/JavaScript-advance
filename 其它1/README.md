@@ -57,7 +57,7 @@ console.log(Number("123 123")) // NaN
 console.log(Number("foo")) // NaN
 console.log(Number("100a")) // NaN
 ```
-> 如果通过 Number 转换函数传入一个字符串，它会试图将其转换成一个整数或浮点数，而且会忽略所有前导的 0，如果有一个字符不是数字，结果都会返回 NaN，鉴于这种严格的判断，我们一般还会使用更加灵活的 parseInt 和 parseFloat 进行转换。
+> 如果向 ToNumber 传入一个字符串，它会试图将其转换成一个整数或浮点数，而且会忽略所有前导的 0，如果有一个字符不是数字，结果都会返回 NaN，鉴于这种严格的判断，我们一般还会使用更加灵活的 parseInt 和 parseFloat 进行转换。如果传入字符串为"",则返回0
 
 > parseInt 只解析整数，parseFloat 则可以解析整数和浮点数，如果字符串前缀是 "0x" 或者"0X"，parseInt 将其解释为十六进制数，parseInt 和 parseFloat 都会跳过任意数量的前导空格，尽可能解析更多数值字符，并忽略后面的内容。如果第一个非空格字符是非法的数字直接量，将最终返回 NaN：
 ```
@@ -396,6 +396,47 @@ fn.valueOf() //ƒ fn(){console.log(1)}
 
 2. 如果对象没有 valueOf 方法，或者这个方法并不返回一个原始值，则试图调用 toString 方法，看能否返回一个原始值
 3. 如果1或2得到一个原始值 value，则 ToNumber(value) 的结果即为最终结果；否则抛出一个类型错误异常。
+console.log(Number({})) // NaN
+/**
+ * 1. valueOf({}) 得到 object 类型的 {}，由于不是基本类型，接下来调用 toString 方法
+ * 2. toString({}) 得到 string 类型的 {}。ToPrimitive 调用完毕，得到一个基本类型的返回值
+ * 3. ToNumber("{}")，按照规则（如果向 ToNumber 传入一个字符串，它会试图将其转换成一个整数或浮点数，而且会忽略所有前导的 0，如果有一个字符不是数字，结果都会返回 NaN）,得到 NaN
+ */
+console.log(Number({a : 1})) // NaN
+/**
+ * 转换流程同上
+ */
+console.log(Number([])) // 0
+/**
+ * 1. [].valueOf() 得到 object 类型的[]，由于不是基本类型，接下来调用 toString 方法
+ * 2. [].toString() 得到 string 类型的 ""。ToPrimitive 调用完毕，得到一个基本类型的返回值
+ * 3. ToNumber("")，按照规则，得到0
+ */
+console.log(Number([0])) // 0
+/**
+ * 1. [0].valueOf() 得到 object 类型的 [0]，由于不是基本类型，接下来调用 toString 方法
+ * 2. [0].toString() 得到 string 类型的 "0"。ToPrimitive 调用完毕，得到一个基本类型的返回值
+ * 3. ToNumber("0")，按照规则，得到0
+ */
+console.log(Number([1, 2, 3])) // NaN
+/**
+ * 1. [1,2,3].valueOf() 得到 object 类型的 [1,2,3]，由于不是基本类型，接下来调用 toString 方法
+ * 2. [1,2,3].toString() 得到 string 类型的 "1,2,3"。ToPrimitive 调用完毕，得到一个基本类型的返回值
+ * 3. ToNumber("1,2,3")，发现','无法解析成数字，按照规则(如果有一个字符不是数字，结果都会返回 NaN)，返回NaN
+ */
+console.log(Number(function(){var a = 1;})) // NaN
+/**
+ * 1. function(){var a = 1;}.valueOf() 得到 object 类型的 function(){var a = 1;}，由于不是基本类型，接下来调用 toString 方法
+ * 2. function(){var a = 1;}.toString() 得到 string 类型的 "function(){var a = 1;}"。ToPrimitive 调用完毕，得到一个基本类型的返回值
+ * 3. ToNumber("function(){var a = 1;}")，发现无法解析成数字，按照规则返回NaN
+ */
+console.log(Number(/\d+/g)) // NaN
+console.log(Number(new Date(2010, 0, 1))) // 1262275200000
+/**
+ * 1. new Date(2010, 0, 1).valueOf() 返回1970年至今的毫秒数 1262275200000，是 number 类型，ToPrimitive 调用完毕
+ * 2. ToNumber(1262275200000)，返回 1262275200000
+ */
+console.log(Number(new Error('a'))) // NaN
 #### ==和===
 #### ==
 * [参考](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/%E7%9B%B8%E7%AD%89)
