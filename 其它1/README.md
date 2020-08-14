@@ -193,9 +193,6 @@ fn.valueOf() //ƒ fn(){console.log(1)}
   ```
 
 #### ToPrimitive
-
-* ToPrimitive 方法会在对象转字符串数字的流程中被调用，但这不是它唯一的应用场景
-
 * 语法
 
   ```javascript
@@ -208,21 +205,19 @@ fn.valueOf() //ƒ fn(){console.log(1)}
 
 当不传入 PreferredType 时，如果 input 是日期类型，相当于传入 String，否则，都相当于传入 Number。
 
-如果传入的 input 是 Undefined、Null、Boolean、Number、String 类型，直接返回该值。
+<strong>如果传入的 input 是 Undefined、Null、Boolean、Number、String 类型，直接返回该值。</strong>
 
 如果是 ToPrimitive(obj, Number)，处理步骤如下：
 
-1. 如果 obj 为 基本类型，直接返回
-2. 否则，调用 valueOf 方法，如果返回一个原始值，则 JavaScript 将其返回。
-3. 否则，调用 toString 方法，如果返回一个原始值，则 JavaScript 将其返回。
-4. 否则，JavaScript 抛出一个类型错误异常。
+1. 调用 valueOf 方法，如果返回一个原始值，则 JavaScript 将其返回。
+2. 否则，调用 toString 方法，如果返回一个原始值，则 JavaScript 将其返回。
+3. 否则，JavaScript 抛出一个类型错误异常。
 
 如果是 ToPrimitive(obj, String)，处理步骤如下：
 
-1. 如果 obj为 基本类型，直接返回
-2. 否则，调用 toString 方法，如果返回一个原始值，则 JavaScript 将其返回。
-3. 否则，调用 valueOf 方法，如果返回一个原始值，则 JavaScript 将其返回。
-4. 否则，JavaScript 抛出一个类型错误异常。
+1. 否则，调用 toString 方法，如果返回一个原始值，则 JavaScript 将其返回。
+2. 否则，调用 valueOf 方法，如果返回一个原始值，则 JavaScript 将其返回。
+3. 否则，JavaScript 抛出一个类型错误异常。
 
 > 也就是说，在不报错的情况下，必然返回一个基本类型（number,string,boolean,null,undefiend）的值
 
@@ -439,6 +434,83 @@ console.log(Number(new Date(2010, 0, 1))) // 1262275200000
  */
 console.log(Number(new Error('a'))) // NaN
 ```
+---
+#### JSON.stringify
+* 作用：将一个 JavaScript 值转换为一个 JSON 字符串
+1. 处理基本类型
+```javascript
+console.log(JSON.stringify(null)) // null
+console.log(JSON.stringify(undefined)) // undefined，注意这个undefined不是字符串的undefined
+console.log(JSON.stringify(true)) // true
+console.log(JSON.stringify(42)) // 42
+console.log(JSON.stringify("42")) // "42"
+```
+2.布尔值、数字、字符串的包装对象在序列化过程中会自动转换成对应的原始值。
+```
+JSON.stringify([new Number(1), new String("false"), new Boolean(false)]); // "[1,"false",false]"
+```
+3.undefined、任意的函数以及 symbol 值，在序列化过程中会被忽略（出现在非数组对象的属性值中时）或者被转换成 null（出现在数组中时）。
+```
+JSON.stringify({x: undefined, y: Object, z: Symbol("")}); 
+// "{}"
+
+JSON.stringify([undefined, function(){console.log(1)}, Symbol("")]);          
+// "[null,null,null]" 
+```
+4.JSON.stringify 有第二个参数 replacer，它可以是数组或者函数，用来指定对象序列化过程中哪些属性应该被处理，哪些应该被排除。
+```
+function replacer(key, value) {
+  if (typeof value === "string") {
+    return undefined;
+  }
+  return value;
+}
+
+var foo = {foundation: "Mozilla", model: "box", week: 45, transport: "car", month: 7};
+var jsonString = JSON.stringify(foo, replacer);
+
+console.log(jsonString)
+// {"week":45,"month":7}
+```
+```
+var foo = {foundation: "Mozilla", model: "box", week: 45, transport: "car", month: 7};
+console.log(JSON.stringify(foo, ['week', 'month']));
+// {"week":45,"month":7}
+```
+5.如果一个被序列化的对象拥有 toJSON 方法，那么该 toJSON 方法就会覆盖该对象默认的序列化行为：不是那个对象被序列化，而是调用 toJSON 方法后的返回值会被序列化，例如：
+```
+var obj = {
+  foo: 'foo',
+  toJSON: function () {
+    return 'bar';
+  }
+};
+
+JSON.stringify({x: obj}); // '{"x":"bar"}'
+```
+---
+#### 算术操作符
+#### 一元操作符 +
+当 + 运算符作为一元操作符的时候，查看 ES5规范1.4.6，会调用 ToNumber 处理该值，相当于 Number('1')，最终结果返回数字 1。
+> 关于 ToNumber 处理不同类型（基本类型、对象）参数的规则，请看上面
+```
+console.log(+[]); // 0
+console.log(+['1']); // 1
+console.log(+['1', '2', '3']); //NaN
+console.log(+{}); // NaN
+```
+#### 二元操作符 +
+根据规范11.6.1 ，当计算 value1 + value2时：
+
+1. lprim = ToPrimitive(value1)
+2. rprim = ToPrimitive(value2)
+3. 如果 lprim 是字符串或者 rprim 是字符串，那么返回 ToString(lprim) 和 ToString(rprim)的拼接结果
+4. 如果3不满足，则返回 ToNumber(lprim) 和 ToNumber(rprim)的运算结果
+
+
+
+
+---
 #### ==和===
 #### ==
 * [参考](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/%E7%9B%B8%E7%AD%89)
