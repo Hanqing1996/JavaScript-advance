@@ -367,6 +367,34 @@ fn().then(()=>{
 ```
 4. 记住 new Promise(xxx) 是同步的，且应该视为是普普通通地执行了一个函数
 5. 记住微任务队列清空后才开始执行宏任务队列
+6. 如果宏任务队列中有多个 setTimeout,它们将几乎同时执行
+```
+(function() {
+
+    console.log('这是开始');
+  
+    setTimeout(function cb() {
+      console.log('这是来自第一个回调的消息');
+    },10000);
+  
+    setTimeout(function cb1() {
+      console.log('这是来自第二个回调的消息');
+    }, 10000);
+  
+    console.log('这是结束');
+  
+  })();
+```
+```
+console.log('这是开始');
+console.log('这是结束');
+
+// 以下两句在10s后几乎同时打印出来
+console.log('这是来自第一个回调的消息');
+console.log('这是来自第二个回调的消息');
+```
+
+
 * 例1
 ```
 async function async1(){
