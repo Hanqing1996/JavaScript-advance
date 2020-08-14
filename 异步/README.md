@@ -425,6 +425,9 @@ console.log(v2);
 
 // 输出:hh
 ```
+```
+await new Promise(resolve=>resolve("hh")) // "hh"
+```
 * await的作用在于我们不用写then()了
 ```
 function test() {
