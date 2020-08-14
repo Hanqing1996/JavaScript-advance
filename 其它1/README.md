@@ -1,6 +1,7 @@
 # 其它
 #### 类型转换
 * [参考](https://github.com/mqyqingfeng/Blog/issues/159)
+* 以下提到的“基本类型”是指 string,number,boolean,undefined,null
 #### 原始值转布尔
 我们使用 Boolean 函数将类型转换成布尔类型，在 JavaScript 中，只有 6 种值可以被转换成 false，其他都会被转换成 true。
 ```
