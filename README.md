@@ -576,6 +576,7 @@ f1 放入宏任务队列。async1执行。f2 入微任务队列。f3 执行，f4
 
 #### [其它1](https://github.com/Hanqing1996/JavaScript-advance/tree/master/%E5%85%B6%E5%AE%831)
 * 类型转换（ToPrimitive,ToString,ToNumber,toString,valueOf）
+* JSON.stringify
 * ==和===
 * const arr,只能保证 arr 对应地址不变，如果想禁止 push等操作，应该配合 Object.freeze() 使用
 ```
@@ -623,7 +624,7 @@ console.log('b'.charCodeAt(0)) // 98
 * 深度拷贝
 * 浅拷贝
 * Object.assign
-* 【面试答】JSON.parse(JSON.stringif(data))可以实现深度拷贝
+* 【面试答】JSON.parse(JSON.stringify(data))可以实现深度拷贝
 * 如何实现复杂对象的深度拷贝
 
 #### [其它2](https://github.com/Hanqing1996/JavaScript-advance/tree/master/%E5%85%B6%E5%AE%832)
