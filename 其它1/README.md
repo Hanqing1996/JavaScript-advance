@@ -139,6 +139,34 @@ function a() {
 }
 a();
 ```
+* 在 IE6 中，null 和 undefined 会被 Object.prototype.toString 识别成 [object Object]！
+
+#### 【面试】构造一个用于识别类型的函数
+```javascript
+var class2type = {};
+
+// 生成class2type映射
+"Boolean Number String Function Array Date RegExp Object Error".split(" ").map(function(item, index) {
+    class2type["[object " + item + "]"] = item.toLowerCase();
+})
+
+function type(obj) {
+    if (obj == null) {
+        return obj + "";
+    }
+    return typeof obj === "object" || typeof obj === "function" ?
+        class2type[Object.prototype.toString.call(obj)] || "object" :
+        typeof obj;
+}
+
+```
+```
+type(123) // "number"
+type(false) // "boolean"
+type(function(){}) // "function"
+
+```
+
 ---
 #### 类型转换
 * 参考：[JavaScript 深入之头疼的类型转换](https://github.com/mqyqingfeng/Blog/issues/159)	
@@ -658,7 +686,7 @@ console.log(new Date(2017, 04, 21) + 123) // Sun May 21 2017 00:00:00 GMT+0800 (
 ```
 // 共5条比较规则，都不满足则直接返回 false
 如果两个操作数都是对象，则仅当两个操作数都引用同一个对象时才返回true。
-如果一个操作数是null，另一个操作数是undefined，则返回true。
+<strong>如果一个操作数是null，另一个操作数是undefined，则返回true。</strong>
 如果两个操作数是不同类型的，就会尝试在比较之前将它们转换为相同类型：
 	当数字与字符串进行比较时，会尝试将字符串转换为数字值。
 	如果操作数之一是Boolean，则将布尔操作数转换为1或0。
