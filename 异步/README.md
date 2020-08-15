@@ -147,6 +147,17 @@ promise2.then(s=>console.log(s)) // 对象promise2执行了then方法
 
 // 输出1
 ```
+
+* 但是 new Promise(resolve=>setTimeout(()=>{console.log('hh');resolve(1)}) 是执行了一个函数
+```
+let p=new Promise(resolve=>{console.log('hh');resolve(1)})
+console.log(p)
+
+// 输出：
+hh 
+Promise {<resolved>: 1}
+```
+
 * promise的局限
 promise的作用只是规范了回调,使[回调变得可控](https://zhuanlan.zhihu.com/p/22782675),避免了回调地狱的出现，但并没有消除回调
 * Promise函数顺序问题
@@ -456,14 +467,10 @@ test()
 
 // 报错：Uncaught SyntaxError: await is only valid in async function
 ```
-* await 命令后面的 Promise 对象，运行结果可能是 rejected，所以最好把 await 命令放在 try...catch 代码块中。
+* await 命令后面的 Promise 对象，运行结果可能是 rejected，所以最好这么写。
 ```
 async function myFunction() {
-  try {
-    await somethingThatReturnsAPromise();
-  } catch (err) {
-    console.log(err);
-  }
+  await somethingThatReturnsAPromise().catch(err=>console.log(err))
 }
 
 // 等价于
@@ -474,6 +481,20 @@ async function myFunction() {
   });
 }
 ```
+* 注意 promise 的 resolve 不是必须等到 await 执行才被调用!!!
+> 以下代码中，resolve 是在同步代码全部执行完毕后等待10s被调用的，然后又过了10s，打印此时的 p,然后获取 resolve 的结果并赋值给 res 
+```
+let p=new Promise(resolve=>setTimeout( ()=>{resolve(1)},10000 ))
+setTimeout(async()=>{
+    console.log(p) // Promise {<resolved>: 1}
+    const res=await 
+    console.log(res) // 1    
+},20000)
+console.log('let us wait 10s')
+```
+* await 会阻塞自己后面的代码，直到自己获取到 promise 的 resolve 结果
+
+详见[这道面试题]()
 
 #### await 用法
 * 用 promise 封装 readFile
