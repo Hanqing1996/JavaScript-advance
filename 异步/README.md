@@ -343,6 +343,133 @@ promise.then(()=>{
 
 
 [理解 JavaScript 的 async/await](https://segmentfault.com/a/1190000007535316)
+#### await 和 await 的等价（看懂这个，接下去的就都不用看了）
+* await 的等价
+```
+await foo();
+console.log(1);
+```
+等价于
+```
+Promise.resolve(foo()).then(()=>console.log(1))
+```
+* async 的等价
+```
+async function foo() {
+    console.log(1)
+}
+```
+等价于
+```
+function foo(){
+    return new Promise((resolve,reject)=>{
+        console.log(1)
+    })
+}
+```
+* 例1
+```
+async function foo() {
+  console.log(1);
+  await foo1();
+  console.log(2);
+}
+```
+等价于
+```
+function foo() {
+    return new Promise(resolve, reject => {
+        console.log(1);
+        Promise.resolve(foo1()).then(() => {
+            console.log(2);
+        })
+    })
+}
+```
+* 例2
+```
+function wait() {
+  return new Promise(resolve => setTimeout(resolve, 10 * 1000));
+}
+
+async function main() {
+  console.time();
+  await wait();
+  await wait();
+  await wait();
+  console.timeEnd();
+}
+main();
+```
+等价于
+```
+function main() {
+    return new Promise((resolve, reject) => {
+        console.time();
+        Promise.resolve(
+            new Promise(resolve => setTimeout(resolve, 10 * 1000))
+        ).then(() => {
+            Promise.resolve(
+                new Promise(resolve => setTimeout(resolve, 10 * 1000))
+            ).then(() => {
+                Promise.resolve(
+                    new Promise(resolve => setTimeout(resolve, 10 * 1000))
+                ).then(() => {
+                    console.timeEnd();
+                });
+            });
+        });
+    });
+}
+main()
+```
+* 例3 
+```
+function wait() {
+  return new Promise(resolve =>
+    setTimeout(resolve, 10 * 1000)
+  )
+}
+
+async function main() {
+  console.time();
+  const x = wait();
+  const y = wait();
+  const z = wait();
+  await x;
+  await y;
+  await z;
+  console.timeEnd();
+}
+main();
+```
+等价于
+```
+
+function main() {
+    return new Promise((resolve, reject) => {
+        console.time();
+        const x = new Promise(resolve =>
+            setTimeout(resolve, 10 * 1000)
+        )
+        const y = new Promise(resolve =>
+            setTimeout(resolve, 10 * 1000)
+        )
+        const z = new Promise(resolve =>
+            setTimeout(resolve, 10 * 1000)
+        )
+
+        Promise.resolve(x).then(() => {
+            Promise.resolve(y).then(() => {
+                Promise.resolve(z).then(() => {
+                    console.timeEnd();
+                })
+            })
+        })
+    })
+}
+main()
+```
 
 #### async 
 async的作用不是把一个函数变成异步函数(放入event loop到最后执行之类的)，而是会使得后面跟的函数返回一个Promise对象
@@ -367,13 +494,12 @@ fn().then(s => console.log('get'+s));
 ```
 等价于
 ```
-var fn=function()
+function fn()
 {
     // 等价于Promise.resolve('小明');
-    return new Promise(resolve=>resolve('小明'));
+    return new Promise((resolve，reject)=>resolve('小明'));
 }
 
-console.log(fn())
 fn().then(s => console.log(s))
 ```
 * async函数不返回值
@@ -381,14 +507,13 @@ fn().then(s => console.log(s))
 async function fn() {
 }
 
-console.log(fn())
 
 /**
  * 输出:
  * Promise {<resolved>: undefined}
  * __proto__: Promise
  * [[PromiseStatus]]: "resolved"
- * [[PromiseValue]]: undefined
+ * [[PromiseValue]]: undefined // resolve 的值是 undefined
  *
  */
 ```
@@ -449,7 +574,7 @@ test().then(s=>console.log(s))
 ```
 等价于
 ```
-function test() {
+async function test() {
     return Promise.resolve('hh');
 }
 
