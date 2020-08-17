@@ -494,7 +494,7 @@ console.log('let us wait 10s')
 ```
 * await 会阻塞自己后面的代码，直到自己获取到 promise 的 resolve 结果
 
-详见[这道面试题]()
+详见[这道面试题](https://github.com/Hanqing1996/-summary#no129-%E8%BE%93%E5%87%BA%E4%BB%A5%E4%B8%8B%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E7%BB%93%E6%9E%9C)
 
 #### await 用法
 * 用 promise 封装 readFile
