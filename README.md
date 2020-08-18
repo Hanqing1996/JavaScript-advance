@@ -202,7 +202,7 @@ Timers->Poll（停留一段时间）->Checkout->Timers...
 
 > 微任务全部执行完毕后，才开始执行宏任务
 * 对应API
-1. setTimeout=>宏任务
+1. setTimeout=>宏任务,准确的说，是 setTimeout(fn,delay)里的回调函数 fn 被放入宏任务事件队列中 
 2. .then(fn)=>微任务
 3. 有关 await 的面试题,转化成 promise 再做。注意 new Promise(fn) 是同步的。
 
