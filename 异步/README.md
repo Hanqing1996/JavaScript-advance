@@ -364,6 +364,7 @@ async function foo() {
 function foo(){
     return new Promise((resolve,reject)=>{
         console.log(1)
+        resolve(undefined)
     })
 }
 ```
