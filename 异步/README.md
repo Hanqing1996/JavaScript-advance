@@ -342,8 +342,58 @@ promise.then(()=>{
 
 
 
+
+
+
 [理解 JavaScript 的 async/await](https://segmentfault.com/a/1190000007535316)
 #### await 和 await 的等价（看懂这个，接下去的就都不用看了）
+
+
+* 注意！！！
+```
+async function foo(){
+    setTimeout(()=>'libai',5000)
+}
+```
+不等价于
+```
+function foo(){
+    return new Promise(resolve=>{
+        setTimeout(()=>{
+            resolve('libai')
+        },5000)
+    })
+}
+```
+因为
+```
+async function foo(){
+    setTimeout(()=>'libai',5000)
+}
+
+// 等价于
+
+/*函数的完整执行特性*/
+async function foo(){
+    setTimeout(()=>'libai',5000)
+    return undefined
+}
+
+// 等价于
+
+function foo(){
+    return new Promise(resolve=>{
+        setTimeout(()=>{
+            resolve('libai')
+        },5000)
+        resolve(undefined)
+    })
+}
+```
+
+
+
+
 * await 的等价
 ```
 await foo();
