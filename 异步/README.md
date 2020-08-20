@@ -75,8 +75,151 @@ promise.then(()=>{
     console.log('失败')
 })
 ```
+---
+####  [Promise.all()](https://es6.ruanyifeng.com/#docs/promise#Promise-all)
 
-[理解 JavaScript 的 async/await](https://segmentfault.com/a/1190000007535316)
+对于 
+
+```javascript
+const p = Promise.all([p1, p2, p3]);
+```
+
+* 只有`p1`、`p2`、`p3`的状态都变成 resolved，`p`的状态才会变成resolved，此时`p1`、`p2`、`p3`的返回值组成一个数组，传递给`p`的回调函数。
+
+```javascript
+const p1=new Promise(resolve=>setTimeout(()=>resolve(1),5000))
+const p2=new Promise(resolve=>setTimeout(()=>resolve(2),5000))
+const p3=new Promise(resolve=>setTimeout(()=>resolve(3),5000))
+
+const p = Promise.all([p1, p2, p3]);
+p.then(args=>console.log(args)) // 5s 后打印 [1,2,3]
+```
+
+* 只要`p1`、`p2`、`p3`之中有一个被`rejected`，`p`的状态就变成`rejected`，此时第一个被`reject`的实例的返回值，会传递给`p`的回调函数。
+
+```javascript
+const p1=new Promise((resolve,reject)=>setTimeout(()=>reject(1),2000))
+const p2=new Promise(resolve=>setTimeout(()=>resolve(2),5000))
+const p3=new Promise(resolve=>setTimeout(()=>resolve(3),5000))
+
+const p = Promise.all([p1, p2, p3]);
+p.catch(err=>console.log(err)) // 2s 后打印 1
+```
+
+* 如果作为 all 参数的 Promise 实例，自己定义了`catch`方法，那么它一旦被`rejected`，并不会触发`Promise.all()`的`catch`方法。
+
+  > 下面代码中，`p1`会`resolved`，`p2`首先会`rejected`，但是`p2`有自己的`catch`方法，该方法返回的是一个新的 Promise 实例，`p2`指向的实际上是这个实例。该实例执行完`catch`方法后，也会变成`resolved`，导致`Promise.all()`方法参数里面的两个实例都会`resolved`，因此会调用`then`方法指定的回调函数，而不会调用`catch`方法指定的回调函数。
+
+  ```javascript
+  const p1 = new Promise((resolve, reject) => {
+    resolve('hello');
+  })
+  .then(result => result)
+  .catch(e => e);
+  
+  const p2 = new Promise((resolve, reject) => {
+    throw new Error('报错了');
+  })
+  .then(result => result)
+  .catch(e => e);
+  
+  Promise.all([p1, p2])
+  .then(result => console.log(result))
+  .catch(e => console.log(e));
+  // ["hello", Error: 报错了]
+  ```
+
+  
+
+---
+
+#### [Promise.race()](https://es6.ruanyifeng.com/#docs/promise#Promise-race)
+
+对于
+
+```javascript
+const p = Promise.race([p1, p2, p3]);
+```
+
+* 只要`p1`、`p2`、`p3`之中有一个实例率先改变状态，`p`的状态就跟着改变。那个率先改变的 Promise 实例的返回值，就传递给`p`的回调函数。即"竞态"。
+
+  ```javascript
+  const p1=new Promise(resolve=>setTimeout(()=>resolve(1),1000))
+  const p2=new Promise(resolve=>setTimeout(()=>resolve(2),2000))
+  const p3=new Promise(resolve=>setTimeout(()=>resolve(3),3000))
+  
+  const p = Promise.race([p1, p2, p3]);
+  p.then(first=>console.log(first)) // 1s 后，打印 1
+  ```
+
+* 注意上面说的是”刷先改变状态“，所以率先 reject 也会改变 p 的状态。
+
+```javascript
+const p1=new Promise((resolve,reject)=>setTimeout(()=>reject(1),1000))
+const p2=new Promise(resolve=>setTimeout(()=>resolve(2),2000))
+const p3=new Promise(resolve=>setTimeout(()=>resolve(3),3000))
+
+const p = Promise.race([p1, p2, p3]);
+p.catch(first=>console.log(first)) // 1s 后，打印 1
+```
+
+---
+
+#### Promise.allSettled()
+
+* 有时候，我们不关心异步操作的结果，只关心这些操作有没有结束。这种场合下，Promise.all() 受制于“有异步操作 reject 就确定下 Promise 状态，并执行回调函数“的特点，不能满足需求。
+
+```javascript
+const p1=new Promise((resolve,reject)=>setTimeout(()=>reject(1),1000))
+const p2=new Promise(resolve=>setTimeout(()=>resolve(2),2000))
+const p3=new Promise(resolve=>setTimeout(()=>resolve(3),3000))
+
+const p = Promise.all([p1, p2, p3]);
+p.catch(err=>console.log('有一个参数 reject 了，其它参数情况未知')) //
+```
+
+* 而  Promise.allSettled 不同，只有所有参数 Promise 实例都有确定的状态（resolved 或 rejected）,p才会 resolved，并给回调函数传递具体的 status数组。
+
+
+
+​		对于 resolved 的参数Promise，会给出 resolve 的值，对于 reject 的参数Promise，会给出 reject 的原因。
+
+```javascript
+const p1=new Promise((resolve,reject)=>setTimeout(()=>reject(1),1000))
+const p2=new Promise(resolve=>setTimeout(()=>resolve(2),2000))
+const p3=new Promise(resolve=>setTimeout(()=>resolve(3),3000))
+
+const p = Promise.allSettled([p1, p2, p3]);
+p.then(allResults=>console.log(allResults)) 
+/**
+ * 3s 后，打印
+ * [{status: "rejected", reason: 1},{status: "fulfilled", value: 2},{status: "fulfilled", value: 3}]
+ */
+
+```
+
+---
+
+#### Promise.prototype.finally()
+
+`finally()`方法用于指定不管 Promise 对象最后状态如何，都会执行的操作。
+
+
+
+ 注意 finally 只是不管成功还是失败都会执行而已，而不会永远最后执行
+
+```javascript
+new Promise((resolve, reject) => {
+    resolve();
+}).finally(() => {
+    console.log('finally1');
+}).then(() => {
+    console.log('then');
+}).finally(() => {
+    console.log('finally2');
+});
+```
+---
 #### await 和 await 的等价（看懂这个，接下去的就都不用看了）
 
 
