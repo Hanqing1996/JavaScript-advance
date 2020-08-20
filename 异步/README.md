@@ -30,13 +30,18 @@
 ```
 
 
-
 #### Promise
 * Promise 的 then 函数的第二个参数<strong>不建议</strong>添加，因为 reject 意味着发生了错误，应该直接由 catch 来处理
 ```
 const p1=new Promise((resolve,reject)=>setTimeout(()=>reject(1),1000))
 
 p1.then(()=>{}).catch(err=>console.log(err))
+```
+* catch 之后 Promise 实例的状态会重新变为 resolved
+```
+const p1=new Promise((resolve,reject)=>setTimeout(()=>reject(1),1000))
+
+p1.catch(err=>console.log(err)).then((res)=>{console.log('resolved after catch')})
 ```
 * Promise 的 resolve(),reject() 不是异步（resolve,regect 被放入异步任务中自然另当别论）的。但是,then()是异步的，会在resolve()或reject()执行完毕才后执行
 * new Promise(resolve=>setTimeout(()=>{console.log('hh');resolve(1)}) 是执行了一个函数
