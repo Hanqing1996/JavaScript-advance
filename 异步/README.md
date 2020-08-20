@@ -29,126 +29,17 @@
  }).done( ()=>{} ).fail( ()=>{} ).always( ()=> {})
 ```
 
-#### catch-语法糖
-```
- axios({
-     url:'xxx',
-     async:true,
- }).then( ()=>{
- }, ()=>{
-   console.log('失败1')
-   return Promise.reject('e1 can not deal it')
- }).then(()=>{  // 注意这里then只包含一个函数
- }).catch((e)=>{
-   console.log('I catch it')
-   console.log(e) // e1处理失败的原因
- })
-
-/**
- * 输出:
- * 失败1
- * I catch it
- * e1 can not deal it
- */
-```
-等价于
-```
- axios({
-     url:'xxx',
-     async:true,
- }).then( ()=>{
- }, ()=>{
-   console.log('失败1')
-   return Promise.reject('e1 can not deal it')
- }).then(()=>{
- },(e)=>{
-   console.log(e) // e1处理失败的原因
- })
-
-/**
- * 输出:
- * 失败1
- * e1 can not deal it
- */
-```
-#### 自己实现的回调
-```
-function buyfruit(fn){ // fn即回调函数
-
-    setTimeout(() => { 
-
-        // 在这里执行任务
-
-        // 异步任务执行完毕，开始根据结果调用相应函数
-        if(Math.random()>0.5){
-
-            // 执行回调函数
-            fn.call(undefined,"买到的苹果")
-        }
-        else{
-
-            // 执行回调函数
-            fn.call(undefined,new Error)
-        }
-    }, (Math.random+0.5)*1000);
-}
-
-// buyfruit(fn),其中fn即为回调函数
-buyfruit(function(res){ 
-
-    if(res instanceof Error){
-        console.log("没买到苹果");
-    }
-    else{
-        console.log("买到了苹果");
-    }
-})
-
-/**
- * 输出:
- * 成功1
- * 失败2
- * [object Error] { ... }
- */
-```
-
-
 
 
 #### Promise
-* Promise和异步没有任何关系,我们可以往Promise内部塞入一个异步任务，但Promise不是异步的，
-* Promise不是异步的,resolve(),reject()也不是异步的，只是普普通通的对象和调用方法而已。但是,then()是异步的，会在resolve()或reject()执行完毕后执行
+* Promise 的 then 函数的第二个参数<strong>不建议</strong>添加，因为 reject 意味着发生了错误，应该直接由 catch 来处理
 ```
-function buyFruit(){
-    return new Promise((resolve,reject)=>{ // 注意resolve,reject不是回调函数
-        setTimeout(()=>{
-            resolve('apple') // s1执行,接下来将执行s2
-        },10000)
-    })
-}
+const p1=new Promise((resolve,reject)=>setTimeout(()=>reject(1),1000))
 
-var pro=buyFruit() 
-
-pro.then(s=>console.log(s))
-
-// 10秒后输出apple
-
-// prom会立即被赋值为PromiseValue=undefined的Promise对象,但直到10秒后prom变为PromiseValue=apple的Promise对象，才会执行then()
+p1.then(()=>{}).catch(err=>console.log(err))
 ```
-* Promise是一个对象，不是一个函数
-```
-
-// 下面这句等价于var promise=Promise.resolve("1");
-var promise=new Promise(resolve=>resolve('1')) // promise是一个对象
-
-var promise2=promise.then() // 对象promise执行了then方法,返回了一个新对象,所以promise2是一个对象
-
-promise2.then(s=>console.log(s)) // 对象promise2执行了then方法
-
-// 输出1
-```
-
-* 但是 new Promise(resolve=>setTimeout(()=>{console.log('hh');resolve(1)}) 是执行了一个函数
+* Promise 的 resolve(),reject() 不是异步（resolve,regect 被放入异步任务中自然另当别论）的。但是,then()是异步的，会在resolve()或reject()执行完毕才后执行
+* new Promise(resolve=>setTimeout(()=>{console.log('hh');resolve(1)}) 是执行了一个函数
 ```
 let p=new Promise(resolve=>{console.log('hh');resolve(1)})
 console.log(p)
@@ -160,190 +51,25 @@ Promise {<resolved>: 1}
 
 * promise的局限
 promise的作用只是规范了回调,使[回调变得可控](https://zhuanlan.zhihu.com/p/22782675),避免了回调地狱的出现，但并没有消除回调
-* Promise函数顺序问题
-1. s1处理成功引发s2
-```
- axios({
-     url:'.',
-     async:true,
- }).then( ()=>{
-   console.log('成功1')
- }, ()=>{
-   console.log('失败1')
- }).then(()=>{
-   console.log('成功2')
- },()=>{
-   console.log('失败2')
- })
 
-/**
- * 输出:
- * 成功1
- * 成功2
- */
-```
-2. e1处理成功引发s2
-```
- axios({
-     url:'xxx',
-     async:true,
- }).then( ()=>{
-   console.log('成功1')
- }, ()=>{
-   console.log('失败1')
- }).then(()=>{
-   console.log('成功2')
- },()=>{
-   console.log('失败2')
- })
-
-
-/**
- * 输出:
- * 失败1
- * 成功2
- */
- ```
-
-3. s1处理失败引发e2
-```
- axios({
-     url:'.',
-     async:true,
- }).then( ()=>{
-   console.log('成功1')
-   处理失败
- }, ()=>{
-   console.log('失败1')
- }).then(()=>{
-   console.log('成功2')
- },(e)=>{
-   console.log('失败2')
-   console.log(e) // s1处理失败的原因
- })
-
-
-/**
- * 输出:
- * 成功1
- * 失败2
- * [object Error] { ... }
- */
- ```
-4. e1处理失败引发e2
-```
- axios({
-     url:'xxx',
-     async:true,
- }).then( ()=>{
-   console.log('成功1')
- }, ()=>{
-   console.log('失败1')
-   处理失败
- }).then(()=>{
-   console.log('成功2')
- },(e)=>{
-   console.log('失败2')
-   console.log(e) // e1处理失败的原因
- })
-
-
-/**
- * 输出:
- * 失败1
- * 失败2
- * [object Error] { ... }
- */
- ```
-* Promise中值的传递
-1. s1(e1)处理成功,return一个值,则s2可以接受一个参数,参数值等于s1的return值
-```
- axios({
-     url:'xxx',
-     async:true,
- }).then( ()=>{
- }, ()=>{
-   return 'e1处理成功'
- }).then((s)=>{
-   console.log(s)
- },(e)=>{
- })
-
-/**
- * 输出:
- * e1处理成功
- */
-```
-2. s1(e1)主动承认处理失败(处理不了),return Promise.reject(''),则e2可以接受一个参数,参数值等于(s1)e1的reject的内容
-```
- axios({
-     url:'xxx',
-     async:true,
- }).then( ()=>{
- }, ()=>{
-   console.log('失败1')
-   return Promise.reject('e1 can not deal it')
- }).then(()=>{
- },(e)=>{
-   console.log('失败2')
-   console.log(e) // e1处理失败的原因
- })
-
-/**
- * 输出:
- * 失败1
- * 失败2
- * e1 can not deal it
- */
-```
-3. s1(e1)处理失败,则e2可以接受一个参数,参数值为s1(e1)的处理失败原因
-```
- axios({
-     url:'xxx',
-     async:true,
- }).then( ()=>{
- }, ()=>{
-   console.log('失败1')
-   处理失败
- }).then(()=>{
- },(e)=>{
-   console.log('失败2')
-   console.log(e) // e1处理失败的原因
- })
-
-
-/**
- * 输出:
- * 失败1
- * 失败2
- * [object Error] { ... }
- */
- ```
 * 自己实现的promise
-注意这里的then逻辑和上面讲的不一样。上面e1处理成功后会执行s2,而这里e1执行后会执行e2
 ```
 function buyFruit(){
-    return new Promise((resolve,reject)=>{ // 注意resolve,reject不是回调函数
+    return new Promise((resolve,reject)=>{
         setTimeout(()=>{
-            reject('apple') // s1执行,接下来将执行s2
+            reject('apple')
         },10000)
     })
 }
 
 var promise=buyFruit()
 
-// 对于promise.then(s2,e2),s2,e2是回调函数
 promise.then(()=>{ 
-    console.log('成功') // s2
+    console.log('成功')
 },()=>{
-    console.log('失败') // e2
+    console.log('失败')
 })
 ```
-
-
-
-
-
 
 [理解 JavaScript 的 async/await](https://segmentfault.com/a/1190000007535316)
 #### await 和 await 的等价（看懂这个，接下去的就都不用看了）
