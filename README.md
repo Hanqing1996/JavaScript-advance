@@ -655,6 +655,7 @@ console.log('b'.charCodeAt(0)) // 98
 * 深度拷贝
 * 浅拷贝
 * Object.assign
+* concat 是深拷贝还是浅拷贝？splice呢？
 * 【面试答】JSON.parse(JSON.stringify(data))可以实现深度拷贝
 * 如何实现复杂对象的深度拷贝
 
