@@ -1464,6 +1464,10 @@ let obj={
 console.log(JSON.parse(JSON.stringify(obj))) // {time: "2020-08-21T01:21:49.893Z"}
 ```
 
+#### concat 是深拷贝还是浅拷贝？splice呢？
+```
+
+```
 
 #### 如何实现复杂对象的深度拷贝
 递归
