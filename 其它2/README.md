@@ -276,3 +276,50 @@ parseInt('1.1') // 1：parseInt 解析"1",忽略".1",十进制下的1是1
 parseInt('2') // 2：2的十进制
 parseInt('0.3') // 0: parseInt 解析"1",忽略".3",十进制下的0是0
 ```
+---
+#### 【面试】 Set、Map、WeakSet 和 WeakMap 的区别
+
+#### Set
+* Same-value-zero equality
+> 向 Set 加入值的时候，不会发生类型转换，所以5和"5"是两个不同的值。Set 内部判断两个值是否不同，使用的算法叫做“Same-value-zero equality”，它类似于精确相等运算符（===），主要的区别是Same-value-zero equality 认为NaN等于自身，而精确相等运算符认为NaN不等于自身。
+```
+let set = new Set();
+let a = NaN;
+let b = NaN;
+set.add(a);
+set.add(b);
+set // Set {NaN}
+```
+* 将 Set 结构转为数组
+> Array.from 方法可以将 Set 结构转为数组
+```
+const items = new Set([1, 2, 3, 2])
+const array = Array.from(items)
+console.log(array)	// [1, 2, 3]
+// 或
+const arr = [...items]
+console.log(arr)	// [1, 2, 3]
+```
+* 用 set 实现 交集（Intersect）、并集（Union）、差集（Difference）
+```
+let set1 = new Set([1, 2, 3])
+let set2 = new Set([4, 3, 2])
+
+let intersect = new Set([...set1].filter(value => set2.has(value)))
+let union = new Set([...set1, ...set2])
+let difference = new Set([...set1].filter(value => !set2.has(value)))
+
+console.log(intersect)	// Set {2, 3}
+console.log(union)		// Set {1, 2, 3, 4}
+console.log(difference)	// Set {1}
+```
+#### WeakSet
+* WeakSet 与 Set 的区别：
+> WeakSet 只能储存对象引用，不能存放值，而 Set 对象都可以
+* weak
+> meaning references to objects in a WeakSet are held weakly.WeakSet 对象中储存的对象值都是被弱引用的，即如果没有其他的变量或属性引用这个对象值，则这个对象将会被垃圾回收掉（不考虑该对象还存在于 WeakSet 中），所以，WeakSet 对象里有多少个成员元素，取决于垃圾回收机制有没有运行，运行前后成员个数可能不一致，遍历结束之后，有的成员可能取不到了（被垃圾回收了），WeakSet 对象是无法被遍历的（ES6 规定 WeakSet 不可遍历），也没有办法拿到它包含的所有元素
+
+#### WeakMap
+> The WeakMap object is a collection of key/value pairs in which the keys are weakly referenced. The keys must be objects and the values can be arbitrary values.键名必须是对象类型且为弱引用，键值可以是任意的
+* WeakMap 的 key 是不可枚举的。
+---
