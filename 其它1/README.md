@@ -1434,20 +1434,35 @@ obj1.child.gender='female'
 console.log(obj2) // { name: 'Jack', child: { name: 'len', gender: 'female' } }
 ```
 #### JSON.parse(JSON.stringify(data))
-* data不可以是复杂对象(复杂对象定义如下)
-1. data不包含日期,正则，函数，循环引用属性
-2. data不包含undefined属性
+
+![dYV9VH.png](https://s1.ax1x.com/2020/08/21/dYV9VH.png)
+* 重点来讲，有以下缺陷：
+1. 非数组对象的属性不能保证以特定的顺序出现在序列化后的字符串中。
+2. undefined、任意的函数以及 symbol 值，在序列化过程中会被忽略
 ```
-let obj1={
-    name:'liming'
+let obj={
+    name:Symbol(123),
+    action:function(){console.log('hi')},
+    age:undefined
 }
 
-let obj2=JSON.parse(JSON.stringify(obj1))
-
-obj1.age=12
-
-console.log(obj2); // {name: "liming"}
+console.log(JSON.parse(JSON.stringify(obj)))// {}
 ```
+3. 所有以 symbol 为属性键的属性都会被完全忽略掉
+```
+let obj={}
+obj[Symbol('nmae')]='libai'
+console.log(JSON.parse(JSON.stringify(obj))) // {}
+```
+4. Date 日期调用了 toJSON() 将其转换为了 string 字符串（同Date.toISOString()），因此会被当做字符串处理。也就是说日期类型的属性值会被转化为字符串类型。
+```
+let obj={
+    time: new Date()
+}
+
+console.log(JSON.parse(JSON.stringify(obj))) // {time: "2020-08-21T01:21:49.893Z"}
+```
+
 
 #### 如何实现复杂对象的深度拷贝
 递归
