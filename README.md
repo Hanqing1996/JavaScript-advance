@@ -782,7 +782,7 @@ toSpliceIndex.forEach((index:any)=>{
 })
 ```
 * 删除
-* 修改.正确姿势（浅拷贝）
+* 修改.正确姿势
 ```
 let data=[{id:1,name:'one'},{id:2,name:'two'},{id:3,name:'three'}]
 let list=data
@@ -791,7 +791,7 @@ target.name='updatedOne'
 console.log(list) // [{id: 1, name: "updatedOne"},{id: 2, name: "two"},{id: 3, name: "three"}]
 console.log(data) // [{id: 1, name: "updatedOne"},{id: 2, name: "two"},{id: 3, name: "three"}]
 ```
-* 增加.正确姿势（浅拷贝）
+* 增加.正确姿势
 ```
 let data=[{id:1,name:'one'},{id:2,name:'two'},{id:3,name:'three'}]
 let list=data
