@@ -1385,17 +1385,6 @@ obj1.age=12
 console.log(obj2) // { name: 'Jack', age: 12 }
 ```
 
-#### Object.assign(obj1,obj2)属于深度拷贝
-* 作用:将source的属性复制至target中,并返回target,属于深度拷贝
-* obj1必须之前已经被赋值为对象
-```
-let obj1
-let obj2={name:'Jack'}
-Object.assign(obj1,obj2)
-// 报错：Cannot convert undefined or null to object
-```
-
-
 #### Object.assign({}, obj1)属于深度拷贝
 ```
 let obj1={name:'Jack'}
@@ -1433,7 +1422,19 @@ obj1.child.gender='female'
 
 console.log(obj2) // { name: 'Jack', child: { name: 'len', gender: 'female' } }
 ```
-#### JSON.parse(JSON.stringify(data))
+#### JSON.parse(JSON.stringify(data)) 属于深度拷贝
+```
+let obj={
+    name: 'libai'
+}
+
+let obj2=JSON.parse(JSON.stringify(obj))
+obj2.name='zhangfei'
+
+console.log(obj2) // {name:"zhangfei"}
+```
+
+<strong>but!!!</strong>
 
 ![dYV9VH.png](https://s1.ax1x.com/2020/08/21/dYV9VH.png)
 * 重点来讲，有以下缺陷：
