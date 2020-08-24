@@ -878,5 +878,21 @@ Human.call(this, "yellow", "nezha")
 ```
 
 #### js的对象和JSON的对象的区别
-1. JSON的对象，属性名必须用""括起来
-2. JSON的对象，属性值不可以是函数
+* json 的 value 只能是以下格式
+```
+object
+array
+string
+number
+true
+false
+null
+```
+* 所以，以下类型的 value,json 是不支持的
+```
+Date
+RegExp
+Function
+undefined
+Symbol
+```
