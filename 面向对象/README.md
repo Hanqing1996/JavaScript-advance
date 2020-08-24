@@ -877,7 +877,7 @@ super("yellow", "nezha")
 Human.call(this, "yellow", "nezha")
 ```
 
-#### js的对象和JSON的对象的区别
+#### JSON格式要求
 * json 的 value 只能是以下格式
 ```
 object
