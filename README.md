@@ -565,7 +565,7 @@ f1 放入宏任务队列。async1执行。f2 入微任务队列。f3 执行，f4
 * 用js模拟继承(__proto__/new/create/class)
 * class
 * super
-* js的对象和JSON的对象的区别
+* JSON格式要求
 
 #### [数组](https://github.com/Hanqing1996/JavaScript-advance/tree/master/%E6%95%B0%E7%BB%84%E6%93%8D%E4%BD%9C)
 * Array和Array.prototype
