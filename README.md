@@ -1,4 +1,22 @@
+* console.dir()可以显示一个对象的所有属性和方法
+```javascript
+// chrome
 
+const f=function(){console.log(1)}
+console.log(f) // ƒ (){console.log(1)}
+
+console.dir(f) 
+/* 
+ƒ f()
+arguments: null
+caller: null
+length: 0
+name: "f"
+prototype: {constructor: ƒ}
+*/
+```
+
+---
 ```
 -1 == 1; // false
 -1 == 0; // false
