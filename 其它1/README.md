@@ -1048,56 +1048,83 @@ for(语句1;语句2;语句4) {
 
 直到语句2为假,for结束
 ```
-#### for循环与var
+---
+#### 【面试】下面代码的输出是什么？为什么
+
+#### 例1
+
+```javascript
+for (var i = 0; i< 10; i++){  
+	setTimeout(() => {        
+		console.log(i);       
+    }, 1000)                  
+}                             
 ```
 
-for(var i=0;i<6;i++){
-    setTimeout(()=>{console.log(i);},0) 
+* 答案
+
+```javascript
+10
+10
+10
+10
+10
+10
+10
+10
+10
+10
+```
+
+* 解析
+
+setTime 里的回调函数所能访问到的 i 是全局变量 i。在宏任务队列的10个回调函数执行时，全局变量 i 的值为10。所以输出10个10。
+
+#### 例2
+
+```javascript
+for (let i = 0; i< 10; i++){  
+	setTimeout(() => {        
+		console.log(i);       
+    }, 1000)                  
 }
-
-// 访问同一个 i 6次
 ```
 
-#### for循环与let
+* 答案
+
+```javascript
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
 ```
-setTimeout(()=>{console.log('end');},0)  
-for(var i=0;i<6;i++){
+
+* 解析
+
+这里有很要命的一点，就是 for 循环里的 i其实声明了10次。<strong>这与 for 循环的语义是不符合的。可以看成是 let 特有的一个 trick</strong><strong>>。具体参考 [我用了两个月的时间才理解 let](https://zhuanlan.zhihu.com/p/28140450)。
+
+
+
+也就是说题目中的代码等价于
+
+```javascript
+for (let i = 0; i< 10; i++){  
     let j=i;
-    setTimeout(()=>{console.log(j);},0) // setTime1
+	setTimeout(() => {        
+		console.log(j);       
+    }, 1000)                  
 }
-
-console.log('start');
-/**
- * 输出:
- * start
- * end
- * 0
- * 1
- * 2
- * 3
- * 4
- * 5
- * 
- */
-
- 
-/** 
-1. setTime1会打印0~5;这说明函数setTime1在执行时访问到的是6个不同的变量j
-2. let是不允许重复声明的，但上述代码没有报错，说明声明的是6个不同的变量
-3. let的魔力在于，它使得函数在每次执行时能访问到不同的,特定的变量
-*/
 ```
-上面代码等价于
-```
-setTimeout(()=>{console.log('end');},0)  
 
-// 这里的i作用域为for的()，这里的let为我们实现了上面的j
-for(let i=0;i<6;i++){
-    setTimeout(()=>{console.log(i);},0) 
-}
+所以，每个 setTime 里面的回调函数所能访问的 j 都是不同的变量，其值分别为 0~9。
 
-console.log('start');
-```
+---
 #### 处理默认参数(ES6之前)
 ```
 function sum(a,b){
