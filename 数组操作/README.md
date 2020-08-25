@@ -498,6 +498,37 @@ const arr=[1,2,3,4,5,6]
 arr.some(item=>item%2==0) // true
 ```
 
+#### concat
+注意参数可以是数组也可以是值
+```
+let arr=[2,3,4]
+
+let arr2=arr.concat(5,6) 
+
+arr2// [2,3,4,5,6]
+```
+```
+let arr=[2,3,4]
+
+let arr2=arr.concat([5,6]) 
+
+arr2 // [2,3,4,5,6]
+```
+
+#### 模拟实现 flat 函数
+```
+let arr = [1, 2, [3, 4, 5, [6, 7], 8], 9, 10, [11, [12, 13]]]
+
+const flatten = function (arr) {
+    while (arr.some(item => Array.isArray(item))) {
+        arr = [].concat(...arr)
+    }
+    return arr
+}
+
+console.log(flatten(arr))
+```
+
 ---
 #### 【笔试输入】str.split(' ').map(Number) 
 ```
