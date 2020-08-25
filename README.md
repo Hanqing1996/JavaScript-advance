@@ -502,6 +502,7 @@ console.log(8)
 
 f1 放入宏任务队列。async1执行。f2 入微任务队列。f3 执行，f4 入微任务队列。f2 执行，f4 执行，f1 执行。
 #### [函数](https://github.com/Hanqing1996/JavaScript-advance/tree/master/%E4%BD%A0%E7%9C%9F%E7%9A%84%E6%87%82%E5%87%BD%E6%95%B0%E5%90%97)
+* with 和 eval
 * return 的坑
 * 几道关于函数和对象的面试题目
 * if(temp=1+2) 不是判断temp是否等于3
