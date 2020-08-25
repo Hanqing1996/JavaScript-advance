@@ -799,7 +799,14 @@ let p=new Person({age:12,gender:true})
 ```
 typeof new String('11');// object
 ```
-
+* 上面 new 的代码可以精简如下
+```
+function _new(fn, ...arg) {
+    var obj = Object.create(fn.prototype);
+    const result = fn.apply(obj, ...arg);
+    return Object.prototype.toString.call(result) == '[object Object]' ? result : obj;
+}
+```
 
 
 #### 私有属性与共有属性
