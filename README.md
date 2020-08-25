@@ -655,7 +655,7 @@ console.log('b'.charCodeAt(0)) // 98
 * const在声明时就必须赋值,不可以重复声明,不可以重复赋值
 * const服从块级作用域
 * for循环细节
-* for循环与let
+* 【面试】for循环与var、let
 * 处理默认参数
 * 剩余参数
 * ...
