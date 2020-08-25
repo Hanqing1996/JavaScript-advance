@@ -609,8 +609,10 @@ f1 放入宏任务队列。async1执行。f2 入微任务队列。f3 执行，f4
 * flat:拍平数组
 * zip:拉拉链（数组变为对象）
 * entries（对象变为数组）
-* 去除数组中的 undefiend 元素
- 
+* filter(Boolean):去除数组中的 undefiend 元素
+* some
+* 【笔试输入】str.split(' ').map(Number)  
+* Icon-font 如何生成 svj.js 文件
 
 #### [字符串](https://github.com/Hanqing1996/JavaScript-advance/tree/master/%E5%AD%97%E7%AC%A6%E4%B8%B2)
 [教程](https://xiedaimala.com/tasks/05ad6931-9101-4c43-8810-893e787efb5f/video_tutorials/dafabdb1-724f-43c7-8b66-3b8037d3363e)
