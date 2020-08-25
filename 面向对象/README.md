@@ -754,58 +754,35 @@ Solider.protoype = {
   Solider.prototype.行走 = function(){ /*走俩步的代码*/}
   Solider.prototype.奔跑 = function(){ /*狂奔的代码*/  }
 ```
-
-#### new
-* [教程](https://xiedaimala.com/tasks/5833c9d4-ebd5-44e4-91b5-661f476f9cad/video_tutorials/4312943e-4fd3-4225-97e5-d4f04d6845be)
-* [文章](https://zhuanlan.zhihu.com/p/23987456)
-* [不用new创造solider](https://github.com/Hanqing1996/JavaScript-advance/blob/master/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/createsolider_without_new.js)
-* [用new创造solider](https://github.com/Hanqing1996/JavaScript-advance/blob/master/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/createsolider_with_new.js)
-* new关注的是：什么是共有的，什么是私有的
-1. 凡公有的，交给Solider.prototype(公共构造函数constructor、公共属性)
-2. 凡私有的，交给Solider，在其中设置私有属性和方法(this.)
-
-
-----
-#### new 做了什么
-1. 让 new 出的实例指向构造函数的原型
-2. 通过执行构造函数，为 new 出的实例增加属性
-3. 不管构造函数有没有返回值，newFunc 都会返回一个具有新属性的构造函数实例
-```
-function newFunc(father, ...rest) {
-  var result = {};
-  result.__proto__ = father.prototype;// 让 result 指向 father 的原型
-  var result2 = father.apply(result, rest); // 执行构造函数 father，为 result 添加属性
-  if (
-    // 构造函数 father 若有返回值，则已赋值给 result2，直接返回 result2
-    (typeof result2 === 'object' || typeof result2 === 'function') &&
-    result2 !== null
-  ) {
-    return result2;
-  }
-  // 构造函数没有返回值，则将 result 返回（由于前面执行构造函数时的 this 指定是result,所以 result 此时已经有了新的属性）
-  return result;
-}
-```
-比如
-```
-function Person(option){
-  this.age=option.age
-  this.gender=option.gender
-}
-
-let p=new Person({age:12,gender:true})
-```
-* 注意 new 返回的一定是对象
-```
-typeof new String('11');// object
-```
-* 上面 new 的代码可以精简如下
-```
+#### 如何实现一个 new
+1. 首先创建一个空的对象，空对象的__proto__属性指向构造函数的原型对象
+2. 把上面创建的空对象赋值构造函数内部的this，用构造函数内部的方法修改空对象
+3. 如果构造函数返回一个非基本类型的值，则返回这个值，否则上面创建的对象
+```javascript
 function _new(fn, ...arg) {
-    var obj = Object.create(fn.prototype);
-    const result = fn.apply(obj, ...arg);
-    return Object.prototype.toString.call(result) == '[object Object]' ? result : obj;
+    const obj = Object.create(fn.prototype);
+    const ret = fn.apply(obj, arg);
+    return ret instanceof Object ? ret : obj;
 }
+```
+* 关于为什么最后要判断 return ret instanceof Object ? ret : obj instanceof Object 来判断是否是对象
+> 包含Array，Object，Function、RegExp、Date 构造函数是可以自己指定返回一个对象的。也就是说不一定构造函数的返回值是构造函数内的 this
+```javascript
+function _new(fn, ...arg) {
+    const obj = Object.create(fn.prototype);
+    const ret = fn.apply(obj, arg);
+    //return ret instanceof Object ? ret : obj;
+    return obj;
+  }
+
+  function A(d) {
+    this.d = d;
+    return {
+      a: 6
+    };
+  }
+  console.log(new A(123));  //{a: 6}
+  console.log(_new(A, 123)); //A {d: 123}
 ```
 
 
