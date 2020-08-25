@@ -606,12 +606,14 @@ f1 放入宏任务队列。async1执行。f2 入微任务队列。f3 执行，f4
 * 对象数组移除某个元素：copy = copy.filter(item => item.id !== targetId)
 * 用redue实现map
 * 用reduce实现filter
-* flat:拍平数组
+* flat:拍平数组（二维->一维）
 * zip:拉拉链（数组变为对象）
 * entries（对象变为数组）
 * filter(Boolean):去除数组中的 undefiend 元素
 * some
 * 【笔试输入】str.split(' ').map(Number)  
+* concat
+* 模拟实现 flat 函数
 * Icon-font 如何生成 svj.js 文件
 
 #### [字符串](https://github.com/Hanqing1996/JavaScript-advance/tree/master/%E5%AD%97%E7%AC%A6%E4%B8%B2)
