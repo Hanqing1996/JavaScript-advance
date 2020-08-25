@@ -685,6 +685,7 @@ console.log('b'.charCodeAt(0)) // 98
 * 迭代器
 * 生成器(迭代器生成的语法糖)
 * for...of(迭代)
+* for in 会遍历__proto__上的属性
 * 迭代和遍历
 * NaN===NaN返回false
 * 4&&9
