@@ -489,5 +489,14 @@ console.log(arr) // [['A',[1,2,3]],['B',[4,5,6]],['C',[7,8,9]]]
 let arr=[1,undefined,2,'a',undefined]
 arr.filter(Boolean) // [1, 2, "a"]
 ```
+---
+#### 【笔试输入】str.split(' ').map(Number) 
+```
+let str='23 45 67 89' // let str=readline()
+
+str.split(' ').map(Number) // [23,45,67,89]
+```
+
+
 #### Icon-font 如何生成 svj.js 文件
 我的项目->下载至本地->获取到 iconfont.js 文件-> 将 iconfont.js 加入项目，重命名为 svg.js
