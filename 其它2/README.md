@@ -169,6 +169,31 @@ for(item of obj){
 
 // 输出:a b c
 ```
+
+#### for in 会遍历__proto__上的属性
+```
+let a=Object.create({name:'libai'}) // name 属性是挂载在 a 的原型上的
+a.age=12
+for(let key in a){
+    console.log(key) // age,name
+}
+```
+* 如果不想要原型上的属性被遍历到呢？
+```
+let a=Object.create({name:'libai'}) // name 属性是挂载在 a 的原型上的
+
+a.age=12
+
+for(let key in a){
+    // 检测 key 是不是 a 自身的属性
+    if(a.hasOwnProperty(key)){
+        console.log(key) // age
+    }
+}
+```
+
+
+
 #### 迭代和遍历
 * 迭代和遍历都是针对Object而言的，本质都是枚举Object的属性
 * 数组可以迭代，可以遍历;对象不可以迭代，可以遍历
