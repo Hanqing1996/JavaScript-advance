@@ -348,3 +348,9 @@ console.log(difference)	// Set {1}
 > The WeakMap object is a collection of key/value pairs in which the keys are weakly referenced. The keys must be objects and the values can be arbitrary values.键名必须是对象类型且为弱引用，键值可以是任意的
 * WeakMap 的 key 是不可枚举的。
 ---
+#### JavaScript 浮点数陷阱（0.1+0.2=0.30000000000000004）及解法
+参考:[JavaScript 浮点数陷阱及解法](https://github.com/camsong/blog/issues/9)
+
+简单的说就是0.1本身是无法用二进制精确存储的（它本身在转成二进制时会陷入循环），而相加操作又是用两个二进制数相加
+
+
