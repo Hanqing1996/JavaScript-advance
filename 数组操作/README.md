@@ -1,5 +1,11 @@
 # 数组
 
+#### Array.from 创建数组
+```
+let arr=Array.from({length:10})
+arr // [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined]
+```
+---
 #### Array和Array.prototype
 1. Array的类型为function
 ```
