@@ -699,6 +699,7 @@ console.log('b'.charCodeAt(0)) // 98
 * flag1&&flag2&&console.log('flag1　and flag2 all true')
 * 将字符串数组中的元素转为Number型，为什么不能直接用ParseInt
 * Set、Map、WeakSet 和 WeakMap 的区别
+* JavaScript 浮点数陷阱（0.1+0.2=0.30000000000000004）及解法
 
 #### [HTTP](https://github.com/Hanqing1996/JavaScript-advance/tree/master/HTTP)
 * curl -v
