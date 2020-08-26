@@ -683,6 +683,7 @@ console.log('b'.charCodeAt(0)) // 98
 * 如何实现复杂对象的深度拷贝
 
 #### [其它2](https://github.com/Hanqing1996/JavaScript-advance/tree/master/%E5%85%B6%E5%AE%832)
+* Array.from 创建数组
 * 【ES6】块级作用域{}
 * 字面量
 * unicode(ES6)
