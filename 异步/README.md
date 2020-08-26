@@ -1,34 +1,5 @@
 # 异步
 
-#### 回调
-* 回调的本质
-在异步任务结束后调根据任务结果调用相应函数的行为
-* 不同场景下的回调
-1. Node.js 的 error-first 形式
-```
- fs.readFile('./1.txt', (error, content)=>{
-     if(error){
-         // 失败
-     }else{
-         // 成功
-     }
- })
- ```
-2. jQuery 的 success / error 形式
-```
- $.ajax({
-     url:'/xxx',
-     success:()=>{},
-     error: ()=>{}
- })
- ```
-3. jQuery 的 done / fail / always 形式
-```
- $.ajax({
-     url:'/xxx',
- }).done( ()=>{} ).fail( ()=>{} ).always( ()=> {})
-```
-
 
 #### Promise
 * Promise 的 then 函数的第二个参数<strong>不建议</strong>添加，因为 reject 意味着发生了错误，应该直接由 catch 来处理
@@ -43,7 +14,6 @@ const p1=new Promise((resolve,reject)=>setTimeout(()=>reject(1),1000))
 
 p1.catch(err=>console.log(err)).then((res)=>{console.log('resolved after catch')})
 ```
-* Promise 的 resolve(),reject() 不是异步（resolve,regect 被放入异步任务中自然另当别论）的。但是,then()是异步的，会在resolve()或reject()执行完毕才后执行
 * new Promise(resolve=>setTimeout(()=>{console.log('hh');resolve(1)}) 是执行了一个函数
 ```
 let p=new Promise(resolve=>{console.log('hh');resolve(1)})
@@ -57,25 +27,175 @@ Promise {<resolved>: 1}
 * promise的局限
 promise的作用只是规范了回调,使[回调变得可控](https://zhuanlan.zhihu.com/p/22782675),避免了回调地狱的出现，但并没有消除回调
 
-* 自己实现的promise
-```
-function buyFruit(){
-    return new Promise((resolve,reject)=>{
-        setTimeout(()=>{
-            reject('apple')
-        },10000)
-    })
-}
-
-var promise=buyFruit()
-
-promise.then(()=>{ 
-    console.log('成功')
-},()=>{
-    console.log('失败')
-})
-```
 ---
+#### promise 的 then 方法
+* Promise 实例化时，同步执行函数
+
+>描述的是这样一种现象：在一个 Promise 实例创建的同时，传入的函数也被执行了
+
+```javascript
+// 既创建了 Promsie 实例 p，又执行了函数 resolve=>{console.log('hh');resolve(1)}
+let p=new Promise(resolve=>{console.log('hh');resolve(1)})
+console.log(p)
+
+// 输出：
+hh 
+Promise {<resolved>: 1}
+```
+
+* Promise 传入的函数，resolve 方法，then 方法都是同步执行的。但是 then  的回调函数会在 then 方法之前的 Promise 实例被 resolve 后被放入微任务队列，在此之前，回调函数存于then 方法之前的 Promise 实例内部
+
+```javascript
+let p=new Promise((resolve,reject)=>setTimeout(resolve,1000))
+
+    p.then(()=>{
+    	console.log(1)
+})
+
+/**
+ * 1. 函数 (resolve,reject)=>setTimeout(resolve,1000) 执行。setTimeout 执行，其回调函数 resolve 被放入微任务队列。
+ * 2. then 方法执行，其回调函数存储于 p 内部。
+ * 3. 目前所有同步代码执行完毕，执行微任务队列中任务。resolve 方法执行，导致 then 方法的回调函数被放入微任务队列。
+ * 4. 目前所有同步代码执行完毕，执行微任务队列中任务。then 方法的回调函数执行。
+ */
+```
+
+* then 方法会返回一个 Promise 对象。且返回一个Promsie 对象这个任务是同步的。只是该 Promsie 的状态，需要在执行 then 方法的回调函数后，才能**最终**确定。
+
+  > 注意辨析：then 方法返回的 Promsie，then 方法的回调函数返回的 Promise
+
+   * 如果 then 方法的回调函数返回一个 Promise（记为 inPromsie），当 inPromsie 被 resolve 后，**微任务队列会推入一个任务，而这个任务的作用是 resolve then 方法返回的promise**。而在此之前， then 方法返回的 promise 处于 pending 状态。
+   * 否则，then 方法的回调函数执行完毕后，then 方法返回的 Promsie 直接变为 resolved。没有微任务队列这一步
+
+  > 也就是说，当 then 方法执行完毕时，一定会返回一个 promsie。且其返回的 promsie 只有一种状态：pending。当 then 方法的回调函数完毕后，该 promsie 的状态可能立即变为 resolved，也可能之后再变成 resolved（等到微任务队列中，修改 Promise 状态的任务被执行后）
+
+
+
+
+
+函数 resolve => {resolve();} 执行，导致 Promise 被 resolve
+
+
+
+执行 then 方法，由于 Promise 已被 resolve，所以回调函数
+
+```javascript
+// task1
+() => {
+    new Promise(resolve => {
+      resolve();
+    })
+      .then(() => {
+        console.log("log: 内部第一个then");
+        return Promise.resolve();
+      })
+      .then(() => console.log("log: 内部第二个then"));
+  }
+```
+
+被放入微任务队列。该then 方法返回一个处于 pending 状态的 promise**（记为 Promsie1）**。
+
+
+
+// 微任务队列：task1
+
+
+
+执行下一个 then 方法，由于promise1 目前没有 resolve ，所以这个 then 方法的回调函数
+
+```javascript
+// tempSave1
+() => console.log("log: 外部第二个then")
+```
+
+暂存于 上一个 then 方法返回的 promise 内部。这个 then 方法返回一个处于 pending 状态的 promsie**（记为 Promsie2）**。
+
+
+
+当前所有同步代码执行完毕，现在执行微任务队列中任务。
+
+
+
+task1 执行，函数 resolve => {resolve();} 执行，导致 Promise 被 resolve
+
+执行 then 方法，由于 Promise 已被 resolve，所以回调函数
+
+```javascript
+// task2
+() => {
+        console.log("log: 内部第一个then");
+        return Promise.resolve();
+      }
+```
+
+被放入微任务队列。该 then 方法返回一个未被 resolve（处于 pending 状态） 的 promise**（记为 Promsie3）**。
+
+
+
+// 微任务队列：task2 
+
+
+
+执行下一个 then 方法，promise3 目前没有 resolve，所以回调函数
+
+```javascript
+// tempSave2
+() => console.log("log: 内部第二个then")
+```
+
+暂存于上一个 then 方法返回的 promsie 内部。该then 方法执行完毕，返回一个处于 pending 状态的 promise**（记为 Promsie4）**。
+
+
+
+至此，task1 执行完毕，由于task1 没有返回值，则 Promsie1 状态由 pending 直接变为 resolved。这导致 tempSave1 被放入微任务队列。
+
+
+
+// 微任务队列：task2 ,tempSave1 
+
+
+
+继续执行微任务队列中的任务。执行 task2，输出“log: 内部第一个then”，返回一个被 resolve 的 Promise。
+
+
+
+至此，task2 执行完毕，由于task2 返回了 一个 Promise 且 resolve 了，所以  一个用于将 Promsie3 的状态修改为 resolved 的任务被放入微任务队列。
+
+```javascript
+// resolvePromise3
+将 Promsie3 的状态修改为 resolved
+```
+
+// 微任务队列：tempSave1,resolvePromise3
+
+
+
+继续执行微任务队列中的任务。执行 tempSave1，输出“log: 外部第二个then”，由于tempSave1没有返回值，则 Promsie2 状态由 pending 直接变为 resolved。
+
+
+
+至此，tempSave1 执行完毕。
+
+
+
+// 微任务队列：resolvePromise3
+
+
+
+接下来执行 resolvePromise3，将 Promsie3 的状态修改为 resolved，这导致 tempSave2 被放入微任务队列
+
+
+
+// 微任务队列：tempSave2 
+
+
+
+接下来执行 tempSave2 ，输出“内部第二个then”。由于tempSave2 没有返回值，则 Promsie4 状态由 pending 直接变为 resolved。
+
+（妈呀，绕死我了）
+
+---
+
 ####  [Promise.all()](https://es6.ruanyifeng.com/#docs/promise#Promise-all)
 
 对于 
