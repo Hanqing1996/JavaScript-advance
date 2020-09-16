@@ -1393,4 +1393,280 @@ const newFormValue = {...props.value, [name]: value}
 
 console.log(newFormValue)//{username: "libai", password: ""}
 ```
+---
+## 以前的错误理解
 
+#### 深度拷贝 
+
+> 另外开辟一片内存空间，两个对象，分别置于两片空间
+
+#### 浅拷贝
+
+> 两个对象指针指向同一片内存空间
+
+#### obj1=obj2属于浅拷贝
+
+```
+let obj1={
+    name:'Jack',
+}
+let obj2=obj1
+
+obj1.age=12
+
+console.log(obj2) // { name: 'Jack', age: 12 }
+```
+
+---
+
+但是！！上面的理解是完全错误的！！！网络上各种一知半解的js”深拷贝“，”浅拷贝“讨论实在是误人子弟！！！
+
+
+
+以下总结参考 [ javascript中的深拷贝和浅拷贝？ - 邹润阳的回答 - 知乎](https://www.zhihu.com/question/23031215/answer/46220227)
+
+---
+
+#### 深拷贝
+
+如果 b 是 a 的一份拷贝，b 中没有对 a 中对象的引用，则称 b 是 a 的深拷贝。
+
+![dYDAfA.jpg](https://s1.ax1x.com/2020/08/21/dYDAfA.jpg)
+
+#### 浅拷贝
+
+浅拷贝的概念要基于深拷贝。如果 b 是 a 的一份拷贝，b 中有对 a 中对象的引用（无论多少个，只要有），则称 b 是 a 的浅拷贝。
+
+>  比如下图中，shadowObj   是 obj 的拷贝结果。obj 和 shadow 的 arr 指向同一片内存空间，我们就说 shadowObj  是 obj  的浅拷贝。
+
+![dYdIsO.jpg](https://s1.ax1x.com/2020/08/21/dYdIsO.jpg)
+
+#### 注意
+
+* "拷贝"的意思是将一个对象的所有属性进行枚举。基本类型的属性一定是复制到另外的内存空间中，引用类型的属性可能是开辟新内存空间，也可能是指向原对象的引用属性对应内存空间。
+
+* let a= {name:'libai'};let  b=a 不属于浅拷贝。
+
+  > 深拷贝和浅拷贝是只针对复杂对象拷贝的概念。而等号就是赋值操作，两者有本质区别；无论深复制还是浅复制都依赖于赋值操作，后者是一门编程语言的根基。
+
+
+
+#### Object.assign({}, obj1)属于深度拷贝
+
+```
+let obj1={name:'Jack'}
+let obj2=Object.assign({}, obj1)
+obj1["age"]=12
+
+console.log(obj2) // { name: 'Jack' }
+```
+
+#### Object.assign(obj1)属于浅拷贝
+
+```
+let obj1={name:'Jack'}
+let obj2=Object.assign(obj1) 
+obj1["age"]=12
+
+console.log(obj2) // { name: 'Jack', age: 12 }
+```
+
+#### 特殊：Object.assign(obj1,obj2)中obj2存在子对象的情况
+
+* 由于复制的是属性，obj1被赋与的属性值是一个地址，指向内存中子对象所在空间,即：原对象深度拷贝,子对象浅拷贝
+
+```
+let obj1={
+    name:'Jack',
+    child:{
+    name:'len'
+    }
+}
+
+let obj2={};
+
+Object.assign(obj2,obj1)
+
+obj1.gender='male'
+obj1.child.gender='female'
+
+console.log(obj2) // { name: 'Jack', child: { name: 'len', gender: 'female' } }
+```
+
+#### JSON.parse(JSON.stringify(data)) 属于深度拷贝
+
+```
+let obj={
+    name: 'libai'
+}
+
+let obj2=JSON.parse(JSON.stringify(obj))
+obj2.name='zhangfei'
+
+console.log(obj2) // {name:"zhangfei"}
+```
+
+<strong>but!!!</strong>
+
+![dYV9VH.png](https://s1.ax1x.com/2020/08/21/dYV9VH.png)
+
+* 重点来讲，有以下缺陷：
+
+1. 非数组对象的属性不能保证以特定的顺序出现在序列化后的字符串中。
+2. undefined、任意的函数以及 symbol 值，在序列化过程中会被忽略
+
+```
+let obj={
+    name:Symbol(123),
+    action:function(){console.log('hi')},
+    age:undefined
+}
+
+console.log(JSON.parse(JSON.stringify(obj)))// {}
+```
+
+3. 所有以 symbol 为属性键的属性都会被完全忽略掉
+
+```
+let obj={}
+obj[Symbol('nmae')]='libai'
+console.log(JSON.parse(JSON.stringify(obj))) // {}
+```
+
+4. Date 日期调用了 toJSON() 将其转换为了 string 字符串（同Date.toISOString()），因此会被当做字符串处理。也就是说日期类型的属性值会被转化为字符串类型。
+
+```
+let obj={
+    time: new Date()
+}
+
+console.log(JSON.parse(JSON.stringify(obj))) // {time: "2020-08-21T01:21:49.893Z"}
+```
+
+#### concat 是深拷贝还是浅拷贝？splice呢？
+
+* concat：浅拷贝
+
+> 以下代码中，arr2 含有对 aar1 的引用，所以 arr2 是 arr1 的浅拷贝
+
+```javascript
+let arr=[1,[2,3,4],[5,6]]
+let arr2=arr.concat()
+arr2[0]=100
+arr2[1][0]=1000
+console.log(arr) // [ 1, [ 1000, 3, 4 ], [ 5, 6 ] ]
+console.log(arr2) // [ 100, [ 1000, 3, 4 ], [ 5, 6 ] ]
+```
+
+* splice：浅拷贝
+
+```javascript
+let arr=[1,[2,3,4],[5,6]]
+let arr2=arr.slice(0)
+arr2[0]=100
+arr2[1][0]=1000
+console.log(arr) // [ 1, [ 1000, 3, 4 ], [ 5, 6 ] ]
+console.log(arr2) // [ 100, [ 1000, 3, 4 ], [ 5, 6 ] ]
+```
+
+#### 递归实现深拷贝
+
+```javascript
+function deepclone(source){
+    
+    if(source instanceof Object){
+
+        let dist;
+        // 处理数组    
+        if(source instanceof Array){
+            dist=new Array();
+        }
+        // 处理函数 
+        if(source instanceof Function){
+            dist=function(){
+                return source.apply(this,arguments);
+            };
+        }
+        // 处理普通对象 
+        dist=new Object();
+        for(let key in source){
+            dist[key]=deepclone(source[key]);
+        }
+        return dist;
+    }
+    return source;
+}
+```
+
+* 缺点
+
+> 无法解决循环引用的情况
+
+```javascript
+const a={}
+a.child=a
+
+const b=deepclone(a)
+//Maximum call stack size exceeded
+```
+
+
+#### 环检测
+
+```javascript
+const a={}
+a.child=a
+
+const b=deepclone(a)
+```
+
+* 方法
+
+> 最diao的是，cache 里的 cacheDist 和 dist 是同步成长的
+
+```javascript
+let cache=[]
+
+function deepclone(source){
+    if(source instanceof Object){
+        const cacheDist=findCache(source)
+
+        if(!cacheDist){
+            let dist;
+            // 处理数组    
+            if(source instanceof Array){
+                dist=new Array();
+            }
+            // 处理函数 
+            if(source instanceof Function){
+                dist=function(){
+                    return source.apply(this,arguments);
+                };
+            }
+            // 处理普通对象 
+            dist=new Object();
+            cache.push([source,dist]);
+
+            for(let key in source){
+                dist[key]=deepclone(source[key]);
+            }
+
+            return dist
+
+        }else{
+            return cacheDist
+        }
+    }
+    return source;
+}
+
+
+function findCache(source) {
+    for (let i = 0; i < cache.length; i++) {
+      if (cache[i][0] === source) {
+        return cache[i][1];
+      }
+    }
+    return undefined;
+  }
+```
