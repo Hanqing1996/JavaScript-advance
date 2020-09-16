@@ -1223,20 +1223,7 @@ console.log(arr2) // [0,1,2,3,4,5,6,7]
 ```
 2. 处理函数剩余参数（见上面）
 3. [将伪数组转换为数组](https://github.com/Hanqing1996/JavaScript-advance/tree/master/%E6%95%B0%E7%BB%84%E6%93%8D%E4%BD%9C)
-4. 深度拷贝
-```
-let obj1={
-    name:'Jack',
-}
-
-let obj2={...obj1};
-
-
-obj1.gender='male'
-
-console.log(obj2) // { name: 'Jack'}
-```
-5. {...obj1,...obj2}
+4. {...obj1,...obj2}
 * 合并对象
 ```
 let obj1={
@@ -1470,27 +1457,14 @@ obj1["age"]=12
 
 console.log(obj2) // { name: 'Jack', age: 12 }
 ```
-
-#### 特殊：Object.assign(obj1,obj2)中obj2存在子对象的情况
-
-* 由于复制的是属性，obj1被赋与的属性值是一个地址，指向内存中子对象所在空间,即：原对象深度拷贝,子对象浅拷贝
-
+#### ES6 的扩展运算符属于浅拷贝
 ```
-let obj1={
-    name:'Jack',
-    child:{
-    name:'len'
-    }
-}
-
-let obj2={};
-
-Object.assign(obj2,obj1)
-
-obj1.gender='male'
-obj1.child.gender='female'
-
-console.log(obj2) // { name: 'Jack', child: { name: 'len', gender: 'female' } }
+let arr=[1,[2,3,4],[5,6]]
+let arr2=[...arr]
+arr2[0]=10
+arr2[1][0]=100
+console.log(arr) // [ 1, [ 100, 3, 4 ], [ 5, 6 ] ]
+console.log(arr2) // [ 10, [ 100, 3, 4 ], [ 5, 6 ] ]
 ```
 
 #### JSON.parse(JSON.stringify(data)) 属于深度拷贝
