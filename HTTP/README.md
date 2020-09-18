@@ -257,6 +257,7 @@ request.Cookie:undefined
 response.Set-Cookie:login=true
 ```
 2. 第二次请求与响应(展示用户信息)
+> 服务器在收到 HTTP 请求头数据之后，就会查找请求头里面的“Cookie”字段信息，当查找到包含login=true的信息时，服务器查询后台，并判断该用户是已登录状态，然后生成含有该用户信息的页面数据，并把生成的数据发送给浏览器。浏览器在接收到该含有当前用户的页面数据后，就可以正确展示用户登录的状态信息了。
 ```
 request.Cookie:login=true
 response.Set-Cookie:login=true
