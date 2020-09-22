@@ -1,4 +1,8 @@
 # 数组
+#### Array(5).fill(0) 初始化数组
+```
+Array(5).fill(0)
+```
 
 #### Array.from 创建数组
 ```
