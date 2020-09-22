@@ -3,6 +3,9 @@
 ```
 Array(5).fill(0)
 ```
+#### Array.from({length:n},()=>Array.from({length:n},()=>0)) 二维数组初始化
+
+
 
 #### Array.from 创建数组
 ```
