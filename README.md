@@ -587,6 +587,7 @@ f1 放入宏任务队列。async1执行。f2 入微任务队列。f3 执行，f4
 * JSON格式要求
 
 #### [数组](https://github.com/Hanqing1996/JavaScript-advance/tree/master/%E6%95%B0%E7%BB%84%E6%93%8D%E4%BD%9C)
+* Array(5).fill(0) 初始化数组
 * Array和Array.prototype
 * 伪数组
 * [...arr] 是 arr 的深拷贝吗
