@@ -2,6 +2,73 @@
 * [Chrome performance](https://zhuanlan.zhihu.com/p/29879682)
 
 # 函数
+
+#### a 和 window.a
+```
+console.log(a)
+// a is not defined
+```
+我们访问一个没有被声明过的变量，所以返回undefined
+
+
+```
+var a
+console.log(a)
+// undefined
+```
+用var声明的变量，会在上下文环境创建时被绑定初值undefined
+
+```
+console.log(window.a)
+// undefined
+```
+访问一个对象的不存在的属性，当然是undefined 
+
+
+#### function a(){} 做了什么？
+
+实际等价于下面
+```
+// 声明
+var a（提升到函数作用域顶部）
+
+// 赋值
+a=function (){}
+```
+所以
+```
+var a=2
+function a(){
+    console.log('haha')
+}
+```
+等价于
+```
+var a=2
+
+// 声明无效
+var a 
+
+// 对 a 进行赋值
+a=function(){
+}
+```
+---
+#### 函数是什么时候被编译的？
+parser 在遇到非立即执行函数时，只会对其进行pre-parse（确定作用域，不生成ast）。直到该函数执行前，才对其进行parse，确定ast。
+
+—为什么这样设计呢？因为js认为，“编译没执行的函数，是一种浪费”。
+
+---
+
+
+
+
+
+
+
+
+
 #### with 和 eval
 
 参考自《你不知道的js》 
