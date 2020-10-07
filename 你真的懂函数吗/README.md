@@ -3,6 +3,13 @@
 
 # 函数
 
+#### 函数体内部的变量是什么时候被创建的？
+
+是函数上下文环境创建完毕前被创建的，而不是 parse 阶段被创建的。
+
+parse 阶段只是【声明】某些变量，而上下文环境创建阶段，会根据之前【声明】的记录去创建那些变量
+
+
 #### a 和 window.a
 ```
 console.log(a)
@@ -24,34 +31,126 @@ console.log(window.a)
 ```
 访问一个对象的不存在的属性，当然是undefined 
 
-
-#### function a(){} 做了什么？
-
-实际等价于下面
+---
+#### 在块级作用域里声明变量/函数
+* 变量
+> 块级作用域里用var声明的变量，会提升到函数（全局）作用域顶部
 ```
-// 声明
-var a（提升到函数作用域顶部）
-
-// 赋值
-a=function (){}
-```
-所以
-```
-var a=2
-function a(){
-    console.log('haha')
+console.log(a)
+{
+   var a
+   a=2
 }
 ```
 等价于
 ```
-var a=2
-
-// 声明无效
-var a 
-
-// 对 a 进行赋值
-a=function(){
+var a
+console.log(a) // undefined
+{
+    a=2
 }
+```
+```
+var myname = "极客时间"
+function showName(){
+  console.log(myname); // undefined 
+  if(0){
+   var myname = "极客邦"
+  }
+  console.log(myname); // 极客邦
+}
+showName()
+```
+if里面的变量 myname 的声明，将被提升到函数 showName 顶部。
+
+所以上面代码等价于
+```
+var myname = "极客时间"
+function showName(){
+  var myname
+  console.log(myname); // undefined 
+  if(0){
+   myname = "极客邦"
+  }
+  console.log(myname); // 极客邦
+}
+showName()
+```
+* 函数
+
+ES6 在附录B里面规定：
+
+1.允许在块级作用域内声明函数。
+
+2.函数声明类似于var，即会提升到全局作用域或函数作用域的头部。
+
+3.同时，函数声明还会提升到所在的块级作用域的头部。
+
+而且，**在块级作用域中定义的函数，在全局上下文中只是进行函数名变量进行提升，但是不执行赋值操作**。所以
+```
+console.log(a)
+{
+    console.log(a)
+    function a(){}
+}
+```
+等价于
+```
+console.log(a) // undefined 
+{
+    // function 声明会在代码执行之前就「创建、初始化并赋值」,也就是说 a 在上下文创建完毕时就已经被赋值为 dunction(){}
+    var a
+    a=function(){}
+    
+    console.log(a)
+}
+```
+又由于
+1. 块级作用域中的函数声明，类似于var，即会提升到全局作用域或函数作用域的头部。
+2. 在块级作用域中定义的函数，在全局上下文中只是进行函数名变量进行提升，但是不执行赋值操作
+
+所以上面代码等价于
+```
+var a
+console.log(a) // undefined 
+{
+    a=function(){}
+    console.log(a) // [Function: a]
+}
+```
+#### let 的暂时性死区
+在块作用域内，let声明的变量被提升，但变量只是创建被提升，初始化并没有被提升，在初始化之前使用变量，就会形成一个暂时性死区
+```
+let myname= '极客时间'
+{
+  console.log(myname) // VM6277:3 Uncaught ReferenceError: Cannot access 'myname' before initialization
+  let myname= '极客邦'
+}
+在执行{}内代码前，就已经存在用let声明的变量myname了，只是无法访问。
+```
+
+#### function fn2(){console.log(2)} 做了什么
+``` 
+fn2()
+function fn2(){
+  console.log(2)
+}
+```
+JS 引擎会有以下过程：
+
+1. 找到所有用 function 声明的变量，在环境中「创建」这些变量。注意这发生在上下文环境创建完毕前，不是 parse 阶段
+2. 将这些变量「初始化」并「赋值」为 function(){ console.log(2) }。
+> 注意这是非常特殊的！因为用 var 声明的变量，在执行代码（上下文）前会被初始化为 undefined 但不会被赋值；用 let,const 声明的变量，在执行代码（上下文）前不会被初始化；只有用 function 声明的变量，在代码执行会完成赋值操作，amazing!!
+3. 开始执行代码 fn2()
+
+即，上面代码等价于
+```
+var fn2
+fn2=function(){
+  console.log(2)
+}
+// 现在开始执行上下文
+fn2()
 ```
 ---
 #### 函数是什么时候被编译的？
@@ -60,13 +159,6 @@ parser 在遇到非立即执行函数时，只会对其进行pre-parse（确定�
 —为什么这样设计呢？因为js认为，“编译没执行的函数，是一种浪费”。
 
 ---
-
-
-
-
-
-
-
 
 
 #### with 和 eval
