@@ -1,4 +1,4 @@
-* [前置知识:原型链]([https://github.com/Hanqing1996/-summary/tree/master/JS#%E4%BB%80%E4%B9%88%E6%98%AF%E5%8E%9F%E5%9E%8B](https://github.com/Hanqing1996/-summary/tree/master/JS#什么是原型)
+* [前置知识:原型链](https://github.com/Hanqing1996/-summary/tree/master/JS#什么是原型)
 
 
 
