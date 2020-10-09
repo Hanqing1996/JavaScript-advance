@@ -1,3 +1,102 @@
+* [前置知识:原型链]([https://github.com/Hanqing1996/-summary/tree/master/JS#%E4%BB%80%E4%B9%88%E6%98%AF%E5%8E%9F%E5%9E%8B](https://github.com/Hanqing1996/-summary/tree/master/JS#什么是原型)
+
+
+
+#### ES6 class,extends
+
+![0r8AjH.jpg](https://s1.ax1x.com/2020/10/09/0r8AjH.jpg)
+
+```js
+class Super{
+    constructor(name){
+        this.name = name
+        this.like = ['sing','dance','rap','basketball']
+    }
+
+    sayName(){
+        console.log(this.name)
+    }
+}
+
+// extends实现了Suber.prototype.__proto__ = Super.prototype
+class Suber extends Super{
+    constructor(name,age){
+        super(name)
+        this.age = age
+    }
+    sayAge(){
+        console.log(this.age)
+    }
+}
+
+const sub1=new Suber('libai',20)
+sub1.sayName()
+```
+
+---
+
+#### 寄生式组合继承
+
+![0r8K4f.jpg](https://s1.ax1x.com/2020/10/09/0r8K4f.jpg)
+
+```js
+function clonePrototype(Super,Suber){
+   // Object.create 实现了 tempPrototype.__proto__=Super.prototype  
+   var tempPrototype = Object.create(Super.prototype);
+   tempPrototype.constructor = Suber;
+   Suber.prototype = tempPrototype;
+}
+
+function Super(name){
+  this.name = name
+  this.like = ['sing','dance','rap','basketball']
+}
+Super.prototype.sayName=function(){
+   console.log(this.name)
+}
+
+function Suber(name,age){
+   Super.call(this,name)      //  继承属性
+   this.age=age
+}
+clonePrototype(Super,Suber);
+Suber.prototype.sayAge=function(){
+  console.log(this.age)
+}
+
+var sub1 = new Suber('sss',45);
+console.log(sub1.name);
+sub1.sayName();
+sub1.sayAge();
+```
+
+---
+
+#### 组合式继承
+
+![0r8UU0.jpg](https://s1.ax1x.com/2020/10/09/0r8UU0.jpg)
+
+```js
+function Super(name){
+    this.name = name
+    this.like = ['唱','调','rap','篮球']
+ }
+ Super.prototype.say=function(){
+   console.log(this.name)
+ }
+ function Suber(name,age){
+   Super.call(this,name)
+   this.age = age
+ }
+ 
+var sup1=new Super('cccccccccccc');
+Suber.prototype=sup1
+var sub1=new Suber('hhh')
+sub1.say()
+```
+
+
+---
 * console.dir()可以显示一个对象的所有属性和方法
 ```javascript
 // chrome
