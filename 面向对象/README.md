@@ -849,6 +849,15 @@ console.log(p1.otherFn===p2.otherFn);// true,因为 otherFn 是共有方法
 * super()只能为父类传递私有属性，不能传递公有属性,公有属性是由extends实现的
 * 注意公有属性只能是函数，而私有属性可以是函数，也可以不是函数
 * class的本质仍然是函数(一个无法call的函数)
+* 在 class 中定义的公有方法会挂载到原型上
+```
+class Human{
+    sayHi(){
+    }
+}
+
+Human.prototype // {constructor: ƒ, sayHi: ƒ}
+```
 
 
 #### super
