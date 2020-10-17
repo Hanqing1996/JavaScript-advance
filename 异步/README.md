@@ -53,9 +53,9 @@ let p=new Promise((resolve,reject)=>setTimeout(resolve,1000))
 })
 
 /**
- * 1. 函数 (resolve,reject)=>setTimeout(resolve,1000) 执行。setTimeout 执行，其回调函数 resolve 被放入微任务队列。
+ * 1. 函数 (resolve,reject)=>setTimeout(resolve,1000) 执行。setTimeout 执行，其回调函数 resolve 被放入宏任务队列。
  * 2. then 方法执行，其回调函数存储于 p 内部。
- * 3. 目前所有同步代码执行完毕，执行微任务队列中任务。resolve 方法执行，导致 then 方法的回调函数被放入微任务队列。
+ * 3. 目前所有同步代码执行完毕，微任务队列为空，因此执行宏任务队列中任务。resolve 方法执行，导致 then 方法的回调函数被放入微任务队列。
  * 4. 目前所有同步代码执行完毕，执行微任务队列中任务。then 方法的回调函数执行。
  */
 ```
@@ -68,7 +68,24 @@ let p=new Promise((resolve,reject)=>setTimeout(resolve,1000))
    * 否则，then 方法的回调函数执行完毕后，then 方法返回的 Promsie 直接变为 resolved。没有微任务队列这一步
 
   > 也就是说，当 then 方法执行完毕时，一定会返回一个 promsie。且其返回的 promsie 只有一种状态：pending。当 then 方法的回调函数完毕后，该 promsie 的状态可能立即变为 resolved，也可能之后再变成 resolved（等到微任务队列中，修改 Promise 状态的任务被执行后）
-
+---
+【超级恶心题，参考自[这位大佬](https://juejin.im/post/6844903972008886279)】写出以下代码输出结果
+```
+new Promise(resolve => {
+  resolve();
+})
+  .then(() => {
+    new Promise(resolve => {
+      resolve();
+    })
+      .then(() => {
+        console.log("log: 内部第一个then");
+        return Promise.resolve();
+      })
+      .then(() => console.log("log: 内部第二个then"));
+  })
+  .then(() => console.log("log: 外部第二个then"));
+```
 
 
 
@@ -93,7 +110,7 @@ let p=new Promise((resolve,reject)=>setTimeout(resolve,1000))
   }
 ```
 
-被放入微任务队列。该then 方法返回一个处于 pending 状态的 promise**（记为 Promsie1）**。
+被放入微任务队列。该then 方法返回一个处于 pending 状态的 promise（记为 Promsie1）。
 
 
 
