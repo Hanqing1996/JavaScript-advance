@@ -1081,6 +1081,20 @@ a.fn() // A {n: 1, fn: }
 ```
 
 #### 柯里化函数
+* 什么是柯里化？
+> 将[接受N个参数的函数]改写为[N个接受单参数的函数]
+
+> 柯里化是为了部分调用
+
+```js
+let multiply=(a,b,c)=>a*b*c
+
+let multiplyCurried=(a)=>(b)=>(c)=>a*b*c
+
+multiplyCurried(10) // 得到一个函数 (b)=>(c)=>10*b*c
+
+multiplyCurried(20) // 得到另一个函数 (b)=>(c)=>20*b*c
+```
 * 示例
 ```
 function curry(fn)
