@@ -415,6 +415,27 @@ Array.prototype.reduce(fn,init){
     return result;
 }
 ``` 
+* reduce 不提供初值的情况·
+
+  ```js
+  array=['a','b','c','d']
+  
+  // 由于没有提供初值,a初始值为array[0],b初始值为array[1]。之后 a 为累计值，b 为当前值
+  /**
+    * a,b 迭代过程
+    * a:array[0]
+    * b:array[1]
+    * 
+    * a:'ab'
+    * b:array[2]
+    *
+    * a:'abc'
+    * b:array[3]
+    */
+  res=array.reduce((a,b)=>a+b)
+  
+  console.log(res) // "abcd"
+  ```
 #### react 的 custom hook
 ```
 export const useMethods = (initialValue, methods) => {
