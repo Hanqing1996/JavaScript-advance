@@ -148,31 +148,16 @@ image/gif
 #### [HTTP缓存](https://xiedaimala.com/tasks/5c46b237-9763-474c-910b-68ccb123bac8/video_tutorials/292ecffa-86e3-4300-b44c-3ebe56e9e424)
 * Catche-Control(Response才有,Request没有)
 ```
-    response.setHeader('Cache-Control', 'max-age=3600') // 设置缓存为3600秒(业界一般设置为10年)
-```
-* 有了缓存，浏览器就不必向服务器请求资源，只需要从磁盘/内存中读取资源即可，用户看到图片的速度会变快
-* 资源更新后，需要将浏览器由从缓存中读取资源，改为向服务器请求资源，该怎么做?
-1. 在path不变(这样才能保证请求的资源正确)的前提下修改href(修改query) 
-在[server.js](https://github.com/Hanqing1996/JavaScript-advance/tree/master/HTTP/HTTP%E7%BC%93%E5%AD%98-demo)中，将
-```
-    <link rel="stylesheet" href="/style">  
-```
-修改为
-```
-    <link rel="stylesheet" href="/style?random=12">  
-```
-注意
-```
 response.setHeader('Cache-Control', 'max-age=3600')
 ```
 不需要删除
-2. 在node.js诞生以前，前端使用时间戳/版本号来实现1中的random
+ 在node.js诞生以前，前端使用时间戳/版本号来实现1中的random
 ```
 /style?t=20180518164444
 /style1?t=20180628164434
 ```
 缺点:粒度可能不够细，手动修改容易出错
-3. 用 MD5重命名
+ 用 MD5重命名
 ```
 fileName_一个Hash值(用webpack生成该文件MD5的前8位)
 ```
