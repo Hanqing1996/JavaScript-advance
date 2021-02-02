@@ -1544,6 +1544,10 @@ console.log(arr2) // [ 100, [ 1000, 3, 4 ], [ 5, 6 ] ]
 ```
 
 #### 实现深拷贝
+
+- [x] 复杂对象 clone
+- [x] symbol 属性 clone
+- [x] 解决循环引用/环检测
 ```js
 let cache=[]
 
