@@ -1543,104 +1543,78 @@ console.log(arr) // [ 1, [ 1000, 3, 4 ], [ 5, 6 ] ]
 console.log(arr2) // [ 100, [ 1000, 3, 4 ], [ 5, 6 ] ]
 ```
 
-#### 递归实现深拷贝
+#### 实现深拷贝
+```js
+let cache=[]
 
-```javascript
+function findTargetInCache(targetSource){
+
+    for(let [source,dist] of cache){
+        if(source===targetSource)
+            return dist
+    }
+    return undefined
+}
+
 function deepclone(source){
     
     if(source instanceof Object){
+        let cacheDist=findTargetInCache(source)
+        if(cacheDist)
+            return cacheDist
 
         let dist;
-        // 处理数组    
+   
+        // 处理复杂对象，包括 Array,Function,RegExp,Date,普通对象
         if(source instanceof Array){
             dist=new Array();
-        }
-        // 处理函数 
-        if(source instanceof Function){
+        }else if(source instanceof Function){
             dist=function(){
                 return source.apply(this,arguments);
             };
+        }else if(source instanceof RegExp){
+            dist = new RegExp(source.source, source.flags);
+        }else if(source instanceof Date){
+            dist = new Date(source);
+        }else{
+            dist=new Object();
         }
-        // 处理普通对象 
-        dist=new Object();
+
+        // 
+        cache.push([source,dist])
+
+
+        // 优先处理 symbol 生成的属性名字
+        let symbolProps=Object.getOwnPropertySymbols(source)
+        for(let key of symbolProps){
+            dist[key]=deepclone(source[key])
+        }
+
         for(let key in source){
-            dist[key]=deepclone(source[key]);
+
+            if(source.hasOwnProperty(key)) {
+                dist[key]=deepclone(source[key]);
+            }
         }
+
+        
         return dist;
     }
     return source;
 }
-```
-
-* 缺点
-
-> 无法解决循环引用的情况
-
-```javascript
-const a={}
-a.child=a
-
-const b=deepclone(a)
-//Maximum call stack size exceeded
-```
 
 
-#### 环检测
-
-```javascript
-const a={}
-a.child=a
-
-const b=deepclone(a)
-```
-
-* 方法
-
-> 最diao的是，cache 里的 cacheDist 和 dist 是同步成长的
-
-```javascript
-let cache=[]
-
-function deepclone(source){
-    if(source instanceof Object){
-        const cacheDist=findCache(source)
-
-        if(!cacheDist){
-            let dist;
-            // 处理数组    
-            if(source instanceof Array){
-                dist=new Array();
-            }
-            // 处理函数 
-            if(source instanceof Function){
-                dist=function(){
-                    return source.apply(this,arguments);
-                };
-            }
-            // 处理普通对象 
-            dist=new Object();
-            cache.push([source,dist]);
-
-            for(let key in source){
-                dist[key]=deepclone(source[key]);
-            }
-
-            return dist
-
-        }else{
-            return cacheDist
-        }
-    }
-    return source;
+let obj={
+    name:'libai',
+    sayHi:function(){
+        console.log('hi')
+    },
+    children:[1,2,3],
 }
 
+obj[Symbol('age')]=10
+obj['friend']=obj
 
-function findCache(source) {
-    for (let i = 0; i < cache.length; i++) {
-      if (cache[i][0] === source) {
-        return cache[i][1];
-      }
-    }
-    return undefined;
-  }
+const res=deepclone(obj)
+console.log(res)
 ```
