@@ -1532,7 +1532,7 @@ console.log(arr) // [ 1, [ 1000, 3, 4 ], [ 5, 6 ] ]
 console.log(arr2) // [ 100, [ 1000, 3, 4 ], [ 5, 6 ] ]
 ```
 
-* splice：浅拷贝
+* slice：浅拷贝
 
 ```javascript
 let arr=[1,[2,3,4],[5,6]]
