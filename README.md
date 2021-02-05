@@ -1,3 +1,28 @@
+
+
+
+
+```js
+function fn(){
+    let myNumber = 23;
+}
+fn()
+```
+
+
+
+当执行此代码时，JS 将执行:
+
+1. 为变量(`myNumber`)创建唯一标识符(**identifier**)。
+2. 在栈内存中分配一个地址（在创建函数fn上下文环境时分配，不是在`myNumber`声明时分配内存地址的)。
+3. 将值 `23` 存储在分配的地址。
+
+![img](https://pic4.zhimg.com/v2-120d6bf3b62fcb070e6a94a094faff9f_b.jpg)
+
+虽然我们通俗地说，`“myNumber 等于 23”`，更专业地说，`myNumber` 等于保存值 23 的内存地址
+---
+
+
 * [前置知识:原型链](https://github.com/Hanqing1996/-summary/tree/master/JS#什么是原型)
 
 
